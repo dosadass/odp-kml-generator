@@ -10,9 +10,11 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BLUE_ICON = os.path.join(BASE_DIR, "blue.png")
 RED_ICON = os.path.join(BASE_DIR, "red.png")
 
-st.title("ODP KML / KMZ Generator")
 
-uploaded_file = st.file_uploader("Upload file Excel ODP", type=["xlsx", "xls"])
+st.markdown('<div class="card">', unsafe_allow_html=True)
+uploaded_file = st.file_uploader("Upload file Excel ODP terbaru", type=["xlsx", "xls"])
+st.caption("Pastikan file memiliki kolom Code, Region, District Name, Capacity, Active, dan Coordinate.")
+st.markdown('</div>', unsafe_allow_html=True)
 
 required_cols = [
     "Code", "Kelurahan", "Kecamatan", "Region", "District Name",
@@ -154,6 +156,57 @@ if uploaded_file:
                     kmz.write(RED_ICON, "files/red.png")
                 else:
                     st.error(f"red.png tidak ditemukan di: {RED_ICON}")
+
+                    st.set_page_config(
+    page_title="Validasi ODP Tools",
+    page_icon="📍",
+    layout="wide"
+)
+
+st.markdown("""
+<style>
+.main-title {
+    background: linear-gradient(135deg, #0f172a, #1e40af);
+    padding: 28px 34px;
+    border-radius: 18px;
+    color: white;
+    margin-bottom: 24px;
+}
+.main-title h1 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 800;
+}
+.main-title p {
+    margin-top: 8px;
+    font-size: 15px;
+    opacity: 0.9;
+}
+.card {
+    background: #ffffff;
+    padding: 18px 22px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.08);
+    margin-bottom: 18px;
+}
+.badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+}
+</style>
+
+<div class="main-title">
+    <span class="badge">VALIDASI ODP TEAM</span>
+    <h1>ODP KML / KMZ Generator</h1>
+    <p>Internal tools untuk mengubah data ODP Excel menjadi file KML/KMZ siap pakai di Google Earth.</p>
+</div>
+""", unsafe_allow_html=True)
 
             st.success(f"File berhasil dibuat! Total titik: {total_point}, dilewati: {skipped_point}")
 
