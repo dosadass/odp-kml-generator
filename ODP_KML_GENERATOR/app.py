@@ -24,7 +24,7 @@ st.markdown("""
 }
 
 .main-title {
-    background: linear-gradient(135deg, #0f172a, #1e40af);
+    background: linear-gradient(135deg, #1e293b, #334155);
     padding: 28px 34px;
     border-radius: 18px;
     color: white;
@@ -41,14 +41,14 @@ st.markdown("""
 .main-title p {
     margin-top: 8px;
     font-size: 15px;
-    opacity: 0.9;
+    color: #cbd5e1;
 }
 
 .badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255,255,255,0.14);
+    background: rgba(255,255,255,0.08);
     backdrop-filter: blur(8px);
     color: white;
     padding: 8px 14px;
