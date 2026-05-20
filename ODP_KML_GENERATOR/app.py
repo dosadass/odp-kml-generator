@@ -70,7 +70,7 @@ st.markdown("""
 </style>
 
 <div class="main-title">
-    <div class="badge">📍 VALIDASI ODP TEAM</div>
+    <div class="badge">📍 VALIDASI ODP</div>
     <h1>ODP KML / KMZ Generator</h1>
     <p>Internal tools untuk mengubah data ODP Excel menjadi file KML/KMZ siap pakai di Google Earth.</p>
 </div>
