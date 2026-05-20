@@ -1,0 +1,164 @@
+import streamlit as st
+import pandas as pd
+import simplekml
+from simplekml import Snippet
+import zipfile
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+BLUE_ICON = os.path.join(BASE_DIR, "blue.png")
+RED_ICON = os.path.join(BASE_DIR, "red.png")
+
+st.title("ODP KML / KMZ Generator")
+
+uploaded_file = st.file_uploader("Upload file Excel ODP", type=["xlsx", "xls"])
+
+required_cols = [
+    "Code", "Kelurahan", "Kecamatan", "Region", "District Name",
+    "Ms. Partner Name", "Capacity", "Active"
+]
+
+def read_excel_auto_header(file):
+    raw = pd.read_excel(file, header=None)
+
+    for i in range(10):
+        row_values = raw.iloc[i].astype(str).str.strip().tolist()
+        if "Code" in row_values and "Kelurahan" in row_values and "Kecamatan" in row_values:
+            df = pd.read_excel(file, header=i)
+            df.columns = df.columns.astype(str).str.strip()
+            return df
+
+    return pd.read_excel(file)
+
+def find_coordinate_column(df):
+    for col in df.columns:
+        sample = df[col].dropna().astype(str).head(20)
+        for val in sample:
+            if "," in val:
+                parts = val.split(",")
+                if len(parts) == 2:
+                    try:
+                        float(parts[0].strip())
+                        float(parts[1].strip())
+                        return col
+                    except:
+                        pass
+    return None
+
+if uploaded_file:
+    df = read_excel_auto_header(uploaded_file)
+
+    st.write("Preview Data:")
+    st.dataframe(df.head())
+
+    st.write("Nama Kolom Terdeteksi:")
+    st.write(list(df.columns))
+
+    coord_col = find_coordinate_column(df)
+
+    missing = [col for col in required_cols if col not in df.columns]
+
+    if coord_col is None:
+        missing.append("Kolom koordinat format Lat,Long")
+
+    if missing:
+        st.error(f"Kolom ini belum ada / beda nama: {missing}")
+    else:
+        st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
+
+        if st.button("Generate KML & KMZ"):
+            kml = simplekml.Kml()
+            total_point = 0
+            skipped_point = 0
+
+            for region, region_df in df.groupby("Region"):
+                region_folder = kml.newfolder(name=str(region))
+
+                for district, district_df in region_df.groupby("District Name"):
+                    district_folder = region_folder.newfolder(name=str(district))
+
+                    for _, row in district_df.iterrows():
+                        try:
+                            coord = str(row[coord_col]).strip()
+                            lat, lon = coord.split(",")
+                            lat = float(lat.strip())
+                            lon = float(lon.strip())
+                        except:
+                            skipped_point += 1
+                            continue
+
+                        capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
+                        active = int(row["Active"]) if pd.notna(row["Active"]) else 0
+
+                        status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
+
+                        header_color = "#E53935" if status == "FULL" else "#4285F4"
+
+                        desc = f"""
+<div style="font-family:Arial; font-size:12px;">
+<table border="1" cellpadding="5" cellspacing="0" width="300">
+<tr>
+    <th colspan="2" bgcolor="{header_color}">
+        <font color="white">{row['Code']}</font>
+    </th>
+</tr>
+<tr><td><b>Code</b></td><td>{row['Code']}</td></tr>
+<tr><td><b>Kelurahan</b></td><td>{row['Kelurahan']}</td></tr>
+<tr><td><b>Kecamatan</b></td><td>{row['Kecamatan']}</td></tr>
+<tr><td><b>Region</b></td><td>{row['Region']}</td></tr>
+<tr><td><b>District</b></td><td>{row['District Name']}</td></tr>
+<tr><td><b>Partner</b></td><td>{row['Ms. Partner Name']}</td></tr>
+<tr><td><b>Capacity</b></td><td>{capacity}</td></tr>
+<tr><td><b>Active</b></td><td>{active}</td></tr>
+<tr><td><b>Status</b></td><td>{status}</td></tr>
+<tr><td><b>Lat</b></td><td>{lat}</td></tr>
+<tr><td><b>Long</b></td><td>{lon}</td></tr>
+</table>
+</div>
+"""
+
+                        pnt = district_folder.newpoint(
+                            name=str(row["Code"]),
+                            coords=[(lon, lat)]
+                        )
+
+                        # Sidebar clean, popup tetap pakai tabel rapi
+                        pnt.description = ""
+                        pnt.snippet = Snippet("", maxlines=0)
+                        pnt.style.balloonstyle.text = desc
+
+                        if status == "FULL":
+                            pnt.style.iconstyle.icon.href = "files/red.png"
+                        else:
+                            pnt.style.iconstyle.icon.href = "files/blue.png"
+
+                        pnt.style.iconstyle.scale = 1.2
+
+                        total_point += 1
+
+            kml_path = "ODP_Master.kml"
+            kmz_path = "ODP_Master.kmz"
+
+            kml.save(kml_path)
+
+            with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
+                kmz.write(kml_path, "doc.kml")
+
+                if os.path.exists(BLUE_ICON):
+                    kmz.write(BLUE_ICON, "files/blue.png")
+                else:
+                    st.error(f"blue.png tidak ditemukan di: {BLUE_ICON}")
+
+                if os.path.exists(RED_ICON):
+                    kmz.write(RED_ICON, "files/red.png")
+                else:
+                    st.error(f"red.png tidak ditemukan di: {RED_ICON}")
+
+            st.success(f"File berhasil dibuat! Total titik: {total_point}, dilewati: {skipped_point}")
+
+            with open(kml_path, "rb") as f:
+                st.download_button("Download KML", f, file_name="ODP_Master.kml")
+
+            with open(kmz_path, "rb") as f:
+                st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
