@@ -45,14 +45,18 @@ st.markdown("""
 }
 
 .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.18);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.14);
+    backdrop-filter: blur(8px);
     color: white;
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: 999px;
     font-size: 12px;
     font-weight: 700;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(255,255,255,0.12);
 }
 
 .info-card {
@@ -66,7 +70,7 @@ st.markdown("""
 </style>
 
 <div class="main-title">
-    <div class="badge">VALIDASI ODP TEAM</div>
+    <div class="badge">📍 VALIDASI ODP TEAM</div>
     <h1>ODP KML / KMZ Generator</h1>
     <p>Internal tools untuk mengubah data ODP Excel menjadi file KML/KMZ siap pakai di Google Earth.</p>
 </div>
