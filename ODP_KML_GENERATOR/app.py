@@ -192,10 +192,11 @@ if uploaded_file:
                         pnt.description = ""
                         pnt.snippet = Snippet("", maxlines=0)
                         pnt.style.balloonstyle.text = desc
+                        
                     if status == "FULL":
-                        pnt.style.iconstyle.icon.href = "http://maps.google.com/mapfiles/kml/paddle/red-blank.png"
+                        pnt.style.iconstyle.icon.href = "http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png"
                     else:
-                        pnt.style.iconstyle.icon.href = "http://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
+                        pnt.style.iconstyle.icon.href = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png"
                         
                         pnt.style.iconstyle.scale = 1.2
                         total_point += 1
