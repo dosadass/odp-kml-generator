@@ -3,18 +3,12 @@ import pandas as pd
 import simplekml
 from simplekml import Snippet
 import zipfile
-import os
 
 st.set_page_config(
     page_title="Validasi ODP Tools",
     page_icon="📍",
     layout="wide"
 )
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-BLUE_ICON = os.path.join(BASE_DIR, "blue.png")
-RED_ICON = os.path.join(BASE_DIR, "red.png")
 
 st.markdown("""
 <style>
@@ -85,6 +79,9 @@ required_cols = [
     "Code", "Kelurahan", "Kecamatan", "Region", "District Name",
     "Ms. Partner Name", "Capacity", "Active"
 ]
+
+IDLE_ICON = "http://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
+FULL_ICON = "http://maps.google.com/mapfiles/kml/paddle/red-blank.png"
 
 def read_excel_auto_header(file):
     raw = pd.read_excel(file, header=None)
@@ -192,12 +189,12 @@ if uploaded_file:
                         pnt.description = ""
                         pnt.snippet = Snippet("", maxlines=0)
                         pnt.style.balloonstyle.text = desc
-                        
-                    if status == "FULL":
-                        pnt.style.iconstyle.icon.href = "http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png"
-                    else:
-                        pnt.style.iconstyle.icon.href = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png"
-                        
+
+                        if status == "FULL":
+                            pnt.style.iconstyle.icon.href = FULL_ICON
+                        else:
+                            pnt.style.iconstyle.icon.href = IDLE_ICON
+
                         pnt.style.iconstyle.scale = 1.2
                         total_point += 1
 
