@@ -192,12 +192,11 @@ if uploaded_file:
                         pnt.description = ""
                         pnt.snippet = Snippet("", maxlines=0)
                         pnt.style.balloonstyle.text = desc
-
-                        if status == "FULL":
-                            pnt.style.iconstyle.icon.href = "files/red.png"
-                        else:
-                            pnt.style.iconstyle.icon.href = "files/blue.png"
-
+                    if status == "FULL":
+                        pnt.style.iconstyle.icon.href = "http://maps.google.com/mapfiles/kml/paddle/red-blank.png"
+                    else:
+                        pnt.style.iconstyle.icon.href = "http://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
+                        
                         pnt.style.iconstyle.scale = 1.2
                         total_point += 1
 
@@ -208,16 +207,6 @@ if uploaded_file:
 
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
-
-                if os.path.exists(BLUE_ICON):
-                    kmz.write(BLUE_ICON, "files/blue.png")
-                else:
-                    st.error(f"blue.png tidak ditemukan di: {BLUE_ICON}")
-
-                if os.path.exists(RED_ICON):
-                    kmz.write(RED_ICON, "files/red.png")
-                else:
-                    st.error(f"red.png tidak ditemukan di: {RED_ICON}")
 
             st.success(f"File berhasil dibuat! Total titik: {total_point}, dilewati: {skipped_point}")
 
