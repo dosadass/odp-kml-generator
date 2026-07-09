@@ -130,21 +130,21 @@ if uploaded_file:
     if missing:
         st.error(f"Kolom ini belum ada / beda nama: {missing}")
     else:
-        st.success(f"Koordinat terdeteksi di kolom: {coord_col}")}")
+        st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
     if st.button("Generate KML & KMZ"):
 
         filename = os.path.splitext(uploaded_file.name)[0]
         kml = simplekml.Kml(name=f"Update {filename}")
 
-            total_point = 0
-            skipped_point = 0
+        total_point = 0
+        skipped_point = 0
 
-            for region, region_df in df.groupby("Region"):
-                region_folder = kml.newfolder(name=str(region))
+        for region, region_df in df.groupby("Region"):
+            region_folder = kml.newfolder(name=str(region))
 
-                for district, district_df in region_df.groupby("District Name"):
-                    district_folder = region_folder.newfolder(name=str(district))
+        for district, district_df in region_df.groupby("District Name"):
+            district_folder = region_folder.newfolder(name=str(district))
 
                     for _, row in district_df.iterrows():
                         try:
@@ -202,18 +202,18 @@ if uploaded_file:
                         pnt.style.iconstyle.scale = 1.2
                         total_point += 1
 
-            kml_path = "ODP_Master.kml"
-            kmz_path = "ODP_Master.kmz"
+    kml_path = "ODP_Master.kml"
+    kmz_path = "ODP_Master.kmz"
 
-            kml.save(kml_path)
+    kml.save(kml_path)
 
-            with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
-                kmz.write(kml_path, "doc.kml")
+    with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
+        kmz.write(kml_path, "doc.kml")
 
-            st.success(f"File berhasil dibuat! Total titik: {total_point}, dilewati: {skipped_point}")
+    st.success(f"File berhasil dibuat! Total titik: {total_point}, dilewati: {skipped_point})
 
-            with open(kml_path, "rb") as f:
-                st.download_button("Download KML", f, file_name="ODP_Master.kml")
+    with open(kml_path, "rb") as f:
+            st.download_button("Download KML", f, file_name="ODP_Master.kml")
 
             with open(kmz_path, "rb") as f:
                 st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
