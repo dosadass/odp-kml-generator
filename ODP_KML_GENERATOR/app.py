@@ -3,6 +3,7 @@ import pandas as pd
 import simplekml
 from simplekml import Snippet
 import zipfile
+import os
 
 st.set_page_config(
     page_title="Validasi ODP Tools",
@@ -129,10 +130,13 @@ if uploaded_file:
     if missing:
         st.error(f"Kolom ini belum ada / beda nama: {missing}")
     else:
-        st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
+        st.success(f"Koordinat terdeteksi di kolom: {coord_col}")}")
 
-        if st.button("Generate KML & KMZ"):
-            kml = simplekml.Kml()
+    if st.button("Generate KML & KMZ"):
+
+        filename = os.path.splitext(uploaded_file.name)[0]
+        kml = simplekml.Kml(name=f"Update {filename}")
+
             total_point = 0
             skipped_point = 0
 
