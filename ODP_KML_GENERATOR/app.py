@@ -132,7 +132,9 @@ if uploaded_file:
         st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
         if st.button("Generate KML & KMZ"):
-            kml = simplekml.Kml()
+            today = datetime.now().strftime("%d %b %Y")
+
+            kml = simplekml.Kml(name=f"Update {today}")
             total_point = 0
             skipped_point = 0
 
