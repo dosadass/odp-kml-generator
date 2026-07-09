@@ -80,8 +80,8 @@ required_cols = [
     "Ms. Partner Name", "Capacity", "Active"
 ]
 
-IDLE_ICON = "http://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
-FULL_ICON = "http://maps.google.com/mapfiles/kml/paddle/red-blank.png"
+IDLE_ICON = "https://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png"
+FULL_ICON = "https://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png"
 
 def read_excel_auto_header(file):
     raw = pd.read_excel(file, header=None)
