@@ -217,33 +217,17 @@ if uploaded_file:
             repo = st.secrets["GITHUB_REPO"]
             branch = st.secrets["GITHUB_BRANCH"]
             
-            st.write("Token length:", len(token))
-            st.write("Token prefix:", token[:15])
-            st.write("Token suffix:", token[-8:])
-            
-            st.write("Repo:", repo)
-            st.write("Branch:", branch)
 
             with open(kmz_path, "rb") as file:
                 content = base64.b64encode(file.read()).decode()
             
             url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
-            st.write("URL:", url)
             
             headers = {
                 "Authorization": f"Bearer {token}",
                 "Accept": "application/vnd.github+json"
             }
 
-            # ===== TEST TOKEN =====
-            user = requests.get(
-                "https://api.github.com/user",
-                headers=headers
-            )
-            
-            st.write("User Status:", user.status_code)
-            st.write("User Response:", user.text)
-            # ======================
 
             
             get = requests.get(url, headers=headers)
@@ -269,7 +253,13 @@ if uploaded_file:
             )
             
             if response.status_code in [200,201]:
-                st.success("🚀 KMZ berhasil diupload ke GitHub!")
+                st.success(f"""
+                ✅ Publish berhasil!
+                
+                📅 Update : {today}
+                📍 Total ODP : {total_point}
+                ☁️ GitHub berhasil diperbarui.
+                """)
             else:
                 st.write(response.status_code)
                 st.write(response.json())
