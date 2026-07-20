@@ -253,12 +253,14 @@ if uploaded_file:
             )
             
             if response.status_code in [200,201]:
-                st.success(f"""
-                ✅ Publish berhasil!
+                st.success("✅ Publish berhasil!")
+
+                st.markdown(f"""
+                ### 📊 Informasi Publish
                 
-                📅 Update : {today}
-                📍 Total ODP : {total_point}
-                ☁️ GitHub berhasil diperbarui.
+                - 📅 **Update** : {today}
+                - 📍 **Total ODP** : **{total_point}**
+                - ☁️ **Status** : GitHub berhasil diperbarui.
                 """)
             else:
                 st.write(response.status_code)
