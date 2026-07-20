@@ -226,6 +226,17 @@ if uploaded_file:
                 "Authorization": f"Bearer {token}",
                 "Accept": "application/vnd.github+json"
             }
+
+            # ===== TEST TOKEN =====
+            user = requests.get(
+                "https://api.github.com/user",
+                headers=headers
+            )
+            
+            st.write("User Status:", user.status_code)
+            st.write("User Response:", user.text)
+            # ======================
+
             
             get = requests.get(url, headers=headers)
             
@@ -252,7 +263,8 @@ if uploaded_file:
             if response.status_code in [200,201]:
                 st.success("🚀 KMZ berhasil diupload ke GitHub!")
             else:
-                st.error(response.text)
+                st.write(response.status_code)
+                st.write(response.json())
 
             st.success(f"File berhasil dibuat! Total titik: {total_point}, dilewati: {skipped_point}")
 
