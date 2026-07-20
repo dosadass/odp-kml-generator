@@ -4,6 +4,8 @@ import simplekml
 from simplekml import Snippet
 import zipfile
 from datetime import datetime
+import requests
+import base64
 
 st.set_page_config(
     page_title="Validasi ODP Tools",
@@ -216,3 +218,46 @@ if uploaded_file:
 
             with open(kmz_path, "rb") as f:
                 st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
+
+
+if st.button("🚀 Publish ke GitHub"):
+
+    token = st.secrets["GITHUB_TOKEN"]
+    repo = st.secrets["GITHUB_REPO"]
+    branch = st.secrets["GITHUB_BRANCH"]
+
+    with open(kmz_path, "rb") as file:
+        content = base64.b64encode(file.read()).decode()
+
+    url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
+
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+
+    get = requests.get(url, headers=headers)
+
+    sha = None
+
+    if get.status_code == 200:
+        sha = get.json()["sha"]
+
+    payload = {
+        "message": "Update ODP KMZ",
+        "content": content,
+        "branch": branch
+    }
+
+    if sha:
+        payload["sha"] = sha
+
+    response = requests.put(
+        url,
+        headers=headers,
+        json=payload
+    )
+
+    if response.status_code in [200,201]:
+        st.success("✅ Berhasil upload ke GitHub!")
+    else:
+        st.error(response.text)
