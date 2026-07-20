@@ -228,6 +228,7 @@ if uploaded_file:
                 content = base64.b64encode(file.read()).decode()
             
             url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
+            st.write("URL:", url)
             
             headers = {
                 "Authorization": f"Bearer {token}",
