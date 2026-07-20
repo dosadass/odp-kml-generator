@@ -6,6 +6,7 @@ import zipfile
 from datetime import datetime
 import requests
 import base64
+import os
 
 st.set_page_config(
     page_title="Validasi ODP Tools",
@@ -137,7 +138,7 @@ if uploaded_file:
     else:
         st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
-        if st.button("Generate KML & KMZ"):
+        if st.button("🚀 Generate + Publish"):
             today = datetime.now().strftime("%d %b %Y")
 
             kml = simplekml.Kml(name=f"Update {today}")
@@ -222,51 +223,50 @@ if uploaded_file:
             with open(kmz_path, "rb") as f:
                 st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
 
+# =============================
+# Upload otomatis ke GitHub
+# =============================
 
-if st.button("🚀 Publish ke GitHub"):
-
-    token = st.secrets["GITHUB_TOKEN"]
-    repo = st.secrets["GITHUB_REPO"]
-    branch = st.secrets["GITHUB_BRANCH"]
-
-    import os
-
-if not os.path.exists(kmz_path):
-    st.error("Silakan Generate KMZ terlebih dahulu.")
-    st.stop()
+token = st.secrets["GITHUB_TOKEN"]
+repo = st.secrets["GITHUB_REPO"]
+branch = st.secrets["GITHUB_BRANCH"]
 
 with open(kmz_path, "rb") as file:
     content = base64.b64encode(file.read()).decode()
 
-    url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
+url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
 
-    headers = {
-        "Authorization": f"Bearer {token}"
-    }
+headers = {
+    "Authorization": f"Bearer {token}",
+    "Accept": "application/vnd.github+json"
+}
 
-    get = requests.get(url, headers=headers)
+get = requests.get(url, headers=headers)
 
-    sha = None
+sha = None
 
-    if get.status_code == 200:
-        sha = get.json()["sha"]
+if get.status_code == 200:
+    sha = get.json()["sha"]
 
-    payload = {
-        "message": "Update ODP KMZ",
-        "content": content,
-        "branch": branch
-    }
+payload = {
+    "message": f"Update KMZ {today}",
+    "content": content,
+    "branch": branch
+}
 
-    if sha:
-        payload["sha"] = sha
+if sha:
+    payload["sha"] = sha
 
-    response = requests.put(
-        url,
-        headers=headers,
-        json=payload
-    )
+response = requests.put(
+    url,
+    headers=headers,
+    json=payload
+)
 
-    if response.status_code in [200,201]:
-        st.success("✅ Berhasil upload ke GitHub!")
-    else:
-        st.error(response.text)
+if response.status_code in [200,201]:
+    st.success("🚀 KMZ berhasil diupload ke GitHub!")
+else:
+    st.error(response.text)
+
+
+
