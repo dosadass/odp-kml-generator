@@ -216,6 +216,13 @@ if uploaded_file:
             token = st.secrets["GITHUB_TOKEN"]
             repo = st.secrets["GITHUB_REPO"]
             branch = st.secrets["GITHUB_BRANCH"]
+            
+            st.write("Token length:", len(token))
+            st.write("Token prefix:", token[:15])
+            st.write("Token suffix:", token[-8:])
+            
+            st.write("Repo:", repo)
+            st.write("Branch:", branch)
 
             with open(kmz_path, "rb") as file:
                 content = base64.b64encode(file.read()).decode()
