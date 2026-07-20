@@ -140,7 +140,7 @@ if uploaded_file:
     else:
         st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
-        if st.button("🚀 Generate + Publish"):
+        if st.button("Generate + Publish"):
             kml = simplekml.Kml(name=f"Update {today}")
             total_point = 0
             skipped_point = 0
@@ -253,7 +253,7 @@ if uploaded_file:
             )
             
             if response.status_code in [200,201]:
-                st.success("✅ Publish berhasil!")
+                st.success("✔️ Publish berhasil!")
 
                 st.markdown(f"""
                 ### Informasi Publish
