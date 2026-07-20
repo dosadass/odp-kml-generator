@@ -256,11 +256,11 @@ if uploaded_file:
                 st.success("✅ Publish berhasil!")
 
                 st.markdown(f"""
-                ### 📊 Informasi Publish
+                ### Informasi Publish
                 
-                - 📅 **Update** : {today}
-                - 📍 **Total ODP** : **{total_point}**
-                - ☁️ **Status** : GitHub berhasil diperbarui.
+                - **Update** : {today}
+                - **Total ODP** : **{total_point}**
+                - **Status** : GitHub berhasil diperbarui.
                 """)
             else:
                 st.write(response.status_code)
