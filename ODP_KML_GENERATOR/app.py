@@ -258,9 +258,9 @@ if uploaded_file:
                 st.markdown(f"""
                 ### Informasi Publish
                 
-                - 📅 **Update** : {today}
+                - 📅 **Update**    : {today}
                 - 📍 **Total ODP** : **{total_point}**
-                - ☁️ **Status** : GitHub berhasil diperbarui.
+                - ☁️ **Status**    : GitHub berhasil diperbarui.
                 """)
             else:
                 st.write(response.status_code)
