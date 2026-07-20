@@ -113,6 +113,9 @@ def find_coordinate_column(df):
                         pass
     return None
 
+kml_path = "ODP_Master.kml"
+kmz_path = "ODP_Master.kmz"
+
 if uploaded_file:
     df = read_excel_auto_header(uploaded_file)
 
@@ -226,8 +229,14 @@ if st.button("🚀 Publish ke GitHub"):
     repo = st.secrets["GITHUB_REPO"]
     branch = st.secrets["GITHUB_BRANCH"]
 
-    with open(kmz_path, "rb") as file:
-        content = base64.b64encode(file.read()).decode()
+    import os
+
+if not os.path.exists(kmz_path):
+    st.error("Silakan Generate KMZ terlebih dahulu.")
+    st.stop()
+
+with open(kmz_path, "rb") as file:
+    content = base64.b64encode(file.read()).decode()
 
     url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
 
