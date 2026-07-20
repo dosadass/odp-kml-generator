@@ -6,7 +6,9 @@ import zipfile
 from datetime import datetime
 import requests
 import base64
-import os
+
+
+today = datetime.now().strftime("%d %b %Y")
 
 st.set_page_config(
     page_title="Validasi ODP Tools",
@@ -139,8 +141,6 @@ if uploaded_file:
         st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
         if st.button("🚀 Generate + Publish"):
-            today = datetime.now().strftime("%d %b %Y")
-
             kml = simplekml.Kml(name=f"Update {today}")
             total_point = 0
             skipped_point = 0
@@ -207,13 +207,52 @@ if uploaded_file:
                         pnt.style.iconstyle.scale = 1.2
                         total_point += 1
 
-            kml_path = "ODP_Master.kml"
-            kmz_path = "ODP_Master.kmz"
 
             kml.save(kml_path)
 
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
+
+            token = st.secrets["GITHUB_TOKEN"]
+            repo = st.secrets["GITHUB_REPO"]
+            branch = st.secrets["GITHUB_BRANCH"]
+
+            with open(kmz_path, "rb") as file:
+                content = base64.b64encode(file.read()).decode()
+            
+            url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
+            
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/vnd.github+json"
+            }
+            
+            get = requests.get(url, headers=headers)
+            
+            sha = None
+            
+            if get.status_code == 200:
+                sha = get.json()["sha"]
+            
+            payload = {
+                "message": f"Update KMZ {today}",
+                "content": content,
+                "branch": branch
+            }
+            
+            if sha:
+                payload["sha"] = sha
+            
+            response = requests.put(
+                url,
+                headers=headers,
+                json=payload
+            )
+            
+            if response.status_code in [200,201]:
+                st.success("🚀 KMZ berhasil diupload ke GitHub!")
+            else:
+                st.error(response.text)
 
             st.success(f"File berhasil dibuat! Total titik: {total_point}, dilewati: {skipped_point}")
 
@@ -223,50 +262,9 @@ if uploaded_file:
             with open(kmz_path, "rb") as f:
                 st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
 
-# =============================
-# Upload otomatis ke GitHub
-# =============================
+        
 
-token = st.secrets["GITHUB_TOKEN"]
-repo = st.secrets["GITHUB_REPO"]
-branch = st.secrets["GITHUB_BRANCH"]
 
-with open(kmz_path, "rb") as file:
-    content = base64.b64encode(file.read()).decode()
-
-url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
-
-headers = {
-    "Authorization": f"Bearer {token}",
-    "Accept": "application/vnd.github+json"
-}
-
-get = requests.get(url, headers=headers)
-
-sha = None
-
-if get.status_code == 200:
-    sha = get.json()["sha"]
-
-payload = {
-    "message": f"Update KMZ {today}",
-    "content": content,
-    "branch": branch
-}
-
-if sha:
-    payload["sha"] = sha
-
-response = requests.put(
-    url,
-    headers=headers,
-    json=payload
-)
-
-if response.status_code in [200,201]:
-    st.success("🚀 KMZ berhasil diupload ke GitHub!")
-else:
-    st.error(response.text)
 
 
 
