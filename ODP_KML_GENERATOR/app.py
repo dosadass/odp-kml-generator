@@ -78,7 +78,7 @@ st.markdown("""
 
 st.markdown('<div class="info-card">', unsafe_allow_html=True)
 uploaded_file = st.file_uploader("Upload file Excel ODP terbaru", type=["xlsx", "xls"])
-st.caption("Pastikan file memiliki kolom Code, Region, District Name, Capacity, Active, dan Coordinate.")
+st.caption("Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate.")
 st.markdown('</div>', unsafe_allow_html=True)
 
 required_cols = [
