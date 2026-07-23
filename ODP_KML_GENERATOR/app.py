@@ -173,55 +173,7 @@ if uploaded_file:
 
                         status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
                         header_color = "#E53935" if status == "FULL" else "#4285F4"
-table_rows = ""
-
-for col in df.columns:
-
-    if col == coord_col:
-        continue
-
-    value = row[col]
-
-    if pd.isna(value):
-        value = "-"
-
-    table_rows += f"""
-<tr>
-    <td><b>{col}</b></td>
-    <td>{value}</td>
-</tr>
-"""
-                        desc = f"""
-<div style="font-family:Arial; font-size:12px;">
-<table border="1" cellpadding="5" cellspacing="0" width="300">
-
-<tr>
-    <th colspan="2" bgcolor="{header_color}">
-        <font color="white">{point_name}</font>
-    </th>
-</tr>
-
-{table_rows}
-
-<tr>
-    <td><b>Status</b></td>
-    <td>{status}</td>
-</tr>
-
-<tr>
-    <td><b>Lat</b></td>
-    <td>{lat}</td>
-</tr>
-
-<tr>
-    <td><b>Long</b></td>
-    <td>{lon}</td>
-</tr>
-
-</table>
-</div>
-"""
-
+                        
                         promo = ""
                         
                         if pd.notna(row["Promo"]):
@@ -231,6 +183,56 @@ for col in df.columns:
                             point_name = f"{row['Code']} - {promo}"
                         else:
                             point_name = str(row["Code"])
+                        table_rows = ""
+
+    for col in df.columns:
+
+        if col == coord_col:
+            continue
+    
+        value = row[col]
+    
+        if pd.isna(value):
+            value = "-"
+    
+        table_rows += f"""
+    <tr>
+        <td><b>{col}</b></td>
+        <td>{value}</td>
+    </tr>
+    """
+                        desc = f"""
+                        <div style="font-family:Arial; font-size:12px;">
+                        <table border="1" cellpadding="5" cellspacing="0" width="300">
+                        
+                        <tr>
+                            <th colspan="2" bgcolor="{header_color}">
+                                <font color="white">{point_name}</font>
+                            </th>
+                        </tr>
+                        
+                        {table_rows}
+                        
+                        <tr>
+                            <td><b>Status</b></td>
+                            <td>{status}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><b>Lat</b></td>
+                            <td>{lat}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td><b>Long</b></td>
+                            <td>{lon}</td>
+                        </tr>
+                        
+                        </table>
+                        </div>
+                        """
+
+                        
                         
                         pnt = district_folder.newpoint(
                             name=point_name,
