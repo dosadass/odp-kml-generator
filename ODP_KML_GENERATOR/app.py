@@ -82,8 +82,15 @@ st.caption("Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, Dis
 st.markdown('</div>', unsafe_allow_html=True)
 
 required_cols = [
-    "Code", "Kelurahan", "Kecamatan", "Region", "District Name",
-    "Ms. Partner Name", "Capacity", "Active"
+    "Code",
+    "Promo",
+    "Kelurahan",
+    "Kecamatan",
+    "Region",
+    "District Name",
+    "Ms. Partner Name",
+    "Capacity",
+    "Active"
 ]
 
 IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
@@ -190,8 +197,18 @@ if uploaded_file:
 </div>
 """
 
+                        promo = ""
+                        
+                        if pd.notna(row["Promo"]):
+                            promo = str(row["Promo"]).strip()
+                        
+                        if promo:
+                            point_name = f"{row['Code']} - {promo}"
+                        else:
+                            point_name = str(row["Code"])
+                        
                         pnt = district_folder.newpoint(
-                            name=str(row["Code"]),
+                            name=point_name,
                             coords=[(lon, lat)]
                         )
 
