@@ -185,23 +185,23 @@ if uploaded_file:
                             point_name = str(row["Code"])
                         table_rows = ""
 
-    for col in df.columns:
-
-        if col == coord_col:
-            continue
-    
-        value = row[col]
-    
-        if pd.isna(value):
-            value = "-"
-    
-        table_rows += f"""
-    <tr>
-        <td><b>{col}</b></td>
-        <td>{value}</td>
-    </tr>
-    """
-                        desc = f"""
+                        for col in df.columns:
+                    
+                            if col == coord_col:
+                                continue
+                        
+                            value = row[col]
+                        
+                            if pd.isna(value):
+                                value = "-"
+                        
+                            table_rows += f"""
+        <tr>
+            <td><b>{col}</b></td>
+            <td>{value}</td>
+        </tr>
+        """
+                            desc = f"""
                         <div style="font-family:Arial; font-size:12px;">
                         <table border="1" cellpadding="5" cellspacing="0" width="300">
                         
