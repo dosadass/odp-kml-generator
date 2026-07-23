@@ -173,26 +173,51 @@ if uploaded_file:
 
                         status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
                         header_color = "#E53935" if status == "FULL" else "#4285F4"
+table_rows = ""
 
+for col in df.columns:
+
+    if col == coord_col:
+        continue
+
+    value = row[col]
+
+    if pd.isna(value):
+        value = "-"
+
+    table_rows += f"""
+<tr>
+    <td><b>{col}</b></td>
+    <td>{value}</td>
+</tr>
+"""
                         desc = f"""
 <div style="font-family:Arial; font-size:12px;">
 <table border="1" cellpadding="5" cellspacing="0" width="300">
+
 <tr>
     <th colspan="2" bgcolor="{header_color}">
-        <font color="white">{row['Code']}</font>
+        <font color="white">{point_name}</font>
     </th>
 </tr>
-<tr><td><b>Code</b></td><td>{row['Code']}</td></tr>
-<tr><td><b>Kelurahan</b></td><td>{row['Kelurahan']}</td></tr>
-<tr><td><b>Kecamatan</b></td><td>{row['Kecamatan']}</td></tr>
-<tr><td><b>Region</b></td><td>{row['Region']}</td></tr>
-<tr><td><b>District</b></td><td>{row['District Name']}</td></tr>
-<tr><td><b>Partner</b></td><td>{row['Ms. Partner Name']}</td></tr>
-<tr><td><b>Capacity</b></td><td>{capacity}</td></tr>
-<tr><td><b>Active</b></td><td>{active}</td></tr>
-<tr><td><b>Status</b></td><td>{status}</td></tr>
-<tr><td><b>Lat</b></td><td>{lat}</td></tr>
-<tr><td><b>Long</b></td><td>{lon}</td></tr>
+
+{table_rows}
+
+<tr>
+    <td><b>Status</b></td>
+    <td>{status}</td>
+</tr>
+
+<tr>
+    <td><b>Lat</b></td>
+    <td>{lat}</td>
+</tr>
+
+<tr>
+    <td><b>Long</b></td>
+    <td>{lon}</td>
+</tr>
+
 </table>
 </div>
 """
