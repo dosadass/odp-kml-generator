@@ -458,34 +458,46 @@ if uploaded_file:
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
                 
-            st.success("Generate selesai!")
+            left,right = st.columns([1.05,1])
+        
+            with left:
+        
+                st.subheader("📊 2. Hasil Generate")
+        
+                st.success("Generate selesai!")
+        
+                c1,c2,c3 = st.columns(3)
+                c1.metric("Total ODP", stats["total"])
+                c2.metric("Skipped", stats["skipped"])
+                c3.metric("Status","Success")
+                    
+                st.success(
+                    f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}"
+                )
             
-            c1,c2,c3 = st.columns(3)
-            c1.metric("Total ODP", stats["total"])
-            c2.metric("Skipped", stats["skipped"])
-            c3.metric("Status","Success")
+                col1,col2 = st.columns(2)
+    
+                with col1:
+                    with open(kml_path,"rb") as f:
+                        st.download_button(
+                            "⬇ Download KML",
+                            f,
+                            file_name="ODP_Master.kml"
+                        )
                 
-            st.success(f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}")
+                with col2:
+                    with open(kmz_path,"rb") as f:
+                        st.download_button(
+                            "⬇ Download KMZ",
+                            f,
+                            file_name="ODP_Master.kmz"
+                        )
 
-            col1,col2 = st.columns(2)
+        with right:
 
-            with col1:
-                with open(kml_path,"rb") as f:
-                    st.download_button(
-                        "⬇ Download KML",
-                        f,
-                        file_name="ODP_Master.kml"
-                    )
-            
-            with col2:
-                with open(kmz_path,"rb") as f:
-                    st.download_button(
-                        "⬇ Download KMZ",
-                        f,
-                        file_name="ODP_Master.kmz"
-                    )
+            st.subheader("☁️ 3. Informasi Publish")
 
-        if publish:
+            if publish:
             token = st.secrets["GITHUB_TOKEN"]
             repo = st.secrets["GITHUB_REPO"]
             branch = st.secrets["GITHUB_BRANCH"]
