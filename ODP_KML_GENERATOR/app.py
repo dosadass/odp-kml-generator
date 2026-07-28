@@ -121,13 +121,33 @@ font-size:14px;
     box-shadow:0 8px 20px rgba(37,99,235,.25);
 }
 
-.stButton > button:hover{
-    transform:translateY(-2px);
-    box-shadow:0 12px 24px rgba(37,99,235,.35);
+.stButton > button{
+
+width:100%;
+height:58px;
+
+border:none;
+border-radius:14px;
+
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+color:white;
+
+font-size:17px;
+font-weight:700;
+
+transition:.25s;
+
+box-shadow:0 8px 20px rgba(37,99,235,.25);
+
 }
 
-.stButton>button:hover{
-transform:translateY(-2px);
+.stButton > button:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 12px 28px rgba(37,99,235,.35);
+
 }
 
 hr{
@@ -162,9 +182,6 @@ uploaded_file = st.file_uploader(
     type=["xlsx", "xls"]
 )
 
-st.caption(
-"Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate."
-)
 st.caption("Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate.")
 st.markdown('</div>', unsafe_allow_html=True)
 
