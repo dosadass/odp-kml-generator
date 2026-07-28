@@ -150,31 +150,31 @@ if uploaded_file:
         index=folder_columns.index("District Name")+1 if "District Name" in folder_columns else 0
     )
 
-st.sidebar.markdown("---")
-
-preview = f"""
-📂 Preview
-
-{folder1}
-"""
-
-if folder2 != "Tidak dipisah":
-    preview += f"""
-└── {folder2}
+    st.sidebar.markdown("---")
+    
+    preview = f"""
+    📂 Preview
+    
+    {folder1}
+    """
+    
+    if folder2 != "Tidak dipisah":
+        preview += f"""
+    └── {folder2}
+        └── ODP
+    """
+    else:
+        preview += """
     └── ODP
-"""
-else:
-    preview += """
-└── ODP
-"""
-
-st.sidebar.info(preview)
-
-    st.write("Preview Data:")
-    st.dataframe(df.head())
-
-    st.write("Nama Kolom Terdeteksi:")
-    st.write(list(df.columns))
+    """
+    
+    st.sidebar.info(preview)
+    
+        st.write("Preview Data:")
+        st.dataframe(df.head())
+    
+        st.write("Nama Kolom Terdeteksi:")
+        st.write(list(df.columns))
 
     
 
