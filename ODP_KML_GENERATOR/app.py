@@ -129,7 +129,31 @@ margin:25px 0;
 </style>
 """,unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("Upload file Excel ODP terbaru", type=["xlsx", "xls"])
+st.markdown("""
+<div class="hero">
+
+<div class="badge">
+📍 DISTRICT MANAGEMENT
+</div>
+
+<h1>ODP KML / KMZ Generator</h1>
+
+<p>
+Internal tools untuk mengubah data Excel menjadi file KML / KMZ
+siap digunakan di Google Earth.
+</p>
+
+</div>
+""", unsafe_allow_html=True)
+
+
+st.markdown("### 📤 1. Upload File Excel ODP")
+
+uploaded_file = st.file_uploader(
+    "",
+    type=["xlsx","xls"],
+    label_visibility="collapsed"
+)
 st.caption("Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate.")
 st.markdown('</div>', unsafe_allow_html=True)
 
