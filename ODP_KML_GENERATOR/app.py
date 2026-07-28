@@ -126,6 +126,30 @@ def find_coordinate_column(df):
 kml_path = "ODP_Master.kml"
 kmz_path = "ODP_Master.kmz"
 
+st.sidebar.header("📂 Struktur Folder")
+
+if not uploaded_file:
+
+    st.sidebar.info("Upload file Excel terlebih dahulu.")
+
+    st.sidebar.selectbox(
+        "Folder Level 1",
+        ["Upload Excel dulu"],
+        disabled=True
+    )
+
+    st.sidebar.selectbox(
+        "Folder Level 2",
+        ["Upload Excel dulu"],
+        disabled=True
+    )
+
+    st.sidebar.selectbox(
+        "Folder Level 3",
+        ["Upload Excel dulu"],
+        disabled=True
+    )
+
 folder_columns = [c for c in df.columns if c != coord_col]
 
     folder1 = st.sidebar.selectbox(
@@ -159,8 +183,6 @@ folder_columns = [c for c in df.columns if c != coord_col]
     preview += "\n        └── ODP"
     
     st.sidebar.code(preview)
-
-st.sidebar.header("📂 Struktur Folder")
 
 if not uploaded_file:
     st.sidebar.info("Upload file Excel terlebih dahulu.")
