@@ -253,36 +253,36 @@ if uploaded_file:
                             <td>{value}</td>
                         </tr>
                         """
-                desc = f"""
-                <div style="font-family:Arial; font-size:12px;">
-                <table border="1" cellpadding="5" cellspacing="0" width="300">
-                
-                <tr>
-                    <th colspan="2" bgcolor="{header_color}">
-                        <font color="white">{point_name}</font>
-                    </th>
-                </tr>
-                
-                {table_rows}
-                
-                <tr>
-                    <td><b>Status</b></td>
-                    <td>{status}</td>
-                </tr>
-                
-                <tr>
-                    <td><b>Lat</b></td>
-                    <td>{lat}</td>
-                </tr>
-                
-                <tr>
-                    <td><b>Long</b></td>
-                    <td>{lon}</td>
-                </tr>
-                
-                </table>
-                </div>
-                """
+                    desc = f"""
+                    <div style="font-family:Arial; font-size:12px;">
+                    <table border="1" cellpadding="5" cellspacing="0" width="300">
+                    
+                    <tr>
+                        <th colspan="2" bgcolor="{header_color}">
+                            <font color="white">{point_name}</font>
+                        </th>
+                    </tr>
+                    
+                    {table_rows}
+                    
+                    <tr>
+                        <td><b>Status</b></td>
+                        <td>{status}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>Lat</b></td>
+                        <td>{lat}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>Long</b></td>
+                        <td>{lon}</td>
+                    </tr>
+                    
+                    </table>
+                    </div>
+                    """
 
                         
                         
