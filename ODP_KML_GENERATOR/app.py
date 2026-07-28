@@ -133,6 +133,9 @@ kmz_path = "ODP_Master.kmz"
 if uploaded_file:
     df = read_excel_auto_header(uploaded_file)
 
+    coord_col = find_coordinate_column(df)
+
+
     st.sidebar.header("📂 Struktur Folder")
 
     folder_columns = [c for c in df.columns if c != coord_col]
@@ -167,7 +170,7 @@ if uploaded_file:
     └── ODP
     """
     
-    st.sidebar.info(preview)
+        st.sidebar.info(preview)
     
         st.write("Preview Data:")
         st.dataframe(df.head())
@@ -216,30 +219,30 @@ if uploaded_file:
             
                             # isi pembuatan point tetap
                             try:
-                                        coord = str(row[coord_col]).strip()
-                                        lat, lon = coord.split(",")
-                                        lat = float(lat.strip())
-                                        lon = float(lon.strip())
+                                coord = str(row[coord_col]).strip()
+                                lat, lon = coord.split(",")
+                                lat = float(lat.strip())
+                                lon = float(lon.strip())
                             except:
-                                        skipped_point += 1
-                                        continue
+                                skipped_point += 1
+                                continue
             
-                                    capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
-                                    active = int(row["Active"]) if pd.notna(row["Active"]) else 0
+                            capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
+                            active = int(row["Active"]) if pd.notna(row["Active"]) else 0
             
-                                    status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
-                                    header_color = "#E53935" if status == "FULL" else "#4285F4"
+                            status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
+                            header_color = "#E53935" if status == "FULL" else "#4285F4"
                                     
-                                    promo = ""
+                            promo = ""
                                     
-                                    if pd.notna(row["Promo"]):
-                                        promo = str(row["Promo"]).strip()
+                                if pd.notna(row["Promo"]):
+                                    promo = str(row["Promo"]).strip()
                                     
-                                    if promo:
-                                        point_name = f"{row['Code']} - {promo}"
-                                    else:
-                                        point_name = str(row["Code"])
-                                    table_rows = ""
+                                if promo:
+                                    point_name = f"{row['Code']} - {promo}"
+                                else:
+                                    point_name = str(row["Code"])
+                                table_rows = ""
             
                                     for col in df.columns:
                                 
