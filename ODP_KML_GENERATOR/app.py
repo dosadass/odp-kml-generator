@@ -183,7 +183,6 @@ st.markdown("""
 </style>
 
 st.markdown("""
-
 <div class="hero">
 
 <div class="badge">
@@ -198,8 +197,7 @@ siap digunakan pada Google Earth.
 </p>
 
 </div>
-
-""",unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 st.markdown('<div class="info-card">', unsafe_allow_html=True)
 uploaded_file = st.file_uploader("Upload file Excel ODP terbaru", type=["xlsx", "xls"])
