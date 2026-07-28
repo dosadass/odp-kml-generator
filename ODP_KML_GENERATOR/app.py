@@ -204,7 +204,16 @@ if uploaded_file:
     else:
         st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
-        if st.button("Generate + Publish"):
+        col1, col2 = st.columns(2)
+
+        with col1:
+            generate = st.button("Generate")
+        
+        with col2:
+            publish = st.button("Publish")
+        
+        if generate or publish:
+        
             kml = simplekml.Kml(name=f"Update {today}")
             stats = {
                 "total": 0,
@@ -212,14 +221,13 @@ if uploaded_file:
             }
 
             def create_point(target_folder, row):
-                global total_point, skipped_point
                 try:
                    coord = str(row[coord_col]).strip()
                    lat, lon = coord.split(",")
                    lat = float(lat.strip())
                    lon = float(lon.strip())
                 except:
-                   skipped_point += 1
+                   stats["skipped"] += 1
                    return
 
                 capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
@@ -255,56 +263,56 @@ if uploaded_file:
                         <td>{value}</td>
                     </tr>
                     """
-                    desc = f"""
-                    <div style="font-family:Arial; font-size:12px;">
-                    <table border="1" cellpadding="5" cellspacing="0" width="300">
-                    
-                    <tr>
-                        <th colspan="2" bgcolor="{header_color}">
-                            <font color="white">{point_name}</font>
-                        </th>
-                    </tr>
-                    
-                    {table_rows}
-                    
-                    <tr>
-                        <td><b>Status</b></td>
-                        <td>{status}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td><b>Lat</b></td>
-                        <td>{lat}</td>
-                    </tr>
-                    
-                    <tr>
-                        <td><b>Long</b></td>
-                        <td>{lon}</td>
-                    </tr>
-                    
-                    </table>
-                    </div>
-                    """
-
-                        
-                        
-            pnt = target_folder.newpoint(
-                name=point_name,
-                coords=[(lon, lat)]
-            )
-
-            pnt.description = ""
-            pnt.snippet = Snippet("", maxlines=0)
-            pnt.style.balloonstyle.text = desc
-
-            if status == "FULL":
-                pnt.style.iconstyle.icon.href = FULL_ICON
-            else:
-                pnt.style.iconstyle.icon.href = IDLE_ICON
-
-            pnt.style.iconstyle.scale = 1.2
-            total_point += 1
-
+                desc = f"""
+                <div style="font-family:Arial; font-size:12px;">
+                <table border="1" cellpadding="5" cellspacing="0" width="300">
+                
+                <tr>
+                    <th colspan="2" bgcolor="{header_color}">
+                        <font color="white">{point_name}</font>
+                    </th>
+                </tr>
+                
+                {table_rows}
+                
+                <tr>
+                    <td><b>Status</b></td>
+                    <td>{status}</td>
+                </tr>
+                
+                <tr>
+                    <td><b>Lat</b></td>
+                    <td>{lat}</td>
+                </tr>
+                
+                <tr>
+                    <td><b>Long</b></td>
+                    <td>{lon}</td>
+                </tr>
+                
+                </table>
+                </div>
+                """
+    
+                            
+                            
+                pnt = target_folder.newpoint(
+                    name=point_name,
+                    coords=[(lon, lat)]
+                )
+        
+                pnt.description = ""
+                pnt.snippet = Snippet("", maxlines=0)
+                pnt.style.balloonstyle.text = desc
+        
+                if status == "FULL":
+                    pnt.style.iconstyle.icon.href = FULL_ICON
+                else:
+                    pnt.style.iconstyle.icon.href = IDLE_ICON
+    
+                pnt.style.iconstyle.scale = 1.2
+                stats["total"] += 1
+        
             for value1, df1 in df.groupby(folder1):
 
                 folder_a = kml.newfolder(name=str(value1))
@@ -349,6 +357,7 @@ if uploaded_file:
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
 
+        if publish:
             token = st.secrets["GITHUB_TOKEN"]
             repo = st.secrets["GITHUB_REPO"]
             branch = st.secrets["GITHUB_BRANCH"]
@@ -395,14 +404,14 @@ if uploaded_file:
                 ### Informasi Publish
                 
                 - 📅 **Update**    : {today}
-                - 📍 **Total ODP** : **{total_point}**
+                - 📍 **Total ODP** : {stats["total"]}
                 - ☁️ **Status**    : GitHub berhasil diperbarui.
                 """)
             else:
                 st.write(response.status_code)
                 st.write(response.json())
 
-            st.success(f"File berhasil dibuat! Total titik: {total_point}, dilewati: {skipped_point}")
+            st.success(f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}")
 
             with open(kml_path, "rb") as f:
                 st.download_button("Download KML", f, file_name="ODP_Master.kml")
