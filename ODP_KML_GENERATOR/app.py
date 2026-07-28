@@ -349,13 +349,21 @@ if uploaded_file:
                             
                                     create_point(folder_c, row)
 
-                        
-
 
             kml.save(kml_path)
-
+            
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
+                
+            st.success("Generate selesai!")
+                
+            st.success(f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}")
+
+            with open(kml_path, "rb") as f:
+                st.download_button("Download KML", f, file_name="ODP_Master.kml")
+
+            with open(kmz_path, "rb") as f:
+                st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
 
         if publish:
             token = st.secrets["GITHUB_TOKEN"]
@@ -411,13 +419,6 @@ if uploaded_file:
                 st.write(response.status_code)
                 st.write(response.json())
 
-            st.success(f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}")
-
-            with open(kml_path, "rb") as f:
-                st.download_button("Download KML", f, file_name="ODP_Master.kml")
-
-            with open(kmz_path, "rb") as f:
-                st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
 
         
 
