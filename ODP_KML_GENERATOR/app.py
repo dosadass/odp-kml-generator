@@ -366,6 +366,9 @@ if uploaded_file:
                 st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
 
         if publish:
+            st.write(folder1)
+            st.write(folder2)
+            st.write(folder3)
             token = st.secrets["GITHUB_TOKEN"]
             repo = st.secrets["GITHUB_REPO"]
             branch = st.secrets["GITHUB_BRANCH"]
