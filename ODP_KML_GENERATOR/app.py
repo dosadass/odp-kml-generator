@@ -407,6 +407,8 @@ if uploaded_file:
                 headers=headers,
                 json=payload
             )
+            st.write(response.status_code)
+            st.write(response.json())
             
             if response.status_code in [200,201]:
                 st.success("✔️ Publish berhasil!")
