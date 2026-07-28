@@ -493,7 +493,7 @@ if uploaded_file:
                             file_name="ODP_Master.kmz"
                         )
 
-        with right:
+    with right:
 
             st.subheader("☁️ 3. Informasi Publish")
 
