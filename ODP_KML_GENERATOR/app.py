@@ -81,6 +81,9 @@ uploaded_file = st.file_uploader("Upload file Excel ODP terbaru", type=["xlsx", 
 st.caption("Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate.")
 st.markdown('</div>', unsafe_allow_html=True)
 
+folder1 = None
+folder2 = None
+
 required_cols = [
     "Code",
     "Promo",
@@ -129,6 +132,42 @@ kmz_path = "ODP_Master.kmz"
 if uploaded_file:
     df = read_excel_auto_header(uploaded_file)
 
+    st.sidebar.header("📂 Struktur Folder")
+
+folder_columns = [c for c in df.columns if c != coord_col]
+
+folder1 = st.sidebar.selectbox(
+    "Folder Level 1",
+    folder_columns,
+    index=folder_columns.index("Region") if "Region" in folder_columns else 0
+)
+
+folder2 = st.sidebar.selectbox(
+    "Folder Level 2",
+    ["Tidak dipisah"] + folder_columns,
+    index=folder_columns.index("District Name")+1 if "District Name" in folder_columns else 0
+)
+
+st.sidebar.markdown("---")
+
+preview = f"""
+📂 Preview
+
+{folder1}
+"""
+
+if folder2 != "Tidak dipisah":
+    preview += f"""
+└── {folder2}
+    └── ODP
+"""
+else:
+    preview += """
+└── ODP
+"""
+
+st.sidebar.info(preview)
+
     st.write("Preview Data:")
     st.dataframe(df.head())
 
@@ -152,13 +191,29 @@ if uploaded_file:
             total_point = 0
             skipped_point = 0
 
-            for region, region_df in df.groupby("Region"):
-                region_folder = kml.newfolder(name=str(region))
+                    for value1, df1 in df.groupby(folder1):
+        
+            folder_a = kml.newfolder(name=str(value1))
+        
+            if folder2 == "Tidak dipisah":
+        
+                for _, row in df1.iterrows():
+        
+                    target_folder = folder_a
+        
+                    # isi pembuatan point tetap
+        
+            else:
+        
+                for value2, df2 in df1.groupby(folder2):
+        
+                    folder_b = folder_a.newfolder(name=str(value2))
+        
+                    for _, row in df2.iterrows():
+        
+                        target_folder = folder_b
 
-                for district, district_df in region_df.groupby("District Name"):
-                    district_folder = region_folder.newfolder(name=str(district))
-
-                    for _, row in district_df.iterrows():
+                # isi pembuatan point tetap
                         try:
                             coord = str(row[coord_col]).strip()
                             lat, lon = coord.split(",")
@@ -234,7 +289,7 @@ if uploaded_file:
 
                         
                         
-                        pnt = district_folder.newpoint(
+                        pnt = target_folder.newpoint(
                             name=point_name,
                             coords=[(lon, lat)]
                         )
