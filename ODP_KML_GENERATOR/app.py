@@ -150,20 +150,29 @@ if not uploaded_file:
         disabled=True
     )
 
-folder_columns = [c for c in df.columns if c != coord_col]
+
+if not uploaded_file:
+    st.sidebar.info("Upload file Excel terlebih dahulu.")
+
+if uploaded_file:
+
+    df = read_excel_auto_header(uploaded_file)
+    coord_col = find_coordinate_column(df)
+
+    folder_columns = [c for c in df.columns if c != coord_col]
 
     folder1 = st.sidebar.selectbox(
         "Folder Level 1",
         folder_columns,
         index=folder_columns.index("Region") if "Region" in folder_columns else 0
     )
-
+    
     folder2 = st.sidebar.selectbox(
         "Folder Level 2",
         ["Tidak dipisah"] + folder_columns,
-        index=folder_columns.index("District Name") + 1 if "District Name" in folder_columns else 0
+        index=folder_columns.index("District Name")+1 if "District Name" in folder_columns else 0
     )
-
+    
     folder3 = st.sidebar.selectbox(
         "Folder Level 3",
         ["Tidak dipisah"] + folder_columns,
@@ -183,14 +192,6 @@ folder_columns = [c for c in df.columns if c != coord_col]
     preview += "\n        └── ODP"
     
     st.sidebar.code(preview)
-
-if not uploaded_file:
-    st.sidebar.info("Upload file Excel terlebih dahulu.")
-
-if uploaded_file:
-
-    df = read_excel_auto_header(uploaded_file)
-    coord_col = find_coordinate_column(df)
 
 
 
