@@ -184,14 +184,67 @@ st.markdown("""
 
 st.markdown("""
 <style>
-...
+
+.block-container{
+    padding-top:1.5rem;
+    max-width:1200px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#0f172a,#1e3a8a);
+    border-radius:22px;
+    padding:35px;
+    color:white;
+    margin-bottom:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+.badge{
+    display:inline-block;
+    background:rgba(255,255,255,.12);
+    padding:8px 15px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.hero h1{
+    margin:0;
+    font-size:38px;
+    font-weight:800;
+}
+
+.hero p{
+    margin-top:10px;
+    color:#dbeafe;
+}
+
+.info-card{
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    border:1px solid #e5e7eb;
+    margin-top:20px;
+}
+
 </style>
 
 <div class="hero">
-    <div class="badge">📍 DISTRICT MANAGEMENT</div>
-    <h1>ODP KML / KMZ Generator</h1>
-    <p>Internal tools...</p>
+
+<div class="badge">
+📍 DISTRICT MANAGEMENT
 </div>
+
+<h1>ODP KML / KMZ Generator</h1>
+
+<p>
+Internal tools untuk mengubah data Excel ODP menjadi file KML / KMZ siap pakai di Google Earth.
+</p>
+
+</div>
+
 """, unsafe_allow_html=True)
 
 st.markdown('<div class="info-card">', unsafe_allow_html=True)
