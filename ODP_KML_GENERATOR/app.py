@@ -520,20 +520,30 @@ if uploaded_file:
                 col1,col2 = st.columns(2)
     
                 with col1:
-                    with open(kml_path,"rb") as f:
-                        st.download_button(
-                            "⬇ Download KML",
-                            f,
-                            file_name="ODP_Master.kml"
-                        )
+                    with col1:
+
+                        st.markdown("### 📄 Download KML")
+                    
+                        with open(kml_path,"rb") as f:
+                            st.download_button(
+                                "ODP_Master.kml",
+                                f,
+                                file_name="ODP_Master.kml",
+                                use_container_width=True
+                            )
                 
                 with col2:
-                    with open(kmz_path,"rb") as f:
-                        st.download_button(
-                            "⬇ Download KMZ",
-                            f,
-                            file_name="ODP_Master.kmz"
-                        )
+                    with col2:
+
+                        st.markdown("### 📦 Download KMZ")
+                    
+                        with open(kmz_path,"rb") as f:
+                            st.download_button(
+                                "ODP_Master.kmz",
+                                f,
+                                file_name="ODP_Master.kmz",
+                                use_container_width=True
+                            )
 
             with right:
 
@@ -580,9 +590,19 @@ if uploaded_file:
                 )
             
             if response.status_code in [200,201]:
-                st.success("✔️ Publish berhasil!")
+                st.markdown(f"""
+                | Informasi | Nilai |
+                |-----------|-------|
+                | 📅 Update | {today} |
+                | 📍 Total ODP | {stats["total"]} |
+                | ☁️ Status | GitHub berhasil diperbarui |
+                | 🌿 Branch | {branch} |
+                | 📂 Repository | {repo} |
+                """)
 
-                st.subheader("📊 Informasi Publish")
+                st.markdown("""
+                ### ☁️ 3. Informasi Publish
+                """)
 
                 st.markdown(f"""
                 - 📅 **Update** : {today}
