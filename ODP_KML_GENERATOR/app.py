@@ -129,125 +129,6 @@ margin:25px 0;
 </style>
 """,unsafe_allow_html=True)
 
-st.markdown("""
-<style>
-.block-container {
-    padding-top: 2rem;
-    max-width: 1100px;
-}
-
-.main-title {
-    background: linear-gradient(135deg, #1e293b, #334155);
-    padding: 28px 34px;
-    border-radius: 18px;
-    color: white;
-    margin-bottom: 24px;
-    box-shadow: 0 8px 24px rgba(15,23,42,0.18);
-}
-
-.main-title h1 {
-    margin: 0;
-    font-size: 36px;
-    font-weight: 800;
-}
-
-.main-title p {
-    margin-top: 8px;
-    font-size: 15px;
-    color: #cbd5e1;
-}
-
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(8px);
-    color: white;
-    padding: 8px 14px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 18px;
-    border: 1px solid rgba(255,255,255,0.12);
-}
-
-.info-card {
-    background: #ffffff;
-    padding: 18px 22px;
-    border-radius: 14px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 14px rgba(15,23,42,0.08);
-    margin-bottom: 18px;
-}
-</style>
-
-st.markdown("""
-<style>
-
-.block-container{
-    padding-top:1.5rem;
-    max-width:1200px;
-}
-
-.hero{
-    background:linear-gradient(135deg,#0f172a,#1e3a8a);
-    border-radius:22px;
-    padding:35px;
-    color:white;
-    margin-bottom:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-}
-
-.badge{
-    display:inline-block;
-    background:rgba(255,255,255,.12);
-    padding:8px 15px;
-    border-radius:999px;
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:15px;
-}
-
-.hero h1{
-    margin:0;
-    font-size:38px;
-    font-weight:800;
-}
-
-.hero p{
-    margin-top:10px;
-    color:#dbeafe;
-}
-
-.info-card{
-    background:white;
-    padding:20px;
-    border-radius:18px;
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
-    border:1px solid #e5e7eb;
-    margin-top:20px;
-}
-
-</style>
-
-<div class="hero">
-
-<div class="badge">
-📍 DISTRICT MANAGEMENT
-</div>
-
-<h1>ODP KML / KMZ Generator</h1>
-
-<p>
-Internal tools untuk mengubah data Excel ODP menjadi file KML / KMZ siap pakai di Google Earth.
-</p>
-
-</div>
-
-""", unsafe_allow_html=True)
-
-st.markdown('<div class="info-card">', unsafe_allow_html=True)
 uploaded_file = st.file_uploader("Upload file Excel ODP terbaru", type=["xlsx", "xls"])
 st.caption("Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate.")
 st.markdown('</div>', unsafe_allow_html=True)
@@ -609,12 +490,12 @@ if uploaded_file:
             if response.status_code in [200,201]:
                 st.success("✔️ Publish berhasil!")
 
-                st.markdown(f"""
                 st.subheader("📊 Informasi Publish")
-                
-                - 📅 **Update**    : {today}
+
+                st.markdown(f"""
+                - 📅 **Update** : {today}
                 - 📍 **Total ODP** : {stats["total"]}
-                - ☁️ **Status**    : GitHub berhasil diperbarui.
+                - ☁️ **Status** : GitHub berhasil diperbarui.
                 """)
             else:
                 st.write(response.status_code)
