@@ -565,9 +565,9 @@ if uploaded_file:
                                 use_container_width=True
                             )
 
-            with right:
+with right:
 
-                st.subheader("☁️ 3. Informasi Publish")
+    st.subheader("☁️ 3. Informasi Publish")
     
             if publish:
                 token = st.secrets["GITHUB_TOKEN"]
