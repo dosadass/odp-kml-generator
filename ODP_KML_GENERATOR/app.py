@@ -210,7 +210,7 @@ if uploaded_file:
             skipped_point = 0
 
             def create_point(target_folder, row):
-                nonlocal total_point, skipped_point
+                    global total_point, skipped_point
                 try:
                    coord = str(row[coord_col]).strip()
                    lat, lon = coord.split(",")
