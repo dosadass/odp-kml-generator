@@ -170,6 +170,41 @@ if uploaded_file:
     folder2 = st.sidebar.selectbox(
         "Folder Level 2",
         ["Tidak dipisah"] + folder_columns,
+        index=folder_columns.index("District Name") + 1 if "District Name" in folder_columns else 0
+    )
+    
+    folder3 = st.sidebar.selectbox(
+        "Folder Level 3",
+        ["Tidak dipisah"] + folder_columns,
+        index=0
+    )
+
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("Preview Struktur")
+    
+    preview = folder1
+    
+    if folder2 != "Tidak dipisah":
+        preview += f"\n└── {folder2}"
+    
+    if folder3 != "Tidak dipisah":
+        preview += f"\n    └── {folder3}"
+    
+    preview += "\n        └── ODP"
+    
+    st.sidebar.code(preview)
+
+    folder_columns = [c for c in df.columns if c != coord_col]
+
+    folder1 = st.sidebar.selectbox(
+        "Folder Level 1",
+        folder_columns,
+        index=folder_columns.index("Region") if "Region" in folder_columns else 0
+    )
+    
+    folder2 = st.sidebar.selectbox(
+        "Folder Level 2",
+        ["Tidak dipisah"] + folder_columns,
         index=folder_columns.index("District Name")+1 if "District Name" in folder_columns else 0
     )
     
@@ -292,7 +327,7 @@ if uploaded_file:
 
                         
                         
-                        pnt = district_folder.newpoint(
+                        pnt = target_folder.newpoint(
                             name=point_name,
                             coords=[(lon, lat)]
                         )
