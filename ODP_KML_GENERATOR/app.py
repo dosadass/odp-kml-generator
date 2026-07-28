@@ -151,9 +151,6 @@ if not uploaded_file:
     )
 
 
-if not uploaded_file:
-    st.sidebar.info("Upload file Excel terlebih dahulu.")
-
 if uploaded_file:
 
     df = read_excel_auto_header(uploaded_file)
