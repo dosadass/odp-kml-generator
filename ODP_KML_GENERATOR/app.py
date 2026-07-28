@@ -18,6 +18,32 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+
+.stButton button{
+    width:100%;
+    height:50px;
+    border-radius:12px;
+    font-weight:bold;
+}
+
+div[data-testid="stMetric"]{
+    background:#ffffff;
+    border:1px solid #E5E7EB;
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.block-container{
+    padding-top:2rem;
+    padding-bottom:2rem;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
 .block-container {
     padding-top: 2rem;
     max-width: 1100px;
@@ -191,6 +217,18 @@ if uploaded_file:
     
     
     st.sidebar.code(preview)
+    st.sidebar.markdown("---")
+
+    if uploaded_file:
+        st.sidebar.info(f"""
+    📅 **Tanggal**
+    
+    {today}
+    
+    📍 **Total Data**
+    
+    {len(df)}
+    """)
 
 
 
@@ -211,6 +249,7 @@ if uploaded_file:
         
         with col2:
             publish = st.button("Publish")
+        st.divider()
         
         if generate or publish:
         
@@ -356,14 +395,31 @@ if uploaded_file:
                 kmz.write(kml_path, "doc.kml")
                 
             st.success("Generate selesai!")
+            
+            c1,c2,c3 = st.columns(3)
+            c1.metric("Total ODP", stats["total"])
+            c2.metric("Skipped", stats["skipped"])
+            c3.metric("Status","Success")
                 
             st.success(f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}")
 
-            with open(kml_path, "rb") as f:
-                st.download_button("Download KML", f, file_name="ODP_Master.kml")
+            col1,col2 = st.columns(2)
 
-            with open(kmz_path, "rb") as f:
-                st.download_button("Download KMZ", f, file_name="ODP_Master.kmz")
+            with col1:
+                with open(kml_path,"rb") as f:
+                    st.download_button(
+                        "⬇ Download KML",
+                        f,
+                        file_name="ODP_Master.kml"
+                    )
+            
+            with col2:
+                with open(kmz_path,"rb") as f:
+                    st.download_button(
+                        "⬇ Download KMZ",
+                        f,
+                        file_name="ODP_Master.kmz"
+                    )
 
         if publish:
             token = st.secrets["GITHUB_TOKEN"]
@@ -409,7 +465,7 @@ if uploaded_file:
                 st.success("✔️ Publish berhasil!")
 
                 st.markdown(f"""
-                ### Informasi Publish
+                st.subheader("📊 Informasi Publish")
                 
                 - 📅 **Update**    : {today}
                 - 📍 **Total ODP** : {stats["total"]}
