@@ -206,53 +206,55 @@ if uploaded_file:
 
         if st.button("Generate + Publish"):
             kml = simplekml.Kml(name=f"Update {today}")
-            total_point = 0
-            skipped_point = 0
+            stats = {
+                "total": 0,
+                "skipped": 0
+            }
 
             def create_point(target_folder, row):
-                    global total_point, skipped_point
-                    try:
-                       coord = str(row[coord_col]).strip()
-                       lat, lon = coord.split(",")
-                       lat = float(lat.strip())
-                       lon = float(lon.strip())
-                    except:
-                       skipped_point += 1
-                       return
-    
-                    capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
-                    active = int(row["Active"]) if pd.notna(row["Active"]) else 0
-    
-                    status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
-                    header_color = "#E53935" if status == "FULL" else "#4285F4"
-                            
-                    promo = ""
-                            
-                    if pd.notna(row["Promo"]):
-                        promo = str(row["Promo"]).strip()
-                            
-                    if promo:
-                        point_name = f"{row['Code']} - {promo}"
-                    else:
-                        point_name = str(row["Code"])
-                    table_rows = ""
-    
-                    for col in df.columns:
+                global total_point, skipped_point
+                try:
+                   coord = str(row[coord_col]).strip()
+                   lat, lon = coord.split(",")
+                   lat = float(lat.strip())
+                   lon = float(lon.strip())
+                except:
+                   skipped_point += 1
+                   return
+
+                capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
+                active = int(row["Active"]) if pd.notna(row["Active"]) else 0
+
+                status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
+                header_color = "#E53935" if status == "FULL" else "#4285F4"
                         
-                        if col == coord_col:
-                            continue
-                            
-                        value = row[col]
-                            
-                        if pd.isna(value):
-                            value = "-"
-                            
-                        table_rows += f"""
-                        <tr>
-                            <td><b>{col}</b></td>
-                            <td>{value}</td>
-                        </tr>
-                        """
+                promo = ""
+                        
+                if pd.notna(row["Promo"]):
+                    promo = str(row["Promo"]).strip()
+                        
+                if promo:
+                    point_name = f"{row['Code']} - {promo}"
+                else:
+                    point_name = str(row["Code"])
+                table_rows = ""
+
+                for col in df.columns:
+                    
+                    if col == coord_col:
+                        continue
+                        
+                    value = row[col]
+                        
+                    if pd.isna(value):
+                        value = "-"
+                        
+                    table_rows += f"""
+                    <tr>
+                        <td><b>{col}</b></td>
+                        <td>{value}</td>
+                    </tr>
+                    """
                     desc = f"""
                     <div style="font-family:Arial; font-size:12px;">
                     <table border="1" cellpadding="5" cellspacing="0" width="300">
@@ -286,22 +288,22 @@ if uploaded_file:
 
                         
                         
-                pnt = target_folder.newpoint(
-                    name=point_name,
-                    coords=[(lon, lat)]
-                )
+            pnt = target_folder.newpoint(
+                name=point_name,
+                coords=[(lon, lat)]
+            )
 
-                pnt.description = ""
-                pnt.snippet = Snippet("", maxlines=0)
-                pnt.style.balloonstyle.text = desc
+            pnt.description = ""
+            pnt.snippet = Snippet("", maxlines=0)
+            pnt.style.balloonstyle.text = desc
 
-                if status == "FULL":
-                    pnt.style.iconstyle.icon.href = FULL_ICON
-                else:
-                    pnt.style.iconstyle.icon.href = IDLE_ICON
+            if status == "FULL":
+                pnt.style.iconstyle.icon.href = FULL_ICON
+            else:
+                pnt.style.iconstyle.icon.href = IDLE_ICON
 
-                pnt.style.iconstyle.scale = 1.2
-                total_point += 1
+            pnt.style.iconstyle.scale = 1.2
+            total_point += 1
 
             for value1, df1 in df.groupby(folder1):
 
