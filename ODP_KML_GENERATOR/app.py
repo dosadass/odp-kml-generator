@@ -19,28 +19,115 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-.stButton button{
-    width:100%;
-    height:50px;
-    border-radius:12px;
-    font-weight:bold;
-}
-
-div[data-testid="stMetric"]{
-    background:#ffffff;
-    border:1px solid #E5E7EB;
-    border-radius:14px;
-    padding:18px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
 .block-container{
-    padding-top:2rem;
-    padding-bottom:2rem;
+    padding-top:25px;
+    max-width:1400px;
+}
+
+section[data-testid="stSidebar"]{
+    background:#f8fafc;
+    border-right:1px solid #e5e7eb;
+}
+
+div[data-testid="stVerticalBlock"]>div{
+    gap:1rem;
+}
+
+.card{
+    background:white;
+    border-radius:18px;
+    padding:24px;
+    border:1px solid #edf2f7;
+    box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+
+.hero{
+background:linear-gradient(135deg,#0f172a,#1d4ed8);
+border-radius:22px;
+padding:40px;
+color:white;
+margin-bottom:25px;
+box-shadow:0 12px 30px rgba(0,0,0,.18);
+}
+
+.hero h1{
+font-size:44px;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:18px;
+color:#dbeafe;
+}
+
+.badge{
+display:inline-block;
+padding:8px 16px;
+background:#2563eb;
+border-radius:999px;
+font-size:13px;
+font-weight:700;
+margin-bottom:18px;
+}
+
+.upload-card{
+background:white;
+padding:25px;
+border-radius:18px;
+border:1px solid #e5e7eb;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+margin-bottom:25px;
+}
+
+.result-card{
+background:white;
+padding:20px;
+border-radius:18px;
+border:1px solid #e5e7eb;
+box-shadow:0 5px 18px rgba(0,0,0,.05);
+}
+
+.metric-card{
+background:white;
+padding:20px;
+border-radius:16px;
+border:1px solid #ececec;
+text-align:center;
+box-shadow:0 5px 12px rgba(0,0,0,.04);
+}
+
+.metric-card h1{
+font-size:42px;
+margin:0;
+color:#2563eb;
+}
+
+.metric-card p{
+margin:0;
+color:#64748b;
+font-size:14px;
+}
+
+.stButton>button{
+width:100%;
+height:70px;
+border-radius:15px;
+font-size:22px;
+font-weight:700;
+border:none;
+transition:.2s;
+}
+
+.stButton>button:hover{
+transform:translateY(-2px);
+}
+
+hr{
+margin:25px 0;
 }
 
 </style>
-""", unsafe_allow_html=True)
+""",unsafe_allow_html=True)
 
 st.markdown("""
 <style>
@@ -95,12 +182,24 @@ st.markdown("""
 }
 </style>
 
-<div class="main-title">
-    <div class="badge">📍 DISTRICT MANAGEMENT</div>
-    <h1>ODP KML / KMZ Generator</h1>
-    <p>Internal tools untuk mengubah data ODP Excel menjadi file KML/KMZ siap pakai di Google Earth.</p>
+st.markdown("""
+
+<div class="hero">
+
+<div class="badge">
+📍 DISTRICT MANAGEMENT
 </div>
-""", unsafe_allow_html=True)
+
+<h1>ODP KML / KMZ Generator</h1>
+
+<p>
+Internal tools untuk mengubah data ODP Excel menjadi file KML/KMZ
+siap digunakan pada Google Earth.
+</p>
+
+</div>
+
+""",unsafe_allow_html=True)
 
 st.markdown('<div class="info-card">', unsafe_allow_html=True)
 uploaded_file = st.file_uploader("Upload file Excel ODP terbaru", type=["xlsx", "xls"])
