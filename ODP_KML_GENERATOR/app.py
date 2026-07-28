@@ -183,19 +183,14 @@ st.markdown("""
 </style>
 
 st.markdown("""
+<style>
+...
+</style>
+
 <div class="hero">
-
-<div class="badge">
-📍 DISTRICT MANAGEMENT
-</div>
-
-<h1>ODP KML / KMZ Generator</h1>
-
-<p>
-Internal tools untuk mengubah data ODP Excel menjadi file KML/KMZ
-siap digunakan pada Google Earth.
-</p>
-
+    <div class="badge">📍 DISTRICT MANAGEMENT</div>
+    <h1>ODP KML / KMZ Generator</h1>
+    <p>Internal tools...</p>
 </div>
 """, unsafe_allow_html=True)
 
