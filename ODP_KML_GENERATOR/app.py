@@ -129,24 +129,26 @@ def find_coordinate_column(df):
 kml_path = "ODP_Master.kml"
 kmz_path = "ODP_Master.kmz"
 
+coord_col = find_coordinate_column(df)
+
 if uploaded_file:
     df = read_excel_auto_header(uploaded_file)
 
     st.sidebar.header("📂 Struktur Folder")
 
-folder_columns = [c for c in df.columns if c != coord_col]
-
-folder1 = st.sidebar.selectbox(
-    "Folder Level 1",
-    folder_columns,
-    index=folder_columns.index("Region") if "Region" in folder_columns else 0
-)
-
-folder2 = st.sidebar.selectbox(
-    "Folder Level 2",
-    ["Tidak dipisah"] + folder_columns,
-    index=folder_columns.index("District Name")+1 if "District Name" in folder_columns else 0
-)
+    folder_columns = [c for c in df.columns if c != coord_col]
+    
+    folder1 = st.sidebar.selectbox(
+        "Folder Level 1",
+        folder_columns,
+        index=folder_columns.index("Region") if "Region" in folder_columns else 0
+    )
+    
+    folder2 = st.sidebar.selectbox(
+        "Folder Level 2",
+        ["Tidak dipisah"] + folder_columns,
+        index=folder_columns.index("District Name")+1 if "District Name" in folder_columns else 0
+    )
 
 st.sidebar.markdown("---")
 
@@ -174,7 +176,7 @@ st.sidebar.info(preview)
     st.write("Nama Kolom Terdeteksi:")
     st.write(list(df.columns))
 
-    coord_col = find_coordinate_column(df)
+    
 
     missing = [col for col in required_cols if col not in df.columns]
 
@@ -191,7 +193,7 @@ st.sidebar.info(preview)
             total_point = 0
             skipped_point = 0
 
-                    for value1, df1 in df.groupby(folder1):
+            for value1, df1 in df.groupby(folder1):
         
             folder_a = kml.newfolder(name=str(value1))
         
@@ -212,87 +214,87 @@ st.sidebar.info(preview)
                     for _, row in df2.iterrows():
         
                         target_folder = folder_b
-
-                # isi pembuatan point tetap
-                        try:
-                            coord = str(row[coord_col]).strip()
-                            lat, lon = coord.split(",")
-                            lat = float(lat.strip())
-                            lon = float(lon.strip())
-                        except:
-                            skipped_point += 1
-                            continue
-
-                        capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
-                        active = int(row["Active"]) if pd.notna(row["Active"]) else 0
-
-                        status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
-                        header_color = "#E53935" if status == "FULL" else "#4285F4"
-                        
-                        promo = ""
-                        
-                        if pd.notna(row["Promo"]):
-                            promo = str(row["Promo"]).strip()
-                        
-                        if promo:
-                            point_name = f"{row['Code']} - {promo}"
-                        else:
-                            point_name = str(row["Code"])
-                        table_rows = ""
-
-                        for col in df.columns:
-                    
-                            if col == coord_col:
-                                continue
-                        
-                            value = row[col]
-                        
-                            if pd.isna(value):
-                                value = "-"
-                        
-                            table_rows += f"""
-        <tr>
-            <td><b>{col}</b></td>
-            <td>{value}</td>
-        </tr>
-        """
-                            desc = f"""
-                        <div style="font-family:Arial; font-size:12px;">
-                        <table border="1" cellpadding="5" cellspacing="0" width="300">
-                        
-                        <tr>
-                            <th colspan="2" bgcolor="{header_color}">
-                                <font color="white">{point_name}</font>
-                            </th>
-                        </tr>
-                        
-                        {table_rows}
-                        
-                        <tr>
-                            <td><b>Status</b></td>
-                            <td>{status}</td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Lat</b></td>
-                            <td>{lat}</td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Long</b></td>
-                            <td>{lon}</td>
-                        </tr>
-                        
-                        </table>
-                        </div>
-                        """
-
-                        
-                        
-                        pnt = target_folder.newpoint(
-                            name=point_name,
-                            coords=[(lon, lat)]
-                        )
+        
+                        # isi pembuatan point tetap
+                                try:
+                                    coord = str(row[coord_col]).strip()
+                                    lat, lon = coord.split(",")
+                                    lat = float(lat.strip())
+                                    lon = float(lon.strip())
+                                except:
+                                    skipped_point += 1
+                                    continue
+        
+                                capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
+                                active = int(row["Active"]) if pd.notna(row["Active"]) else 0
+        
+                                status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
+                                header_color = "#E53935" if status == "FULL" else "#4285F4"
+                                
+                                promo = ""
+                                
+                                if pd.notna(row["Promo"]):
+                                    promo = str(row["Promo"]).strip()
+                                
+                                if promo:
+                                    point_name = f"{row['Code']} - {promo}"
+                                else:
+                                    point_name = str(row["Code"])
+                                table_rows = ""
+        
+                                for col in df.columns:
+                            
+                                    if col == coord_col:
+                                        continue
+                                
+                                    value = row[col]
+                                
+                                    if pd.isna(value):
+                                        value = "-"
+                                
+                                    table_rows += f"""
+                <tr>
+                    <td><b>{col}</b></td>
+                    <td>{value}</td>
+                </tr>
+                """
+                                    desc = f"""
+                                <div style="font-family:Arial; font-size:12px;">
+                                <table border="1" cellpadding="5" cellspacing="0" width="300">
+                                
+                                <tr>
+                                    <th colspan="2" bgcolor="{header_color}">
+                                        <font color="white">{point_name}</font>
+                                    </th>
+                                </tr>
+                                
+                                {table_rows}
+                                
+                                <tr>
+                                    <td><b>Status</b></td>
+                                    <td>{status}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><b>Lat</b></td>
+                                    <td>{lat}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><b>Long</b></td>
+                                    <td>{lon}</td>
+                                </tr>
+                                
+                                </table>
+                                </div>
+                                """
+        
+                                
+                                
+                                pnt = target_folder.newpoint(
+                                    name=point_name,
+                                    coords=[(lon, lat)]
+                                )
 
                         pnt.description = ""
                         pnt.snippet = Snippet("", maxlines=0)
