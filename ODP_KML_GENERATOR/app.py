@@ -189,39 +189,6 @@ if uploaded_file:
     
     preview += "\n        └── ODP"
     
-    st.sidebar.code(preview)
-
-    folder_columns = [c for c in df.columns if c != coord_col]
-
-    folder1 = st.sidebar.selectbox(
-        "Folder Level 1",
-        folder_columns,
-        index=folder_columns.index("Region") if "Region" in folder_columns else 0
-    )
-    
-    folder2 = st.sidebar.selectbox(
-        "Folder Level 2",
-        ["Tidak dipisah"] + folder_columns,
-        index=folder_columns.index("District Name")+1 if "District Name" in folder_columns else 0
-    )
-    
-    folder3 = st.sidebar.selectbox(
-        "Folder Level 3",
-        ["Tidak dipisah"] + folder_columns,
-        index=0
-    )
-    
-    st.sidebar.markdown("---")
-    
-    preview = folder1
-    
-    if folder2 != "Tidak dipisah":
-        preview += f"\n└── {folder2}"
-    
-    if folder3 != "Tidak dipisah":
-        preview += f"\n    └── {folder3}"
-    
-    preview += "\n        └── ODP"
     
     st.sidebar.code(preview)
 
@@ -242,104 +209,137 @@ if uploaded_file:
             total_point = 0
             skipped_point = 0
 
-            for region, region_df in df.groupby("Region"):
-                region_folder = kml.newfolder(name=str(region))
+            def create_point(target_folder, row):
+                nonlocal total_point, skipped_point
+                try:
+                   coord = str(row[coord_col]).strip()
+                   lat, lon = coord.split(",")
+                   lat = float(lat.strip())
+                   lon = float(lon.strip())
+                except:
+                   skipped_point += 1
+                   return
 
-                for district, district_df in region_df.groupby("District Name"):
-                    district_folder = region_folder.newfolder(name=str(district))
+                capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
+                active = int(row["Active"]) if pd.notna(row["Active"]) else 0
 
-                    for _, row in district_df.iterrows():
-                        try:
-                            coord = str(row[coord_col]).strip()
-                            lat, lon = coord.split(",")
-                            lat = float(lat.strip())
-                            lon = float(lon.strip())
-                        except:
-                            skipped_point += 1
-                            continue
-
-                        capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
-                        active = int(row["Active"]) if pd.notna(row["Active"]) else 0
-
-                        status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
-                        header_color = "#E53935" if status == "FULL" else "#4285F4"
+                status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
+                header_color = "#E53935" if status == "FULL" else "#4285F4"
                         
-                        promo = ""
+                promo = ""
                         
-                        if pd.notna(row["Promo"]):
-                            promo = str(row["Promo"]).strip()
+                if pd.notna(row["Promo"]):
+                    promo = str(row["Promo"]).strip()
                         
-                        if promo:
-                            point_name = f"{row['Code']} - {promo}"
-                        else:
-                            point_name = str(row["Code"])
-                        table_rows = ""
+                if promo:
+                    point_name = f"{row['Code']} - {promo}"
+                else:
+                    point_name = str(row["Code"])
+                table_rows = ""
 
-                        for col in df.columns:
+                for col in df.columns:
                     
-                            if col == coord_col:
-                                continue
+                    if col == coord_col:
+                        continue
                         
-                            value = row[col]
+                    value = row[col]
                         
-                            if pd.isna(value):
-                                value = "-"
+                    if pd.isna(value):
+                        value = "-"
                         
-                            table_rows += f"""
-        <tr>
-            <td><b>{col}</b></td>
-            <td>{value}</td>
-        </tr>
-        """
-                            desc = f"""
-                        <div style="font-family:Arial; font-size:12px;">
-                        <table border="1" cellpadding="5" cellspacing="0" width="300">
-                        
-                        <tr>
-                            <th colspan="2" bgcolor="{header_color}">
-                                <font color="white">{point_name}</font>
-                            </th>
-                        </tr>
-                        
-                        {table_rows}
-                        
-                        <tr>
-                            <td><b>Status</b></td>
-                            <td>{status}</td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Lat</b></td>
-                            <td>{lat}</td>
-                        </tr>
-                        
-                        <tr>
-                            <td><b>Long</b></td>
-                            <td>{lon}</td>
-                        </tr>
-                        
-                        </table>
-                        </div>
-                        """
+                    table_rows += f"""
+                    <tr>
+                        <td><b>{col}</b></td>
+                        <td>{value}</td>
+                    </tr>
+                    """
+                desc = f"""
+                <div style="font-family:Arial; font-size:12px;">
+                <table border="1" cellpadding="5" cellspacing="0" width="300">
+                
+                <tr>
+                    <th colspan="2" bgcolor="{header_color}">
+                        <font color="white">{point_name}</font>
+                    </th>
+                </tr>
+                
+                {table_rows}
+                
+                <tr>
+                    <td><b>Status</b></td>
+                    <td>{status}</td>
+                </tr>
+                
+                <tr>
+                    <td><b>Lat</b></td>
+                    <td>{lat}</td>
+                </tr>
+                
+                <tr>
+                    <td><b>Long</b></td>
+                    <td>{lon}</td>
+                </tr>
+                
+                </table>
+                </div>
+                """
 
                         
                         
-                        pnt = target_folder.newpoint(
-                            name=point_name,
-                            coords=[(lon, lat)]
-                        )
+                pnt = target_folder.newpoint(
+                    name=point_name,
+                    coords=[(lon, lat)]
+                )
 
-                        pnt.description = ""
-                        pnt.snippet = Snippet("", maxlines=0)
-                        pnt.style.balloonstyle.text = desc
+                pnt.description = ""
+                pnt.snippet = Snippet("", maxlines=0)
+                pnt.style.balloonstyle.text = desc
 
-                        if status == "FULL":
-                            pnt.style.iconstyle.icon.href = FULL_ICON
+                if status == "FULL":
+                    pnt.style.iconstyle.icon.href = FULL_ICON
+                else:
+                    pnt.style.iconstyle.icon.href = IDLE_ICON
+
+                pnt.style.iconstyle.scale = 1.2
+                total_point += 1
+
+            for value1, df1 in df.groupby(folder1):
+
+                folder_a = kml.newfolder(name=str(value1))
+            
+                if folder2 == "Tidak dipisah":
+            
+                    for _, row in df1.iterrows():
+            
+                        target_folder = folder_a
+            
+                        create_point(target_folder, row)
+            
+                else:
+            
+                    for value2, df2 in df1.groupby(folder2):
+            
+                        folder_b = folder_a.newfolder(name=str(value2))
+            
+                        if folder3 == "Tidak dipisah":
+            
+                            for _, row in df2.iterrows():
+            
+                                target_folder = folder_b
+            
+                                create_point(target_folder, row)
+            
                         else:
-                            pnt.style.iconstyle.icon.href = IDLE_ICON
+            
+                            for value3, df3 in df2.groupby(folder3):
 
-                        pnt.style.iconstyle.scale = 1.2
-                        total_point += 1
+                                folder_c = folder_b.newfolder(name=str(value3))
+                            
+                                for _, row in df3.iterrows():
+                            
+                                    create_point(folder_c, row)
+
+                        
 
 
             kml.save(kml_path)
