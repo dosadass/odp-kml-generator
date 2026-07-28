@@ -210,7 +210,12 @@ def find_coordinate_column(df):
 kml_path = "ODP_Master.kml"
 kmz_path = "ODP_Master.kmz"
 
-st.sidebar.header("📂 Struktur Folder")
+st.sidebar.markdown("""
+# 📍 ODP TOOLS
+##### District Management
+
+---
+""")
 
 if not uploaded_file:
 
@@ -261,7 +266,7 @@ if uploaded_file:
     )
 
     st.sidebar.markdown("---")
-    st.sidebar.subheader("Preview Struktur")
+    st.sidebar.markdown("### 👁 Preview Struktur")
     
     preview = folder1
     
@@ -274,19 +279,56 @@ if uploaded_file:
     preview += "\n        └── ODP"
     
     
-    st.sidebar.code(preview)
-    st.sidebar.markdown("---")
+    st.sidebar.markdown(f"""
+    <div style="
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid #E5E7EB;
+    font-family:Consolas;
+    line-height:1.7;
+    ">
+    
+    {preview.replace(chr(10),"<br>")}
+    
+    </div>
+    """, unsafe_allow_html=True)
 
     if uploaded_file:
-        st.sidebar.info(f"""
-    📅 **Tanggal**
-    
-    {today}
-    
-    📍 **Total Data**
-    
-    {len(df)}
-    """)
+        st.sidebar.markdown(f"""
+        <div style="
+        background:linear-gradient(180deg,#EFF6FF,#DBEAFE);
+        padding:18px;
+        border-radius:14px;
+        border:1px solid #BFDBFE;
+        ">
+        
+        <h4 style="margin:0;color:#1D4ED8;">
+        📊 RINGKASAN DATA
+        </h4>
+        
+        <br>
+        
+        <b>Tanggal Update</b><br>
+        {today}
+        
+        <br><br>
+        
+        <b>Total Data ODP</b><br>
+        {len(df)}
+        
+        <br><br>
+        
+        <b>Region</b><br>
+        {df['Region'].nunique()}
+        
+        <br><br>
+        
+        <b>District Name</b><br>
+        {df['District Name'].nunique()}
+        
+        </div>
+        """, unsafe_allow_html=True)
 
 
 
