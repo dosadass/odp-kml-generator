@@ -731,7 +731,6 @@ if uploaded_file:
                             "Authorization": f"Bearer {token}",
                             "Accept": "application/vnd.github+json"
                         }
-                        st.markdown("</div>", unsafe_allow_html=True)
                     
                         get = requests.get(url, headers=headers)
                     
@@ -757,37 +756,46 @@ if uploaded_file:
                     
                         if response.status_code in [200, 201]:
                     
-                            st.markdown("""
-                            <div style="
-                            background:#ECFDF5;
-                            border:1px solid #BBF7D0;
-                            padding:18px;
-                            border-radius:14px;
-                            font-size:18px;
-                            font-weight:700;
-                            color:#166534;
-                            margin-bottom:18px;
-                            ">
-                            ✔ Publish berhasil
-                            </div>
-                            """, unsafe_allow_html=True)
-            
-                            st.markdown("""
-                            <h2 style="
-                            margin-bottom:20px;
-                            font-weight:700;
-                            ">
-                            ☁️ Publish
-                            </h2>
-                            """, unsafe_allow_html=True)
-                            
                             st.markdown(f"""
                             <table style="
                             width:100%;
                             border-collapse:collapse;
                             font-size:14px;
                             ">
+                            
+                            <tr>
+                            <th align="left">Informasi</th>
+                            <th align="left">Nilai</th>
+                            </tr>
+                            
+                            <tr>
+                            <td>📅 Update</td>
+                            <td>{today}</td>
+                            </tr>
+                            
+                            <tr>
+                            <td>📍 Total ODP</td>
+                            <td>{stats["total"]}</td>
+                            </tr>
+                            
+                            <tr>
+                            <td>☁️ Status</td>
+                            <td>GitHub berhasil diperbarui</td>
+                            </tr>
+                            
+                            <tr>
+                            <td>🌿 Branch</td>
+                            <td>{branch}</td>
+                            </tr>
+                            
+                            <tr>
+                            <td>📂 Repository</td>
+                            <td>{repo}</td>
+                            </tr>
+                            
+                            </table>
                             """, unsafe_allow_html=True)
+
                 
             <tr>
             <th align="left">Informasi</th>
