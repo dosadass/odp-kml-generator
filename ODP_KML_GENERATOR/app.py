@@ -36,7 +36,7 @@ div[data-testid="stVerticalBlock"]>div{
 .card{
 background:white;
 border-radius:14px;
-padding:17.5px 15px;
+padding:17.4px 15px;
 border:1px solid #edf2f7;
 box-shadow:0 3px 10px rgba(0,0,0,.04);
 }
@@ -172,7 +172,7 @@ margin-bottom:8px;
 box-shadow:0 3px 10px rgba(0,0,0,.04);
 ">
 <h3 style="margin:0;">
-📤 1. Upload File Excel ODP
+1. Upload File Excel ODP
 </h3>
 </div>
 """, unsafe_allow_html=True)
@@ -313,7 +313,7 @@ if uploaded_file:
     st.sidebar.markdown(f"""
     <div style="
     background:white;
-    padding:17.5px;
+    padding:17.4px;
     border-radius:12px;
     border:1px solid #E5E7EB;
     font-family:Consolas;
@@ -502,7 +502,7 @@ if uploaded_file:
 
             with left:
 
-                st.subheader("📊 2. Hasil Generate")
+                st.subheader("2. Hasil Generate")
 
                 st.success("Generate selesai!")
 
@@ -566,7 +566,7 @@ if uploaded_file:
 
             with right:
 
-                    st.subheader("☁️ 3. Informasi Publish")
+                    st.subheader("3. Informasi Publish")
 
                     if publish:
                         token = st.secrets["GITHUB_TOKEN"]
@@ -618,33 +618,33 @@ if uploaded_file:
                             ">
                             
                             <tr style="background:#F8FAFC;">
-                            <th align="left" style="padding:17.5px;border:1px solid #E5E7EB;">Informasi</th>
-                            <th align="left" style="padding:17.5px;border:1px solid #E5E7EB;">Nilai</th>
+                            <th align="left" style="padding:17.4px;border:1px solid #E5E7EB;">Informasi</th>
+                            <th align="left" style="padding:17.4px;border:1px solid #E5E7EB;">Nilai</th>
                             </tr>
                             
                             <tr>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">📅 Update</td>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">{today}</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">📅 Update</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">{today}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">📍 Total ODP</td>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">{stats["total"]}</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">📍 Total ODP</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">{stats["total"]}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">☁️ Status</td>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">☁️ Status</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">🌿 Branch</td>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">{branch}</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">🌿 Branch</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">{branch}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">📂 Repository</td>
-                            <td style="padding:17.5px;border:1px solid #E5E7EB;">{repo}</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">📂 Repository</td>
+                            <td style="padding:17.4px;border:1px solid #E5E7EB;">{repo}</td>
                             </tr>
                             
                             </table>
