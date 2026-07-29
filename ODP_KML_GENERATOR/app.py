@@ -531,6 +531,9 @@ if uploaded_file:
                 kmz.write(kml_path, "doc.kml")
 
             st.markdown("<div class='card'>", unsafe_allow_html=True)
+            st.markdown("""
+            <div class="card">
+            """, unsafe_allow_html=True)
             left,right = st.columns([1.05,1])
         
             with left:
@@ -540,9 +543,30 @@ if uploaded_file:
                 st.success("Generate selesai!")
         
                 c1,c2,c3 = st.columns(3)
-                c1.metric("Total ODP", stats["total"])
-                c2.metric("Skipped", stats["skipped"])
-                c3.metric("Status","Success")
+                
+                with c1:
+                    st.markdown(f"""
+                    <div class="metric-card">
+                        <p>Total ODP</p>
+                        <h1>{stats["total"]}</h1>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with c2:
+                    st.markdown(f"""
+                    <div class="metric-card">
+                        <p>Skipped</p>
+                        <h1>{stats["skipped"]}</h1>
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                with c3:
+                    st.markdown("""
+                    <div class="metric-card">
+                        <p>Status</p>
+                        <h1 style="font-size:34px;">Success</h1>
+                    </div>
+                    """, unsafe_allow_html=True)
                     
                 st.success(
                     f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}"
@@ -621,6 +645,7 @@ if uploaded_file:
                         if response.status_code in [200, 201]:
                     
                             st.success("✔ Publish berhasil!")
+                            st.markdown("</div>", unsafe_allow_html=True)
                     
                             st.markdown("""
                     ### ☁️ 3. Informasi Publish
