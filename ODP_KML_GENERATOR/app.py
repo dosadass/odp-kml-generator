@@ -21,11 +21,11 @@ st.markdown("""
 
 .block-container{
 
-padding-top:25px;
+padding-top:10px;
 
-padding-bottom:40px;
+padding-bottom:20px;
 
-max-width:1450px;
+max-width:1600px;
 
 }
 
@@ -44,38 +44,38 @@ background:white;
 
 border-radius:18px;
 
-padding:18px;
+padding:14px;
 
 border:1px solid #DBEAFE;
 
 box-shadow:0 8px 24px rgba(0,0,0,.05);
 
-margin-bottom:20px;
+margin-bottom:10px;
 
 }
 
 .hero{
 background:linear-gradient(135deg,#0f172a,#1d4ed8);
 border-radius:22px;
-padding:40px;
+padding:28px 34px;
 color:white;
-margin-bottom:25px;
+margin-bottom:15px;
 box-shadow:0 12px 30px rgba(0,0,0,.18);
 }
 
 .hero h1{
-font-size:44px;
+font-size:36px;
 margin-bottom:10px;
 }
 
 .hero p{
-font-size:18px;
+font-size:16px;
 color:#dbeafe;
 }
 
 .badge{
 display:inline-block;
-padding:8px 16px;
+padding:6px 12px;
 background:#2563eb;
 border-radius:999px;
 font-size:13px;
@@ -104,9 +104,9 @@ box-shadow:0 5px 18px rgba(0,0,0,.05);
 
 background:linear-gradient(180deg,#FFFFFF,#F8FAFC);
 
-border-radius:18px;
+border-radius:14px;
 
-padding:18px;
+padding:12px;
 
 border:1px solid #DBEAFE;
 
@@ -116,7 +116,7 @@ transition:.25s;
 
 text-align:center;
 
-height:95px;
+height:90px;
 
 }
 
@@ -134,7 +134,7 @@ margin-top:10px;
 
 margin-bottom:5px;
 
-font-size:34px;
+font-size:28px;
 
 color:#2563EB;
 
@@ -148,12 +148,12 @@ font-weight:700;
 
 color:#64748B;
 
-font-size:15px;
+font-size:13px;
 
 }
 
 .metric-card h1{
-font-size:34px;
+font-size:28px;
 margin:0;
 color:#2563eb;
 }
@@ -168,16 +168,16 @@ font-size:14px;
 .stButton > button{
 
 width:100%;
-height:58px;
+height:48px;
 
 border:none;
-border-radius:14px;
+border-radius:10px;
 
 background:linear-gradient(135deg,#2563eb,#1d4ed8);
 
 color:white;
 
-font-size:17px;
+font-size:15px;
 font-weight:700;
 
 transition:.25s;
@@ -354,12 +354,10 @@ if uploaded_file:
         index=0
     )
 
-    st.sidebar.markdown(
-    """
+    st.sidebar.markdown("""
     <div style="height:8px"></div>
-    """,
-    unsafe_allow_html=True
-    )
+    <hr style="margin:10px 0;">
+    """, unsafe_allow_html=True)
     
     st.sidebar.markdown("### 👁 Preview Struktur")
     
@@ -378,7 +376,7 @@ if uploaded_file:
     <div style="
     margin-top:12px;
     background:white;
-    padding:15px;
+    padding:12px;
     border-radius:12px;
     border:1px solid #E5E7EB;
     font-family:Consolas;
@@ -394,7 +392,8 @@ if uploaded_file:
         st.sidebar.markdown(f"""
         <div style="
         background:white;
-        padding:15px;
+        line-height:1.5;
+        padding:12px;
         border-radius:16px;
         border:1px solid #E5E7EB;
         box-shadow:0 5px 15px rgba(0,0,0,.05);
@@ -608,7 +607,7 @@ if uploaded_file:
                 kmz.write(kml_path, "doc.kml")
 
             
-            left,right=st.columns([1.2,1],gap="medium")
+            left,right = st.columns([1,1], gap="small")
         
             with left:
         
@@ -625,7 +624,7 @@ if uploaded_file:
                 <div style="
                 background:#ECFDF5;
                 border:1px solid #BBF7D0;
-                padding:18px;
+                padding:12px;
                 border-radius:14px;
                 font-size:18px;
                 font-weight:700;
@@ -666,7 +665,7 @@ if uploaded_file:
                 <div style="
                 background:#ECFDF5;
                 border:1px solid #BBF7D0;
-                padding:18px;
+                padding:14px;
                 border-radius:12px;
                 color:#166534;
                 font-weight:600;
@@ -687,7 +686,7 @@ if uploaded_file:
                 </div>
                 """, unsafe_allow_html=True)
             
-                col1,col2 = st.columns(2)
+                col1,col2 = st.columns(2, gap="small")
     
                 with col1:
 
