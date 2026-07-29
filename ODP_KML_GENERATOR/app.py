@@ -394,7 +394,6 @@ if uploaded_file:
     
         {len(df)}
         
-        <br><br>
         
         <b>Region</b><br>
         {df['Region'].nunique()}
