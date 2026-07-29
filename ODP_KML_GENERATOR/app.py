@@ -35,10 +35,10 @@ div[data-testid="stVerticalBlock"]>div{
 
 .card{
 background:white;
-border-radius:16px;
-padding:14px 18px;
+border-radius:14px;
+padding:10px 15px;
 border:1px solid #edf2f7;
-box-shadow:0 4px 12px rgba(0,0,0,.05);
+box-shadow:0 3px 10px rgba(0,0,0,.04);
 }
 
 .hero{
@@ -165,7 +165,7 @@ siap digunakan di Google Earth.
 st.markdown("""
 <div class="card">
 
-<h3 style="margin-top:0;">
+<h3 style="margin:0 0 10px 0;">
 📤 1. Upload File Excel ODP
 </h3>
 """, unsafe_allow_html=True)
