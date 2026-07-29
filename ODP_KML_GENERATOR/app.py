@@ -101,12 +101,55 @@ box-shadow:0 5px 18px rgba(0,0,0,.05);
 }
 
 .metric-card{
-background:white;
-padding:20px;
-border-radius:16px;
-border:1px solid #ececec;
+
+background:linear-gradient(180deg,#FFFFFF,#F8FAFC);
+
+border-radius:18px;
+
+padding:24px;
+
+border:1px solid #DBEAFE;
+
+box-shadow:0 8px 20px rgba(59,130,246,.08);
+
+transition:.25s;
+
 text-align:center;
-box-shadow:0 5px 12px rgba(0,0,0,.04);
+
+height:150px;
+
+}
+
+.metric-card:hover{
+
+transform:translateY(-5px);
+
+box-shadow:0 15px 35px rgba(37,99,235,.15);
+
+}
+
+.metric-card h1{
+
+margin-top:10px;
+
+margin-bottom:5px;
+
+font-size:42px;
+
+color:#2563EB;
+
+}
+
+.metric-card p{
+
+margin:0;
+
+font-weight:700;
+
+color:#64748B;
+
+font-size:15px;
+
 }
 
 .metric-card h1{
@@ -393,6 +436,43 @@ if uploaded_file:
     if missing:
         st.error(f"Kolom ini belum ada / beda nama: {missing}")
     else:
+    
+        st.markdown("## 📈 Dashboard")
+    
+        a,b,c,d = st.columns(4)
+    
+        with a:
+            st.markdown(f"""
+            <div class="metric-card">
+                <p>📍 Total ODP</p>
+                <h1>{len(df)}</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
+        with b:
+            st.markdown(f"""
+            <div class="metric-card">
+                <p>🌍 Region</p>
+                <h1>{df['Region'].nunique()}</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
+        with c:
+            st.markdown(f"""
+            <div class="metric-card">
+                <p>🏢 District</p>
+                <h1>{df['District Name'].nunique()}</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
+        with d:
+            st.markdown(f"""
+            <div class="metric-card">
+                <p>📅 Update</p>
+                <h1 style="font-size:20px">{today}</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
         st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
         col1, col2 = st.columns(2)
