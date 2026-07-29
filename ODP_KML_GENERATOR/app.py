@@ -759,35 +759,35 @@ if uploaded_file:
                         if response.status_code in [200, 201]:
                     
                             st.markdown("""
-                            <div style="
-                            background:#ECFDF5;
-                            border:1px solid #BBF7D0;
-                            padding:18px;
-                            border-radius:14px;
-                            font-size:18px;
-                            font-weight:700;
-                            color:#166534;
-                            margin-bottom:18px;
-                            ">
-                            ✔ Publish berhasil
-                            </div>
-                            """, unsafe_allow_html=True)
-        
-                            st.markdown("""
-                                <h2 style="
-                                margin-bottom:20px;
+                                <div style="
+                                background:#ECFDF5;
+                                border:1px solid #BBF7D0;
+                                padding:18px;
+                                border-radius:14px;
+                                font-size:18px;
                                 font-weight:700;
+                                color:#166534;
+                                margin-bottom:18px;
                                 ">
-                                ☁️ Publish
-                                </h2>
+                                ✔ Publish berhasil
+                                </div>
                                 """, unsafe_allow_html=True)
+            
+                                st.markdown("""
+                                    <h2 style="
+                                    margin-bottom:20px;
+                                    font-weight:700;
+                                    ">
+                                    ☁️ Publish
+                                    </h2>
+                                    """, unsafe_allow_html=True)
                                 
-                            st.markdown(f"""
-                            <table style="
-                            width:100%;
-                            border-collapse:collapse;
-                            font-size:14px;
-                            ">
+                                st.markdown(f"""
+                                <table style="
+                                width:100%;
+                                border-collapse:collapse;
+                                font-size:14px;
+                                ">
                 
                 <tr>
                 <th align="left">Informasi</th>
