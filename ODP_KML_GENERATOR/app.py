@@ -194,12 +194,6 @@ st.caption(
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader(
-    "Upload file Excel ODP terbaru",
-    type=["xlsx", "xls"]
-)
-
-st.markdown('</div>', unsafe_allow_html=True)
 
 required_cols = [
     "Code",
