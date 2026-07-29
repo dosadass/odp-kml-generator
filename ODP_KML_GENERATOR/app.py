@@ -112,24 +112,6 @@ font-size:14px;
     box-shadow:0 8px 20px rgba(37,99,235,.25);
 }
 
-section[data-testid="stFileUploader"]{
-    padding-top:0px !important;
-    padding-bottom:0px !important;
-}
-
-section[data-testid="stFileUploader"] > div{
-    padding:6px !important;
-}
-
-div[data-testid="stFileUploaderDropzone"]{
-    padding:8px !important;
-    min-height:55px !important;
-}
-
-div[data-testid="stFileUploaderDropzoneInstructions"]{
-    display:none;
-}
-
 .stButton > button{
 
 width:100%;
@@ -181,11 +163,18 @@ siap digunakan di Google Earth.
 
 
 st.markdown("""
-<div class="card">
-
-<h3 style="margin:0 0 10px 0;">
+<div style="
+background:white;
+padding:10px 18px;
+border-radius:14px;
+border:1px solid #e5e7eb;
+margin-bottom:10px;
+box-shadow:0 3px 10px rgba(0,0,0,.04);
+">
+<h3 style="margin:0;">
 📤 1. Upload File Excel ODP
 </h3>
+</div>
 """, unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
@@ -193,7 +182,6 @@ uploaded_file = st.file_uploader(
     type=["xlsx","xls"]
 )
 
-st.markdown("</div>", unsafe_allow_html=True)
 
 
 required_cols = [
