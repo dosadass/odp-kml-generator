@@ -121,18 +121,6 @@ color:#64748b;
 font-size:14px;
 }
 
-.stButton > button{
-    width:100%;
-    height:78px;
-    border-radius:14px;
-    font-size:20px;
-    font-weight:700;
-    border:none;
-    transition:0.25s;
-    color:white;
-    background:linear-gradient(90deg,#2563eb,#3b82f6);
-    box-shadow:0 8px 20px rgba(37,99,235,.25);
-}
 
 .stButton > button{
 
@@ -394,17 +382,6 @@ if uploaded_file:
     
         {len(df)}
         
-        
-        <b>Region</b><br>
-        {df['Region'].nunique()}
-        
-        <br><br>
-        
-        <b>District Name</b><br>
-        {df['District Name'].nunique()}
-        
-        </div>
-        """, unsafe_allow_html=True)
 
 
 
@@ -576,7 +553,6 @@ if uploaded_file:
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
 
-            st.markdown("<div class='card'>", unsafe_allow_html=True)
             st.markdown("""
             <div class="card">
             """, unsafe_allow_html=True)
@@ -642,7 +618,6 @@ if uploaded_file:
                 col1,col2 = st.columns(2)
     
                 with col1:
-                    with col1:
 
                         st.markdown("""
                         <div class="card">
@@ -657,10 +632,8 @@ if uploaded_file:
                                 file_name="ODP_Master.kml",
                                 use_container_width=True
                             )
-                            st.markdown("</div>", unsafe_allow_html=True)
                 
                 with col2:
-                    with col2:
 
                         st.markdown("### 📦 Download KMZ")
                     
@@ -671,15 +644,8 @@ if uploaded_file:
                                 file_name="ODP_Master.kmz",
                                 use_container_width=True
                             )
-                            st.markdown("</div>", unsafe_allow_html=True)
 
             with right:
-            
-                    st.markdown("""
-                    <div class="card">
-                    
-                    ### ☁️ 3. Informasi Publish
-                    """, unsafe_allow_html=True)
                     
                     if publish:
                         token = st.secrets["GITHUB_TOKEN"]
@@ -718,12 +684,10 @@ if uploaded_file:
                             headers=headers,
                             json=payload
                         )
-                        st.markdown("</div>", unsafe_allow_html=True)
                     
                         if response.status_code in [200, 201]:
                     
                             st.success("✔ Publish berhasil!")
-                            st.markdown("</div>", unsafe_allow_html=True)
                     
                             st.markdown("""
                     ### ☁️ 3. Informasi Publish
