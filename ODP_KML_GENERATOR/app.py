@@ -36,7 +36,7 @@ div[data-testid="stVerticalBlock"]>div{
 .card{
 background:white;
 border-radius:14px;
-padding:18px 15px;
+padding:17px 15px;
 border:1px solid #edf2f7;
 box-shadow:0 3px 10px rgba(0,0,0,.04);
 }
@@ -313,7 +313,7 @@ if uploaded_file:
     st.sidebar.markdown(f"""
     <div style="
     background:white;
-    padding:18px;
+    padding:17px;
     border-radius:12px;
     border:1px solid #E5E7EB;
     font-family:Consolas;
@@ -618,33 +618,33 @@ if uploaded_file:
                             ">
                             
                             <tr style="background:#F8FAFC;">
-                            <th align="left" style="padding:18px;border:1px solid #E5E7EB;">Informasi</th>
-                            <th align="left" style="padding:18px;border:1px solid #E5E7EB;">Nilai</th>
+                            <th align="left" style="padding:17px;border:1px solid #E5E7EB;">Informasi</th>
+                            <th align="left" style="padding:17px;border:1px solid #E5E7EB;">Nilai</th>
                             </tr>
                             
                             <tr>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">📅 Update</td>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">{today}</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">📅 Update</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">{today}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">📍 Total ODP</td>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">{stats["total"]}</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">📍 Total ODP</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">{stats["total"]}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">☁️ Status</td>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">☁️ Status</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">🌿 Branch</td>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">{branch}</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">🌿 Branch</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">{branch}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">📂 Repository</td>
-                            <td style="padding:18px;border:1px solid #E5E7EB;">{repo}</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">📂 Repository</td>
+                            <td style="padding:17px;border:1px solid #E5E7EB;">{repo}</td>
                             </tr>
                             
                             </table>
