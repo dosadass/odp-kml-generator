@@ -341,22 +341,15 @@ if uploaded_file:
         
         <b>Tanggal Update</b><br>
         {today}
-        
         <br><br>
-        
         <b>Total Data ODP</b><br>
         {len(df)}
-        
         <br><br>
-        
         <b>Region</b><br>
         {df['Region'].nunique()}
-        
         <br><br>
-        
         <b>District Name</b><br>
         {df['District Name'].nunique()}
-        
         </div>
         """, unsafe_allow_html=True)
 
