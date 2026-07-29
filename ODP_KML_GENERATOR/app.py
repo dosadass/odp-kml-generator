@@ -650,9 +650,6 @@ if uploaded_file:
                             st.success("✔ Publish berhasil!")
                             st.markdown("</div>", unsafe_allow_html=True)
 
-                            st.markdown("""
-                    ### ☁️ 3. Informasi Publish
-                    """)
 
                             st.markdown(f"""
                     | Informasi | Nilai |
