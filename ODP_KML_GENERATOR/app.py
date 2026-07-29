@@ -20,8 +20,13 @@ st.markdown("""
 <style>
 
 .block-container{
-    padding-top:25px;
-    max-width:1400px;
+
+padding-top:25px;
+
+padding-bottom:40px;
+
+max-width:1450px;
+
 }
 
 section[data-testid="stSidebar"]{
@@ -34,11 +39,19 @@ div[data-testid="stVerticalBlock"]>div{
 }
 
 .card{
-    background:white;
-    border-radius:18px;
-    padding:24px;
-    border:1px solid #edf2f7;
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
+
+background:white;
+
+border-radius:18px;
+
+padding:24px;
+
+border:1px solid #DBEAFE;
+
+box-shadow:0 8px 24px rgba(0,0,0,.05);
+
+margin-bottom:20px;
+
 }
 
 .hero{
@@ -92,8 +105,56 @@ background:white;
 padding:20px;
 border-radius:16px;
 border:1px solid #ececec;
+
+background:linear-gradient(180deg,#FFFFFF,#F8FAFC);
+
+border-radius:18px;
+
+padding:24px;
+
+border:1px solid #DBEAFE;
+
+box-shadow:0 8px 20px rgba(59,130,246,.08);
+
+transition:.25s;
+
 text-align:center;
 box-shadow:0 5px 12px rgba(0,0,0,.04);
+
+height:150px;
+
+}
+
+.metric-card:hover{
+
+transform:translateY(-5px);
+
+box-shadow:0 15px 35px rgba(37,99,235,.15);
+
+}
+
+.metric-card h1{
+
+margin-top:10px;
+
+margin-bottom:5px;
+
+font-size:42px;
+
+color:#2563EB;
+
+}
+
+.metric-card p{
+
+margin:0;
+
+font-weight:700;
+
+color:#64748B;
+
+font-size:15px;
+
 }
 
 .metric-card h1{
@@ -108,18 +169,6 @@ color:#64748b;
 font-size:14px;
 }
 
-.stButton > button{
-    width:100%;
-    height:78px;
-    border-radius:14px;
-    font-size:20px;
-    font-weight:700;
-    border:none;
-    transition:0.25s;
-    color:white;
-    background:linear-gradient(90deg,#2563eb,#3b82f6);
-    box-shadow:0 8px 20px rgba(37,99,235,.25);
-}
 
 .stButton > button{
 
@@ -175,7 +224,6 @@ siap digunakan di Google Earth.
 """, unsafe_allow_html=True)
 
 
-st.markdown("### 📤 1. Upload File Excel ODP")
 st.markdown("""
 <div class="card">
 
@@ -195,13 +243,6 @@ st.caption(
 
 st.markdown("</div>", unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader(
-    "Upload file Excel ODP terbaru",
-    type=["xlsx", "xls"]
-)
-
-st.caption("Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate.")
-st.markdown('</div>', unsafe_allow_html=True)
 
 required_cols = [
     "Code",
@@ -249,11 +290,25 @@ kml_path = "ODP_Master.kml"
 kmz_path = "ODP_Master.kmz"
 
 st.sidebar.markdown("""
-# 📍 ODP TOOLS
-##### District Management
+<div style="text-align:center;">
 
----
-""")
+<h2 style="margin-bottom:0;color:#1D4ED8;">
+📍 ODP TOOLS
+</h2>
+
+<div style="
+color:#64748B;
+font-size:14px;
+margin-top:-4px;
+">
+District Management
+</div>
+
+</div>
+
+<br>
+<hr>
+""", unsafe_allow_html=True)
 
 if not uploaded_file:
 
@@ -285,6 +340,7 @@ if uploaded_file:
 
     folder_columns = [c for c in df.columns if c != coord_col]
 
+    st.sidebar.markdown("### 📂 STRUKTUR FOLDER")
     folder1 = st.sidebar.selectbox(
         "Folder Level 1",
         folder_columns,
@@ -335,38 +391,45 @@ if uploaded_file:
     if uploaded_file:
         st.sidebar.markdown(f"""
         <div style="
-        background:linear-gradient(180deg,#EFF6FF,#DBEAFE);
+        background:white;
         padding:18px;
-        border-radius:14px;
-        border:1px solid #BFDBFE;
+        border-radius:16px;
+        border:1px solid #E5E7EB;
+        box-shadow:0 5px 15px rgba(0,0,0,.05);
         ">
         
-        <h4 style="margin:0;color:#1D4ED8;">
+        <h4 style="
+        margin:0;
+        color:#2563EB;
+        ">
         📊 RINGKASAN DATA
         </h4>
         
-        <br>
+        <hr>
         
-        <b>Tanggal Update</b><br>
+        <b>📅 Update</b><br>
         {today}
         
         <br><br>
         
-        <b>Total Data ODP</b><br>
+        <b>📍 Total ODP</b><br>
         {len(df)}
         
         <br><br>
         
-        <b>Region</b><br>
+        <b>🌍 Region</b><br>
         {df['Region'].nunique()}
         
         <br><br>
         
-        <b>District Name</b><br>
+        <b>🏢 District</b><br>
         {df['District Name'].nunique()}
         
         </div>
         """, unsafe_allow_html=True)
+
+        {len(df)}
+
 
 
 
@@ -378,6 +441,43 @@ if uploaded_file:
     if missing:
         st.error(f"Kolom ini belum ada / beda nama: {missing}")
     else:
+    
+        st.markdown("## 📈 Dashboard")
+    
+        a,b,c,d = st.columns(4)
+    
+        with a:
+            st.markdown(f"""
+            <div class="metric-card">
+                <p>📍 Total ODP</p>
+                <h1>{len(df)}</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
+        with b:
+            st.markdown(f"""
+            <div class="metric-card">
+                <p>🌍 Region</p>
+                <h1>{df['Region'].nunique()}</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
+        with c:
+            st.markdown(f"""
+            <div class="metric-card">
+                <p>🏢 District</p>
+                <h1>{df['District Name'].nunique()}</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
+        with d:
+            st.markdown(f"""
+            <div class="metric-card">
+                <p>📅 Update</p>
+                <h1 style="font-size:20px">{today}</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
         st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
         col1, col2 = st.columns(2)
@@ -537,32 +637,102 @@ if uploaded_file:
 
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
-                
 
-            st.markdown("<div class='card'>", unsafe_allow_html=True)
-            left,right = st.columns([1.05,1])
+            st.markdown("""
+            <div class="card">
+            """, unsafe_allow_html=True)
+            st.markdown("""
+            <div class="card">
+            """, unsafe_allow_html=True)
+
+            left, right = st.columns([1.05,1])
 
             with left:
 
-                st.subheader("📊 2. Hasil Generate")
+                st.markdown("""
+                <h2 style="
+                margin-bottom:20px;
+                font-weight:700;
+                ">
+                📊 Hasil Generate
+                </h2>
+                """, unsafe_allow_html=True)
 
-                st.success("Generate selesai!")
+                st.markdown("""
+                <div style="
+                background:#ECFDF5;
+                border:1px solid #BBF7D0;
+                padding:18px;
+                border-radius:14px;
+                font-size:18px;
+                font-weight:700;
+                color:#166534;
+                margin-bottom:18px;
+                ">
+                ✅ Generate berhasil
+                </div>
+                """, unsafe_allow_html=True)
 
                 c1,c2,c3 = st.columns(3)
-                c1.metric("Total ODP", stats["total"])
-                c2.metric("Skipped", stats["skipped"])
-                c3.metric("Status","Success")
 
-                st.success(
-                    f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}"
-                )
+                with c1:
+                    st.markdown(f"""
+                    <div class="metric-card">
+                        <p>Total ODP</p>
+                        <h1>{stats["total"]}</h1>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with c2:
+                    st.markdown(f"""
+                    <div class="metric-card">
+                        <p>Skipped</p>
+                        <h1>{stats["skipped"]}</h1>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with c3:
+                    st.markdown("""
+                    <div class="metric-card">
+                        <p>Status</p>
+                        <h1 style="font-size:34px;">Success</h1>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                st.markdown(f"""
+                <div style="
+                background:#ECFDF5;
+                border:1px solid #BBF7D0;
+                padding:18px;
+                border-radius:12px;
+                color:#166534;
+                font-weight:600;
+                ">
+                
+                ✅ File berhasil dibuat
+                
+                <br><br>
+                
+                Total titik :
+                <b>{stats["total"]}</b>
+                
+                <br>
+                
+                Skipped :
+                <b>{stats["skipped"]}</b>
+                
+                </div>
+                """, unsafe_allow_html=True)
 
                 col1,col2 = st.columns(2)
 
                 with col1:
-                    with col1:
 
-                        st.markdown("### 📄 Download KML")
+                        st.markdown("""
+                        <div class="card">
+                        
+                        ### 📄 Download KML
+                        """, unsafe_allow_html=True)
 
                         with open(kml_path,"rb") as f:
                             st.download_button(
@@ -573,7 +743,6 @@ if uploaded_file:
                             )
 
                 with col2:
-                    with col2:
 
                         st.markdown("### 📦 Download KMZ")
 
@@ -586,8 +755,6 @@ if uploaded_file:
                             )
 
             with right:
-
-                    st.subheader("☁️ 3. Informasi Publish")
 
                     if publish:
                         token = st.secrets["GITHUB_TOKEN"]
@@ -603,6 +770,7 @@ if uploaded_file:
                             "Authorization": f"Bearer {token}",
                             "Accept": "application/vnd.github+json"
                         }
+                        st.markdown("</div>", unsafe_allow_html=True)
 
                         get = requests.get(url, headers=headers)
 
@@ -625,15 +793,19 @@ if uploaded_file:
                             headers=headers,
                             json=payload
                         )
-                        st.markdown("</div>", unsafe_allow_html=True)
 
                         if response.status_code in [200, 201]:
 
                             st.success("✔ Publish berhasil!")
 
                             st.markdown("""
-                    ### ☁️ 3. Informasi Publish
-                    """)
+                    <h2 style="
+                    margin-bottom:20px;
+                    font-weight:700;
+                    ">
+                    ☁️ Publish
+                    </h2>
+                    """, unsafe_allow_html=True)
 
                             st.markdown(f"""
                     | Informasi | Nilai |
@@ -656,3 +828,6 @@ if uploaded_file:
 
                             st.write(response.status_code)
                             st.write(response.json())
+                            st.markdown("""
+                            </div>
+                            """, unsafe_allow_html=True)
