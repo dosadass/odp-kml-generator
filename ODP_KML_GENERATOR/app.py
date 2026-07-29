@@ -21,11 +21,11 @@ st.markdown("""
 
 .block-container{
 
-padding-top:10px;
+padding-top:25px;
 
-padding-bottom:20px;
+padding-bottom:40px;
 
-max-width:1600px;
+max-width:1450px;
 
 }
 
@@ -44,38 +44,38 @@ background:white;
 
 border-radius:18px;
 
-padding:14px;
+padding:18px;
 
 border:1px solid #DBEAFE;
 
 box-shadow:0 8px 24px rgba(0,0,0,.05);
 
-margin-bottom:10px;
+margin-bottom:20px;
 
 }
 
 .hero{
 background:linear-gradient(135deg,#0f172a,#1d4ed8);
 border-radius:22px;
-padding:28px 34px;
+padding:40px;
 color:white;
-margin-bottom:15px;
+margin-bottom:25px;
 box-shadow:0 12px 30px rgba(0,0,0,.18);
 }
 
 .hero h1{
-font-size:36px;
+font-size:44px;
 margin-bottom:10px;
 }
 
 .hero p{
-font-size:16px;
+font-size:18px;
 color:#dbeafe;
 }
 
 .badge{
 display:inline-block;
-padding:6px 12px;
+padding:8px 16px;
 background:#2563eb;
 border-radius:999px;
 font-size:13px;
@@ -104,9 +104,9 @@ box-shadow:0 5px 18px rgba(0,0,0,.05);
 
 background:linear-gradient(180deg,#FFFFFF,#F8FAFC);
 
-border-radius:14px;
+border-radius:18px;
 
-padding:12px;
+padding:18px;
 
 border:1px solid #DBEAFE;
 
@@ -116,7 +116,7 @@ transition:.25s;
 
 text-align:center;
 
-height:90px;
+height:95px;
 
 }
 
@@ -134,7 +134,7 @@ margin-top:10px;
 
 margin-bottom:5px;
 
-font-size:28px;
+font-size:34px;
 
 color:#2563EB;
 
@@ -148,12 +148,12 @@ font-weight:700;
 
 color:#64748B;
 
-font-size:13px;
+font-size:15px;
 
 }
 
 .metric-card h1{
-font-size:28px;
+font-size:34px;
 margin:0;
 color:#2563eb;
 }
@@ -168,16 +168,16 @@ font-size:14px;
 .stButton > button{
 
 width:100%;
-height:48px;
+height:58px;
 
 border:none;
-border-radius:10px;
+border-radius:14px;
 
 background:linear-gradient(135deg,#2563eb,#1d4ed8);
 
 color:white;
 
-font-size:15px;
+font-size:17px;
 font-weight:700;
 
 transition:.25s;
@@ -354,10 +354,12 @@ if uploaded_file:
         index=0
     )
 
-    st.sidebar.markdown("""
+    st.sidebar.markdown(
+    """
     <div style="height:8px"></div>
-    <hr style="margin:10px 0;">
-    """, unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+    )
 
     st.sidebar.markdown("### 👁 Preview Struktur")
 
@@ -376,7 +378,7 @@ if uploaded_file:
     <div style="
     margin-top:12px;
     background:white;
-    padding:12px;
+    padding:15px;
     border-radius:12px;
     border:1px solid #E5E7EB;
     font-family:Consolas;
@@ -392,8 +394,7 @@ if uploaded_file:
         st.sidebar.markdown(f"""
         <div style="
         background:white;
-        line-height:1.5;
-        padding:12px;
+        padding:15px;
         border-radius:16px;
         border:1px solid #E5E7EB;
         box-shadow:0 5px 15px rgba(0,0,0,.05);
@@ -429,6 +430,7 @@ if uploaded_file:
         </div>
         """, unsafe_allow_html=True)
 
+        {len(df)}
 
 
 
@@ -606,7 +608,7 @@ if uploaded_file:
                 kmz.write(kml_path, "doc.kml")
 
 
-            left,right = st.columns([1,1], gap="small")
+            left,right=st.columns([1.2,1],gap="medium")
 
             with left:
 
@@ -623,7 +625,7 @@ if uploaded_file:
                 <div style="
                 background:#ECFDF5;
                 border:1px solid #BBF7D0;
-                padding:12px;
+                padding:18px;
                 border-radius:14px;
                 font-size:18px;
                 font-weight:700;
@@ -664,7 +666,7 @@ if uploaded_file:
                 <div style="
                 background:#ECFDF5;
                 border:1px solid #BBF7D0;
-                padding:14px;
+                padding:18px;
                 border-radius:12px;
                 color:#166534;
                 font-weight:600;
@@ -685,28 +687,28 @@ if uploaded_file:
                 </div>
                 """, unsafe_allow_html=True)
 
-                col1,col2 = st.columns(2, gap="small")
+                col1,col2 = st.columns(2)
 
                 with col1:
 
-                    st.markdown("""
-                    <div class="card">
-                    📥 Download KML
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                    with open(kml_path,"rb") as f:
-                        st.download_button(
-                            "ODP_Master.kml",
-                            f,
-                            file_name="ODP_Master.kml",
-                            use_container_width=True
-                        )
-
+                        st.markdown("""
+                        <div class="card">
+                        
+                        📥 Download KML
+                        st.markdown("</div>",unsafe_allow_html=True)
+                    
+                        with open(kml_path,"rb") as f:
+                            st.download_button(
+                                "ODP_Master.kml",
+                                f,
+                                file_name="ODP_Master.kml",
+                                use_container_width=True
+                            )
+                
                 with col2:
 
                         st.markdown("📥 Download KMZ")
-
+                    
                         with open(kmz_path,"rb") as f:
                             st.download_button(
                                 "ODP_Master.kmz",
@@ -716,94 +718,78 @@ if uploaded_file:
                             )
 
             with right:
-
+                    
                     if publish:
                         token = st.secrets["GITHUB_TOKEN"]
                         repo = st.secrets["GITHUB_REPO"]
                         branch = st.secrets["GITHUB_BRANCH"]
-
+                    
                         with open(kmz_path, "rb") as file:
                             content = base64.b64encode(file.read()).decode()
-
+                    
                         url = f"https://api.github.com/repos/{repo}/contents/ODP_Master.kmz"
-
+                    
                         headers = {
                             "Authorization": f"Bearer {token}",
                             "Accept": "application/vnd.github+json"
                         }
-
+                        st.markdown("</div>", unsafe_allow_html=True)
+                    
                         get = requests.get(url, headers=headers)
-
+                    
                         sha = None
-
+                    
                         if get.status_code == 200:
                             sha = get.json()["sha"]
-
+                    
                         payload = {
                             "message": f"Update KMZ {today}",
                             "content": content,
                             "branch": branch
                         }
-
+                    
                         if sha:
                             payload["sha"] = sha
-
+                    
                         response = requests.put(
                             url,
                             headers=headers,
                             json=payload
                         )
-
+                    
                         if response.status_code in [200, 201]:
-
+                    
+                st.markdown("""
+                <div style="
+                background:#ECFDF5;
+                border:1px solid #BBF7D0;
+                padding:18px;
+                border-radius:14px;
+                font-size:18px;
+                font-weight:700;
+                color:#166534;
+                margin-bottom:18px;
+                ">
+                ✔ Publish berhasil
+                </div>
+                """, unsafe_allow_html=True)
+        
+                st.markdown("""
+                    <h2 style="
+                    margin-bottom:20px;
+                    font-weight:700;
+                    ">
+                    ☁️ Publish
+                    </h2>
+                    """, unsafe_allow_html=True)
+                    
                             st.markdown(f"""
-                            <table style="
-                            width:100%;
-                            border-collapse:collapse;
-                            font-size:14px;
-                            ">
-                            
-                            <tr>
-                            <th align="left">Informasi</th>
-                            <th align="left">Nilai</th>
-                            </tr>
-                            
-                            <tr>
-                            <td>📅 Update</td>
-                            <td>{today}</td>
-                            </tr>
-                            
-                            <tr>
-                            <td>📍 Total ODP</td>
-                            <td>{stats["total"]}</td>
-                            </tr>
-                            
-                            <tr>
-                            <td>☁️ Status</td>
-                            <td>GitHub berhasil diperbarui</td>
-                            </tr>
-                            
-                            <tr>
-                            <td>🌿 Branch</td>
-                            <td>{branch}</td>
-                            </tr>
-                            
-                            <tr>
-                            <td>📂 Repository</td>
-                            <td>{repo}</td>
-                            </tr>
-                            
-                            </table>
-                            """, unsafe_allow_html=True)
-
-
-            st.markdown(f"""
+                    st.markdown(f"""
             <table style="
             width:100%;
             border-collapse:collapse;
             font-size:14px;
             ">
-            
             <tr>
             <th align="left">Informasi</th>
             <th align="left">Nilai</th>
@@ -835,4 +821,41 @@ if uploaded_file:
             </tr>
             
             </table>
-            """, unsafe_allow_html=True)
+            """,unsafe_allow_html=True)
+                <table style="
+                width:100%;
+                border-collapse:collapse;
+                font-size:14px;
+                ">
+                <tr>
+                <th align="left">Informasi</th>
+                <th align="left">Nilai</th>
+                </tr>
+                
+                <tr>
+                <td>📅 Update</td>
+                <td>{today}</td>
+                </tr>
+                
+                <tr>
+                <td>📍 Total ODP</td>
+                <td>{stats["total"]}</td>
+                </tr>
+                
+                <tr>
+                <td>☁️ Status</td>
+                <td>GitHub berhasil diperbarui</td>
+                </tr>
+                
+                <tr>
+                <td>🌿 Branch</td>
+                <td>{branch}</td>
+                </tr>
+                
+                <tr>
+                <td>📂 Repository</td>
+                <td>{repo}</td>
+                </tr>
+                
+                </table>
+                """,unsafe_allow_html=True)
