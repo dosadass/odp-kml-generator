@@ -165,8 +165,8 @@ siap digunakan di Google Earth.
 st.markdown("""
 <div style="
 background:white;
-padding:10px 18px;
-border-radius:14px;
+padding:8px 16px;
+border-radius:13px;
 border:1px solid #e5e7eb;
 margin-bottom:10px;
 box-shadow:0 3px 10px rgba(0,0,0,.04);
@@ -613,38 +613,38 @@ if uploaded_file:
                             <table style="
                             width:100%;
                             border-collapse:collapse;
-                            font-size:13px;
+                            font-size:15px;
                             line-height:1.2;
                             ">
                             
                             <tr style="background:#F8FAFC;">
-                            <th align="left" style="padding:5px;border:1px solid #E5E7EB;">Informasi</th>
-                            <th align="left" style="padding:5px;border:1px solid #E5E7EB;">Nilai</th>
+                            <th align="left" style="padding:10px;border:1px solid #E5E7EB;">Informasi</th>
+                            <th align="left" style="padding:10px;border:1px solid #E5E7EB;">Nilai</th>
                             </tr>
                             
                             <tr>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">📅 Update</td>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">{today}</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">📅 Update</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">{today}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">📍 Total ODP</td>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">{stats["total"]}</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">📍 Total ODP</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">{stats["total"]}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">☁️ Status</td>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">☁️ Status</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">🌿 Branch</td>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">{branch}</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">🌿 Branch</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">{branch}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">📂 Repository</td>
-                            <td style="padding:5px;border:1px solid #E5E7EB;">{repo}</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">📂 Repository</td>
+                            <td style="padding:10px;border:1px solid #E5E7EB;">{repo}</td>
                             </tr>
                             
                             </table>
