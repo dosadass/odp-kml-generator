@@ -797,6 +797,18 @@ if uploaded_file:
                             """, unsafe_allow_html=True)
 
             
+            st.markdown(f"""
+            <table style="
+            width:100%;
+            border-collapse:collapse;
+            font-size:14px;
+            ">
+            
+            <tr>
+            <th align="left">Informasi</th>
+            <th align="left">Nilai</th>
+            </tr>
+            
             <tr>
             <td>📅 Update</td>
             <td>{today}</td>
