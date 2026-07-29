@@ -773,21 +773,21 @@ if uploaded_file:
                             </div>
                             """, unsafe_allow_html=True)
         
-                st.markdown("""
-                    <h2 style="
-                    margin-bottom:20px;
-                    font-weight:700;
-                    ">
-                    ☁️ Publish
-                    </h2>
-                    """, unsafe_allow_html=True)
-                    
-                st.markdown(f"""
-                <table style="
-                width:100%;
-                border-collapse:collapse;
-                font-size:14px;
-                ">
+                            st.markdown("""
+                                <h2 style="
+                                margin-bottom:20px;
+                                font-weight:700;
+                                ">
+                                ☁️ Publish
+                                </h2>
+                                """, unsafe_allow_html=True)
+                                
+                            st.markdown(f"""
+                            <table style="
+                            width:100%;
+                            border-collapse:collapse;
+                            font-size:14px;
+                            ">
                 
                 <tr>
                 <th align="left">Informasi</th>
