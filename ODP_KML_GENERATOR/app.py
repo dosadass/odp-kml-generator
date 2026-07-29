@@ -34,40 +34,31 @@ div[data-testid="stVerticalBlock"]>div{
 }
 
 .card{
-    background:white;
-    border-radius:18px;
-    padding:12px 18px;
-    border:1px solid #edf2f7;
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
+background:white;
+border-radius:16px;
+padding:14px 18px;
+border:1px solid #edf2f7;
+box-shadow:0 4px 12px rgba(0,0,0,.05);
 }
 
 .hero{
 background:linear-gradient(135deg,#0f172a,#1d4ed8);
-border-radius:22px;
-padding:40px;
+border-radius:18px;
+padding:22px 28px;
 color:white;
-margin-bottom:25px;
-box-shadow:0 12px 30px rgba(0,0,0,.18);
+margin-bottom:18px;
+box-shadow:0 8px 20px rgba(0,0,0,.12);
 }
 
 .hero h1{
-font-size:44px;
-margin-bottom:10px;
+font-size:34px;
+margin:0 0 6px;
 }
 
 .hero p{
-font-size:18px;
+font-size:14px;
+margin:0;
 color:#dbeafe;
-}
-
-.badge{
-display:inline-block;
-padding:8px 16px;
-background:#2563eb;
-border-radius:999px;
-font-size:13px;
-font-weight:700;
-margin-bottom:18px;
 }
 
 .upload-card{
@@ -160,10 +151,6 @@ margin:25px 0;
 st.markdown("""
 <div class="hero">
 
-<div class="badge">
-📍 DISTRICT MANAGEMENT
-</div>
-
 <h1>ODP KML / KMZ Generator</h1>
 
 <p>
@@ -236,11 +223,24 @@ kml_path = "ODP_Master.kml"
 kmz_path = "ODP_Master.kmz"
 
 st.sidebar.markdown("""
-# 📍 ODP TOOLS
-##### District Management
+<div style="text-align:center;">
+
+<h2 style="margin-bottom:2px;">
+📍 ODP TOOLS
+</h2>
+
+<div style="
+font-size:14px;
+color:#64748B;
+margin-bottom:12px;
+">
+District Management
+</div>
+
+</div>
 
 ---
-""")
+""", unsafe_allow_html=True)
 
 if not uploaded_file:
 
@@ -329,7 +329,7 @@ if uploaded_file:
     if missing:
         st.error(f"Kolom ini belum ada / beda nama: {missing}")
     else:
-        st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
+        st.info(f"📍 Koordinat : {coord_col}")
 
         col1, col2 = st.columns(2)
 
@@ -607,37 +607,38 @@ if uploaded_file:
                             <table style="
                             width:100%;
                             border-collapse:collapse;
-                            font-size:14px;
+                            font-size:13px;
+                            line-height:1.2;
                             ">
                             
                             <tr style="background:#F8FAFC;">
-                            <th align="left" style="padding:8px;border:1px solid #E5E7EB;">Informasi</th>
-                            <th align="left" style="padding:8px;border:1px solid #E5E7EB;">Nilai</th>
+                            <th align="left" style="padding:5px;border:1px solid #E5E7EB;">Informasi</th>
+                            <th align="left" style="padding:5px;border:1px solid #E5E7EB;">Nilai</th>
                             </tr>
                             
                             <tr>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">📅 Update</td>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">{today}</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">📅 Update</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">{today}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">📍 Total ODP</td>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">{stats["total"]}</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">📍 Total ODP</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">{stats["total"]}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">☁️ Status</td>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">☁️ Status</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">🌿 Branch</td>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">{branch}</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">🌿 Branch</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">{branch}</td>
                             </tr>
                             
                             <tr>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">📂 Repository</td>
-                            <td style="padding:8px;border:1px solid #E5E7EB;">{repo}</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">📂 Repository</td>
+                            <td style="padding:5px;border:1px solid #E5E7EB;">{repo}</td>
                             </tr>
                             
                             </table>
