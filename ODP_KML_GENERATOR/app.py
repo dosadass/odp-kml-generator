@@ -613,7 +613,6 @@ if uploaded_file:
                         if response.status_code in [200, 201]:
 
                             st.success("✔ Publish berhasil!")
-                            st.markdown("</div>", unsafe_allow_html=True)
 
                             st.markdown("""
                     ### ☁️ 3. Informasi Publish
