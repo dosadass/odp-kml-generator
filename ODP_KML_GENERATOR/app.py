@@ -530,10 +530,7 @@ if uploaded_file:
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
 
-            st.markdown("<div class='card'>", unsafe_allow_html=True)
-            st.markdown("""
-            <div class="card">
-            """, unsafe_allow_html=True)
+
             left,right = st.columns([1.05,1])
 
             with left:
@@ -640,12 +637,10 @@ if uploaded_file:
                             headers=headers,
                             json=payload
                         )
-                        st.markdown("</div>", unsafe_allow_html=True)
 
                         if response.status_code in [200, 201]:
 
                             st.success("✔ Publish berhasil!")
-                            st.markdown("</div>", unsafe_allow_html=True)
 
 
                             st.markdown(f"""
