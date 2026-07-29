@@ -44,7 +44,7 @@ background:white;
 
 border-radius:18px;
 
-padding:24px;
+padding:18px;
 
 border:1px solid #DBEAFE;
 
@@ -106,7 +106,7 @@ background:linear-gradient(180deg,#FFFFFF,#F8FAFC);
 
 border-radius:18px;
 
-padding:24px;
+padding:18px;
 
 border:1px solid #DBEAFE;
 
@@ -116,7 +116,7 @@ transition:.25s;
 
 text-align:center;
 
-height:150px;
+height:120px;
 
 }
 
@@ -134,7 +134,7 @@ margin-top:10px;
 
 margin-bottom:5px;
 
-font-size:42px;
+font-size:34px;
 
 color:#2563EB;
 
@@ -153,7 +153,7 @@ font-size:15px;
 }
 
 .metric-card h1{
-font-size:42px;
+font-size:34px;
 margin:0;
 color:#2563eb;
 }
@@ -354,7 +354,10 @@ if uploaded_file:
         index=0
     )
 
-    st.sidebar.markdown("---")
+    st.sidebar.markdown(
+    "<div style='height:10px'></div>",
+    unsafe_allow_html=True
+    )
     st.sidebar.markdown("### 👁 Preview Struktur")
     
     preview = folder1
@@ -387,7 +390,7 @@ if uploaded_file:
         st.sidebar.markdown(f"""
         <div style="
         background:white;
-        padding:18px;
+        padding:15px;
         border-radius:16px;
         border:1px solid #E5E7EB;
         box-shadow:0 5px 15px rgba(0,0,0,.05);
@@ -436,44 +439,6 @@ if uploaded_file:
     if missing:
         st.error(f"Kolom ini belum ada / beda nama: {missing}")
     else:
-    
-        st.markdown("## 📈 Dashboard")
-    
-        a,b,c,d = st.columns(4)
-    
-        with a:
-            st.markdown(f"""
-            <div class="metric-card">
-                <p>📍 Total ODP</p>
-                <h1>{len(df)}</h1>
-            </div>
-            """, unsafe_allow_html=True)
-    
-        with b:
-            st.markdown(f"""
-            <div class="metric-card">
-                <p>🌍 Region</p>
-                <h1>{df['Region'].nunique()}</h1>
-            </div>
-            """, unsafe_allow_html=True)
-    
-        with c:
-            st.markdown(f"""
-            <div class="metric-card">
-                <p>🏢 District</p>
-                <h1>{df['District Name'].nunique()}</h1>
-            </div>
-            """, unsafe_allow_html=True)
-    
-        with d:
-            st.markdown(f"""
-            <div class="metric-card">
-                <p>📅 Update</p>
-                <h1 style="font-size:20px">{today}</h1>
-            </div>
-            """, unsafe_allow_html=True)
-    
-        st.success(f"Koordinat terdeteksi di kolom: {coord_col}")
 
         col1, col2 = st.columns(2)
 
@@ -633,14 +598,8 @@ if uploaded_file:
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
 
-            st.markdown("""
-            <div class="card">
-            """, unsafe_allow_html=True)
-            st.markdown("""
-            <div class="card">
-            """, unsafe_allow_html=True)
             
-            left, right = st.columns([1.05,1])
+            left,right = st.columns([1,1], gap="large")
         
             with left:
         
@@ -726,7 +685,7 @@ if uploaded_file:
                         st.markdown("""
                         <div class="card">
                         
-                        ### 📄 Download KML
+                        📥 Download KML
                         """, unsafe_allow_html=True)
                     
                         with open(kml_path,"rb") as f:
@@ -739,7 +698,7 @@ if uploaded_file:
                 
                 with col2:
 
-                        st.markdown("### 📦 Download KMZ")
+                        st.markdown("📥 Download KMZ")
                     
                         with open(kmz_path,"rb") as f:
                             st.download_button(
@@ -791,7 +750,20 @@ if uploaded_file:
                     
                         if response.status_code in [200, 201]:
                     
-                            st.success("✔ Publish berhasil!")
+                            st.markdown("""
+                            <div style="
+                            background:#ECFDF5;
+                            border:1px solid #BBF7D0;
+                            padding:18px;
+                            border-radius:14px;
+                            font-size:18px;
+                            font-weight:700;
+                            color:#166534;
+                            margin-bottom:18px;
+                            ">
+                            ✔ Publish berhasil
+                            </div>
+                            """, unsafe_allow_html=True)
                     
                             st.markdown("""
                     <h2 style="
