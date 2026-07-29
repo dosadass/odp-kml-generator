@@ -20,8 +20,13 @@ st.markdown("""
 <style>
 
 .block-container{
-    padding-top:25px;
-    max-width:1400px;
+
+padding-top:25px;
+
+padding-bottom:40px;
+
+max-width:1450px;
+
 }
 
 section[data-testid="stSidebar"]{
@@ -34,11 +39,19 @@ div[data-testid="stVerticalBlock"]>div{
 }
 
 .card{
-    background:white;
-    border-radius:18px;
-    padding:24px;
-    border:1px solid #edf2f7;
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
+
+background:white;
+
+border-radius:18px;
+
+padding:24px;
+
+border:1px solid #DBEAFE;
+
+box-shadow:0 8px 24px rgba(0,0,0,.05);
+
+margin-bottom:20px;
+
 }
 
 .hero{
@@ -241,11 +254,25 @@ kml_path = "ODP_Master.kml"
 kmz_path = "ODP_Master.kmz"
 
 st.sidebar.markdown("""
-# 📍 ODP TOOLS
-##### District Management
+<div style="text-align:center;">
 
----
-""")
+<h2 style="margin-bottom:0;color:#1D4ED8;">
+📍 ODP TOOLS
+</h2>
+
+<div style="
+color:#64748B;
+font-size:14px;
+margin-top:-4px;
+">
+District Management
+</div>
+
+</div>
+
+<br>
+<hr>
+""", unsafe_allow_html=True)
 
 if not uploaded_file:
 
@@ -277,6 +304,7 @@ if uploaded_file:
 
     folder_columns = [c for c in df.columns if c != coord_col]
 
+    st.sidebar.markdown("### 📂 STRUKTUR FOLDER")
     folder1 = st.sidebar.selectbox(
         "Folder Level 1",
         folder_columns,
@@ -327,7 +355,42 @@ if uploaded_file:
     if uploaded_file:
         st.sidebar.markdown(f"""
         <div style="
-        background:linear-gradient(180deg,#EFF6FF,#DBEAFE);
+        background:white;
+        padding:18px;
+        border-radius:16px;
+        border:1px solid #E5E7EB;
+        box-shadow:0 5px 15px rgba(0,0,0,.05);
+        ">
+        
+        <h4 style="
+        margin:0;
+        color:#2563EB;
+        ">
+        📊 RINGKASAN DATA
+        </h4>
+        
+        <hr>
+        
+        <b>📅 Update</b><br>
+        {today}
+        
+        <br><br>
+        
+        <b>📍 Total ODP</b><br>
+        {len(df)}
+        
+        <br><br>
+        
+        <b>🌍 Region</b><br>
+        {df['Region'].nunique()}
+        
+        <br><br>
+        
+        <b>🏢 District</b><br>
+        {df['District Name'].nunique()}
+        
+        </div>
+        """, unsafe_allow_html=True)
         padding:18px;
         border-radius:14px;
         border:1px solid #BFDBFE;
@@ -568,16 +631,41 @@ if uploaded_file:
                     </div>
                     """, unsafe_allow_html=True)
                     
-                st.success(
-                    f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}"
-                )
+                st.markdown(f"""
+                <div style="
+                background:#ECFDF5;
+                border:1px solid #BBF7D0;
+                padding:18px;
+                border-radius:12px;
+                color:#166534;
+                font-weight:600;
+                ">
+                
+                ✅ File berhasil dibuat
+                
+                <br><br>
+                
+                Total titik :
+                <b>{stats["total"]}</b>
+                
+                <br>
+                
+                Skipped :
+                <b>{stats["skipped"]}</b>
+                
+                </div>
+                """, unsafe_allow_html=True)
             
                 col1,col2 = st.columns(2)
     
                 with col1:
                     with col1:
 
-                        st.markdown("### 📄 Download KML")
+                        st.markdown("""
+                        <div class="card">
+                        
+                        ### 📄 Download KML
+                        """, unsafe_allow_html=True)
                     
                         with open(kml_path,"rb") as f:
                             st.download_button(
@@ -586,6 +674,7 @@ if uploaded_file:
                                 file_name="ODP_Master.kml",
                                 use_container_width=True
                             )
+                            st.markdown("</div>", unsafe_allow_html=True)
                 
                 with col2:
                     with col2:
@@ -599,10 +688,15 @@ if uploaded_file:
                                 file_name="ODP_Master.kmz",
                                 use_container_width=True
                             )
+                            st.markdown("</div>", unsafe_allow_html=True)
 
             with right:
             
-                    st.subheader("☁️ 3. Informasi Publish")
+                    st.markdown("""
+                    <div class="card">
+                    
+                    ### ☁️ 3. Informasi Publish
+                    """, unsafe_allow_html=True)
                     
                     if publish:
                         token = st.secrets["GITHUB_TOKEN"]
@@ -618,6 +712,7 @@ if uploaded_file:
                             "Authorization": f"Bearer {token}",
                             "Accept": "application/vnd.github+json"
                         }
+                        st.markdown("</div>", unsafe_allow_html=True)
                     
                         get = requests.get(url, headers=headers)
                     
