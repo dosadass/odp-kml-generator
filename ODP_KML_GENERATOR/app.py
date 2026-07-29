@@ -36,7 +36,7 @@ div[data-testid="stVerticalBlock"]>div{
 .card{
     background:white;
     border-radius:18px;
-    padding:24px;
+    padding:12px 18px;
     border:1px solid #edf2f7;
     box-shadow:0 5px 20px rgba(0,0,0,.05);
 }
@@ -186,10 +186,6 @@ st.markdown("""
 uploaded_file = st.file_uploader(
     "Upload file Excel ODP terbaru",
     type=["xlsx","xls"]
-)
-
-st.caption(
-    "Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate."
 )
 
 st.markdown("</div>", unsafe_allow_html=True)
