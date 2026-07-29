@@ -785,43 +785,43 @@ if uploaded_file:
                     
                             st.markdown(f"""
                     st.markdown(f"""
-            <table style="
-            width:100%;
-            border-collapse:collapse;
-            font-size:14px;
-            ">
-            <tr>
-            <th align="left">Informasi</th>
-            <th align="left">Nilai</th>
-            </tr>
-            
-            <tr>
-            <td>📅 Update</td>
-            <td>{today}</td>
-            </tr>
-            
-            <tr>
-            <td>📍 Total ODP</td>
-            <td>{stats["total"]}</td>
-            </tr>
-            
-            <tr>
-            <td>☁️ Status</td>
-            <td>GitHub berhasil diperbarui</td>
-            </tr>
-            
-            <tr>
-            <td>🌿 Branch</td>
-            <td>{branch}</td>
-            </tr>
-            
-            <tr>
-            <td>📂 Repository</td>
-            <td>{repo}</td>
-            </tr>
-            
-            </table>
-            """,unsafe_allow_html=True)
+                <table style="
+                width:100%;
+                border-collapse:collapse;
+                font-size:14px;
+                ">
+                <tr>
+                <th align="left">Informasi</th>
+                <th align="left">Nilai</th>
+                </tr>
+                
+                <tr>
+                <td>📅 Update</td>
+                <td>{today}</td>
+                </tr>
+                
+                <tr>
+                <td>📍 Total ODP</td>
+                <td>{stats["total"]}</td>
+                </tr>
+                
+                <tr>
+                <td>☁️ Status</td>
+                <td>GitHub berhasil diperbarui</td>
+                </tr>
+                
+                <tr>
+                <td>🌿 Branch</td>
+                <td>{branch}</td>
+                </tr>
+                
+                <tr>
+                <td>📂 Repository</td>
+                <td>{repo}</td>
+                </tr>
+                
+                </table>
+                """,unsafe_allow_html=True)
 
 
         
