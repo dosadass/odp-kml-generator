@@ -796,11 +796,6 @@ if uploaded_file:
                             </table>
                             """, unsafe_allow_html=True)
 
-                
-            <tr>
-            <th align="left">Informasi</th>
-            <th align="left">Nilai</th>
-            </tr>
             
             <tr>
             <td>📅 Update</td>
