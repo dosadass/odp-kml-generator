@@ -391,23 +391,7 @@ if uploaded_file:
         
         </div>
         """, unsafe_allow_html=True)
-        padding:18px;
-        border-radius:14px;
-        border:1px solid #BFDBFE;
-        ">
-        
-        <h4 style="margin:0;color:#1D4ED8;">
-        📊 RINGKASAN DATA
-        </h4>
-        
-        <br>
-        
-        <b>Tanggal Update</b><br>
-        {today}
-        
-        <br><br>
-        
-        <b>Total Data ODP</b><br>
+    
         {len(df)}
         
         <br><br>
