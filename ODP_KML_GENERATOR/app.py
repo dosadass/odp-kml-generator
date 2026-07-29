@@ -556,13 +556,37 @@ if uploaded_file:
             st.markdown("""
             <div class="card">
             """, unsafe_allow_html=True)
-            left,right = st.columns([1.05,1])
+            st.markdown("""
+            <div class="card">
+            """, unsafe_allow_html=True)
+            
+            left, right = st.columns([1.05,1])
         
             with left:
         
-                st.subheader("📊 2. Hasil Generate")
+                st.markdown("""
+                <h2 style="
+                margin-bottom:20px;
+                font-weight:700;
+                ">
+                📊 Hasil Generate
+                </h2>
+                """, unsafe_allow_html=True)
         
-                st.success("Generate selesai!")
+                st.markdown("""
+                <div style="
+                background:#ECFDF5;
+                border:1px solid #BBF7D0;
+                padding:18px;
+                border-radius:14px;
+                font-size:18px;
+                font-weight:700;
+                color:#166534;
+                margin-bottom:18px;
+                ">
+                ✅ Generate berhasil
+                </div>
+                """, unsafe_allow_html=True)
         
                 c1,c2,c3 = st.columns(3)
                 
@@ -690,8 +714,13 @@ if uploaded_file:
                             st.success("✔ Publish berhasil!")
                     
                             st.markdown("""
-                    ### ☁️ 3. Informasi Publish
-                    """)
+                    <h2 style="
+                    margin-bottom:20px;
+                    font-weight:700;
+                    ">
+                    ☁️ Publish
+                    </h2>
+                    """, unsafe_allow_html=True)
                     
                             st.markdown(f"""
                     | Informasi | Nilai |
@@ -714,6 +743,9 @@ if uploaded_file:
                     
                             st.write(response.status_code)
                             st.write(response.json())
+                            st.markdown("""
+                            </div>
+                            """, unsafe_allow_html=True)
 
 
         
