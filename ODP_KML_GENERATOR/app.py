@@ -193,7 +193,6 @@ st.markdown("</div>", unsafe_allow_html=True)
 
 required_cols = [
     "Code",
-    "Promo",
     "Kelurahan",
     "Kecamatan",
     "Region",
@@ -330,24 +329,6 @@ if uploaded_file:
         ">
         
         <h4 style="margin:0;color:#1D4ED8;">
-        📊 RINGKASAN DATA
-        </h4>
-        
-        <br>
-        
-        <b>Tanggal Update</b><br>
-        {today}
-        <br><br>
-        <b>Total Data ODP</b><br>
-        {len(df)}
-        <br><br>
-        <b>Region</b><br>
-        {df['Region'].nunique()}
-        <br><br>
-        <b>District Name</b><br>
-        {df['District Name'].nunique()}
-        </div>
-        """, unsafe_allow_html=True)
 
 
 
@@ -402,9 +383,11 @@ if uploaded_file:
 
                 promo = ""
 
-                if pd.notna(row["Promo"]):
-                    promo = str(row["Promo"]).strip()
-
+                if "Promo" in df.columns:
+                    promo = str(row["Promo"]).strip() if pd.notna(row["Promo"]) else ""
+                else:
+                    promo = ""
+                
                 if promo:
                     point_name = f"{row['Code']} - {promo}"
                 else:
@@ -567,7 +550,7 @@ if uploaded_file:
 
                         with open(kml_path,"rb") as f:
                             st.download_button(
-                                "ODP_Master.kml",
+                                "File kml",
                                 f,
                                 file_name="ODP_Master.kml",
                                 use_container_width=True
@@ -580,7 +563,7 @@ if uploaded_file:
 
                         with open(kmz_path,"rb") as f:
                             st.download_button(
-                                "ODP_Master.kmz",
+                                "File kmz",
                                 f,
                                 file_name="ODP_Master.kmz",
                                 use_container_width=True
@@ -633,23 +616,41 @@ if uploaded_file:
 
 
                             st.markdown(f"""
-                    | Informasi | Nilai |
-                    |-----------|-------|
-                    | 📅 Update | {today} |
-                    | 📍 Total ODP | {stats["total"]} |
-                    | ☁️ Status | GitHub berhasil diperbarui |
-                    | 🌿 Branch | {branch} |
-                    | 📂 Repository | {repo} |
-                    """)
-
-                            st.markdown(f"""
-                    - 📅 **Update** : {today}
-                    - 📍 **Total ODP** : {stats["total"]}
-                    - ☁️ **Status** : GitHub berhasil diperbarui.
-                    """)
-
-                        else:
-                            st.error("Publish gagal!")
-
-                            st.write(response.status_code)
-                            st.write(response.json())
+                        <table style="
+                        width:100%;
+                        border-collapse:collapse;
+                        font-size:14px;
+                        ">
+                        
+                        <tr style="background:#F8FAFC;">
+                        <th align="left" style="padding:8px;border:1px solid #E5E7EB;">Informasi</th>
+                        <th align="left" style="padding:8px;border:1px solid #E5E7EB;">Nilai</th>
+                        </tr>
+                        
+                        <tr>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">📅 Update</td>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">{today}</td>
+                        </tr>
+                        
+                        <tr>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">📍 Total ODP</td>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">{stats["total"]}</td>
+                        </tr>
+                        
+                        <tr>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">☁️ Status</td>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
+                        </tr>
+                        
+                        <tr>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">🌿 Branch</td>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">{branch}</td>
+                        </tr>
+                        
+                        <tr>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">📂 Repository</td>
+                        <td style="padding:8px;border:1px solid #E5E7EB;">{repo}</td>
+                        </tr>
+                        
+                        </table>
+                        """, unsafe_allow_html=True)
