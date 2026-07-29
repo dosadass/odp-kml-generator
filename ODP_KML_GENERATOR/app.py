@@ -541,6 +541,8 @@ if uploaded_file:
                 st.subheader("📊 2. Hasil Generate")
 
                 st.success("Generate selesai!")
+
+                c1,c2,c3 = st.columns(3)
                 
                 with c1:
                     st.markdown(f"""
