@@ -330,6 +330,32 @@ if uploaded_file:
         
         <h4 style="margin:0;color:#1D4ED8;">
 
+        📊 RINGKASAN DATA
+        </h4>
+        
+        <br>
+        
+        <b>Tanggal Update</b><br>
+        {today}
+        
+        <br><br>
+        
+        <b>Total Data ODP</b><br>
+        {len(df)}
+        
+        <br><br>
+        
+        <b>Region</b><br>
+        {df['Region'].nunique()}
+        
+        <br><br>
+        
+        <b>District Name</b><br>
+        {df['District Name'].nunique()}
+        
+        </div>
+        """, unsafe_allow_html=True)
+
 
 
     missing = [col for col in required_cols if col not in df.columns]
