@@ -116,7 +116,7 @@ transition:.25s;
 
 text-align:center;
 
-height:120px;
+height:95px;
 
 }
 
@@ -355,9 +355,12 @@ if uploaded_file:
     )
 
     st.sidebar.markdown(
-    "<div style='height:10px'></div>",
+    """
+    <div style="height:8px"></div>
+    """,
     unsafe_allow_html=True
     )
+    
     st.sidebar.markdown("### 👁 Preview Struktur")
     
     preview = folder1
@@ -373,6 +376,7 @@ if uploaded_file:
     
     st.sidebar.markdown(f"""
     <div style="
+    margin-top:12px;
     background:white;
     padding:15px;
     border-radius:12px;
@@ -453,7 +457,12 @@ if uploaded_file:
                 "☁️ Publish\n\nPublish ke GitHub",
                 use_container_width=True
             )
-        st.divider()
+        st.markdown(
+        """
+        <div style="margin-top:15px;margin-bottom:10px;border-top:1px solid #E5E7EB;"></div>
+        """,
+        unsafe_allow_html=True
+        )
         
         if generate or publish:
         
@@ -599,7 +608,7 @@ if uploaded_file:
                 kmz.write(kml_path, "doc.kml")
 
             
-            left,right = st.columns([1,1], gap="large")
+            left,right=st.columns([1.2,1],gap="medium")
         
             with left:
         
@@ -686,7 +695,7 @@ if uploaded_file:
                         <div class="card">
                         
                         📥 Download KML
-                        """, unsafe_allow_html=True)
+                        st.markdown("</div>",unsafe_allow_html=True)
                     
                         with open(kml_path,"rb") as f:
                             st.download_button(
@@ -750,22 +759,22 @@ if uploaded_file:
                     
                         if response.status_code in [200, 201]:
                     
-                            st.markdown("""
-                            <div style="
-                            background:#ECFDF5;
-                            border:1px solid #BBF7D0;
-                            padding:18px;
-                            border-radius:14px;
-                            font-size:18px;
-                            font-weight:700;
-                            color:#166534;
-                            margin-bottom:18px;
-                            ">
-                            ✔ Publish berhasil
-                            </div>
-                            """, unsafe_allow_html=True)
-                    
-                            st.markdown("""
+                st.markdown("""
+                <div style="
+                background:#ECFDF5;
+                border:1px solid #BBF7D0;
+                padding:18px;
+                border-radius:14px;
+                font-size:18px;
+                font-weight:700;
+                color:#166534;
+                margin-bottom:18px;
+                ">
+                ✔ Publish berhasil
+                </div>
+                """, unsafe_allow_html=True)
+        
+                st.markdown("""
                     <h2 style="
                     margin-bottom:20px;
                     font-weight:700;
@@ -775,29 +784,44 @@ if uploaded_file:
                     """, unsafe_allow_html=True)
                     
                             st.markdown(f"""
-                    | Informasi | Nilai |
-                    |-----------|-------|
-                    | 📅 Update | {today} |
-                    | 📍 Total ODP | {stats["total"]} |
-                    | ☁️ Status | GitHub berhasil diperbarui |
-                    | 🌿 Branch | {branch} |
-                    | 📂 Repository | {repo} |
-                    """)
-                    
-                            st.markdown(f"""
-                    - 📅 **Update** : {today}
-                    - 📍 **Total ODP** : {stats["total"]}
-                    - ☁️ **Status** : GitHub berhasil diperbarui.
-                    """)
-                    
-                        else:
-                            st.error("Publish gagal!")
-                    
-                            st.write(response.status_code)
-                            st.write(response.json())
-                            st.markdown("""
-                            </div>
-                            """, unsafe_allow_html=True)
+                    st.markdown(f"""
+            <table style="
+            width:100%;
+            border-collapse:collapse;
+            font-size:14px;
+            ">
+            <tr>
+            <th align="left">Informasi</th>
+            <th align="left">Nilai</th>
+            </tr>
+            
+            <tr>
+            <td>📅 Update</td>
+            <td>{today}</td>
+            </tr>
+            
+            <tr>
+            <td>📍 Total ODP</td>
+            <td>{stats["total"]}</td>
+            </tr>
+            
+            <tr>
+            <td>☁️ Status</td>
+            <td>GitHub berhasil diperbarui</td>
+            </tr>
+            
+            <tr>
+            <td>🌿 Branch</td>
+            <td>{branch}</td>
+            </tr>
+            
+            <tr>
+            <td>📂 Repository</td>
+            <td>{repo}</td>
+            </tr>
+            
+            </table>
+            """,unsafe_allow_html=True)
 
 
         
