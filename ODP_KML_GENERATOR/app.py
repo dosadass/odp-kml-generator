@@ -112,6 +112,24 @@ font-size:14px;
     box-shadow:0 8px 20px rgba(37,99,235,.25);
 }
 
+section[data-testid="stFileUploader"]{
+    padding-top:0px !important;
+    padding-bottom:0px !important;
+}
+
+section[data-testid="stFileUploader"] > div{
+    padding:6px !important;
+}
+
+div[data-testid="stFileUploaderDropzone"]{
+    padding:8px !important;
+    min-height:55px !important;
+}
+
+div[data-testid="stFileUploaderDropzoneInstructions"]{
+    display:none;
+}
+
 .stButton > button{
 
 width:100%;
