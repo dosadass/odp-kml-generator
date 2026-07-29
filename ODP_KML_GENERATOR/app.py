@@ -541,11 +541,6 @@ if uploaded_file:
                 st.subheader("📊 2. Hasil Generate")
 
                 st.success("Generate selesai!")
-
-                c1,c2,c3 = st.columns(3)
-                c1.metric("Total ODP", stats["total"])
-                c2.metric("Skipped", stats["skipped"])
-                c3.metric("Status","Success")
                 
                 with c1:
                     st.markdown(f"""
