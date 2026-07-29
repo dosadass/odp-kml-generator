@@ -428,8 +428,7 @@ if uploaded_file:
         
         </div>
         """, unsafe_allow_html=True)
-    
-        {len(df)}
+
         
 
 
@@ -692,10 +691,10 @@ if uploaded_file:
 
                     st.markdown("""
                     <div class="card">
-                        
                     📥 Download KML
-                    st.markdown("</div>",unsafe_allow_html=True)
-                    
+                    </div>
+                    """, unsafe_allow_html=True)
+                
                     with open(kml_path,"rb") as f:
                         st.download_button(
                             "ODP_Master.kml",
@@ -773,21 +772,22 @@ if uploaded_file:
                                 </div>
                                 """, unsafe_allow_html=True)
             
-                                st.markdown("""
-                                    <h2 style="
-                                    margin-bottom:20px;
-                                    font-weight:700;
-                                    ">
-                                    ☁️ Publish
-                                    </h2>
-                                    """, unsafe_allow_html=True)
-                                
-                                st.markdown(f"""
+                            st.markdown("""
+                                <h2 style="
+                                margin-bottom:20px;
+                                font-weight:700;
+                                ">
+                                ☁️ Publish
+                                </h2>
+                                """, unsafe_allow_html=True)
+                            
+                            st.markdown(f"""
                                 <table style="
                                 width:100%;
                                 border-collapse:collapse;
                                 font-size:14px;
                                 ">
+                                """, unsafe_allow_html=True)
                 
                 <tr>
                 <th align="left">Informasi</th>
