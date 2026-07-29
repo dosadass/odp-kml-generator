@@ -175,14 +175,30 @@ siap digunakan di Google Earth.
 """, unsafe_allow_html=True)
 
 
-st.markdown("### 📤 1. Upload File Excel ODP")
+st.markdown("""
+<div class="card">
+
+<h3 style="margin-top:0;">
+📤 1. Upload File Excel ODP
+</h3>
+""", unsafe_allow_html=True)
+
+uploaded_file = st.file_uploader(
+    "Upload file Excel ODP terbaru",
+    type=["xlsx","xls"]
+)
+
+st.caption(
+    "Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate."
+)
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
     "Upload file Excel ODP terbaru",
     type=["xlsx", "xls"]
 )
 
-st.caption("Pastikan file memiliki kolom Code, Kelurahan, Kecamatan, Region, District Name, Capacity, Active, dan Coordinate.")
 st.markdown('</div>', unsafe_allow_html=True)
 
 required_cols = [
@@ -519,7 +535,8 @@ if uploaded_file:
             
             with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
                 kmz.write(kml_path, "doc.kml")
-                
+
+            st.markdown("<div class='card'>", unsafe_allow_html=True)
             left,right = st.columns([1.05,1])
         
             with left:
@@ -605,6 +622,7 @@ if uploaded_file:
                             headers=headers,
                             json=payload
                         )
+                        st.markdown("</div>", unsafe_allow_html=True)
                     
                         if response.status_code in [200, 201]:
                     
