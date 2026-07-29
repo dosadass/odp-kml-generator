@@ -44,7 +44,7 @@ box-shadow:0 3px 10px rgba(0,0,0,.04);
 .hero{
 background:linear-gradient(135deg,#0f172a,#1d4ed8);
 border-radius:18px;
-padding:60px 30px;
+padding:50px 30px;
 color:white;
 margin-bottom:18px;
 box-shadow:0 8px 20px rgba(0,0,0,.12);
@@ -335,7 +335,7 @@ if uploaded_file:
     if missing:
         st.error(f"Kolom ini belum ada / beda nama: {missing}")
     else:
-        st.info(f"📍 Koordinat : {coord_col}")
+        st.info(f"📍 Koordinat terdeteksi di kolom : {coord_col}")
 
         col1, col2 = st.columns(2)
 
