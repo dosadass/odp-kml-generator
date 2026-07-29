@@ -690,19 +690,19 @@ if uploaded_file:
     
                 with col1:
 
-                        st.markdown("""
-                        <div class="card">
+                    st.markdown("""
+                    <div class="card">
                         
-                        📥 Download KML
-                        st.markdown("</div>",unsafe_allow_html=True)
+                    📥 Download KML
+                    st.markdown("</div>",unsafe_allow_html=True)
                     
-                        with open(kml_path,"rb") as f:
-                            st.download_button(
-                                "ODP_Master.kml",
-                                f,
-                                file_name="ODP_Master.kml",
-                                use_container_width=True
-                            )
+                    with open(kml_path,"rb") as f:
+                        st.download_button(
+                            "ODP_Master.kml",
+                            f,
+                            file_name="ODP_Master.kml",
+                            use_container_width=True
+                        )
                 
                 with col2:
 
@@ -758,20 +758,20 @@ if uploaded_file:
                     
                         if response.status_code in [200, 201]:
                     
-                st.markdown("""
-                <div style="
-                background:#ECFDF5;
-                border:1px solid #BBF7D0;
-                padding:18px;
-                border-radius:14px;
-                font-size:18px;
-                font-weight:700;
-                color:#166534;
-                margin-bottom:18px;
-                ">
-                ✔ Publish berhasil
-                </div>
-                """, unsafe_allow_html=True)
+                            st.markdown("""
+                            <div style="
+                            background:#ECFDF5;
+                            border:1px solid #BBF7D0;
+                            padding:18px;
+                            border-radius:14px;
+                            font-size:18px;
+                            font-weight:700;
+                            color:#166534;
+                            margin-bottom:18px;
+                            ">
+                            ✔ Publish berhasil
+                            </div>
+                            """, unsafe_allow_html=True)
         
                 st.markdown("""
                     <h2 style="
@@ -782,13 +782,13 @@ if uploaded_file:
                     </h2>
                     """, unsafe_allow_html=True)
                     
-                            st.markdown(f"""
-                    st.markdown(f"""
+                st.markdown(f"""
                 <table style="
                 width:100%;
                 border-collapse:collapse;
                 font-size:14px;
                 ">
+                
                 <tr>
                 <th align="left">Informasi</th>
                 <th align="left">Nilai</th>
@@ -820,7 +820,7 @@ if uploaded_file:
                 </tr>
                 
                 </table>
-                """,unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
 
 
         
