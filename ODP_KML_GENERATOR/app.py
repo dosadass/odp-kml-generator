@@ -614,43 +614,42 @@ if uploaded_file:
 
                             st.success("✔ Publish berhasil!")
 
-
-st.markdown(f"""
-<table style="
-width:100%;
-border-collapse:collapse;
-font-size:14px;
-">
-
-<tr style="background:#F8FAFC;">
-<th align="left" style="padding:8px;border:1px solid #E5E7EB;">Informasi</th>
-<th align="left" style="padding:8px;border:1px solid #E5E7EB;">Nilai</th>
-</tr>
-
-<tr>
-<td style="padding:8px;border:1px solid #E5E7EB;">📅 Update</td>
-<td style="padding:8px;border:1px solid #E5E7EB;">{today}</td>
-</tr>
-
-<tr>
-<td style="padding:8px;border:1px solid #E5E7EB;">📍 Total ODP</td>
-<td style="padding:8px;border:1px solid #E5E7EB;">{stats["total"]}</td>
-</tr>
-
-<tr>
-<td style="padding:8px;border:1px solid #E5E7EB;">☁️ Status</td>
-<td style="padding:8px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
-</tr>
-
-<tr>
-<td style="padding:8px;border:1px solid #E5E7EB;">🌿 Branch</td>
-<td style="padding:8px;border:1px solid #E5E7EB;">{branch}</td>
-</tr>
-
-<tr>
-<td style="padding:8px;border:1px solid #E5E7EB;">📂 Repository</td>
-<td style="padding:8px;border:1px solid #E5E7EB;">{repo}</td>
-</tr>
-
-</table>
-""", unsafe_allow_html=True)
+                            st.markdown(f"""
+                            <table style="
+                            width:100%;
+                            border-collapse:collapse;
+                            font-size:14px;
+                            ">
+                            
+                            <tr style="background:#F8FAFC;">
+                            <th align="left" style="padding:8px;border:1px solid #E5E7EB;">Informasi</th>
+                            <th align="left" style="padding:8px;border:1px solid #E5E7EB;">Nilai</th>
+                            </tr>
+                            
+                            <tr>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">📅 Update</td>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">{today}</td>
+                            </tr>
+                            
+                            <tr>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">📍 Total ODP</td>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">{stats["total"]}</td>
+                            </tr>
+                            
+                            <tr>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">☁️ Status</td>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">GitHub berhasil diperbarui</td>
+                            </tr>
+                            
+                            <tr>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">🌿 Branch</td>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">{branch}</td>
+                            </tr>
+                            
+                            <tr>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">📂 Repository</td>
+                            <td style="padding:8px;border:1px solid #E5E7EB;">{repo}</td>
+                            </tr>
+                            
+                            </table>
+                            """, unsafe_allow_html=True)
