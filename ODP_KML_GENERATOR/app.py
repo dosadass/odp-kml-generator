@@ -376,6 +376,8 @@ if uploaded_file:
     IDLE_ICON = ICONS[idle_icon_name]
     FULL_ICON = ICONS[full_icon_name]
 
+    missing = [col for col in required_cols if col not in df.columns]
+
     if coord_col is None:
         missing.append("Kolom koordinat format Lat,Long")
 
