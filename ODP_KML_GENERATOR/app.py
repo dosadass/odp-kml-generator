@@ -349,11 +349,10 @@ if uploaded_file:
     st.sidebar.markdown("### Icon IDLE")
     
     idle_selected = image_select(
-        "",
+    "",
         images=list(ICONS.values()),
         captions=list(ICONS.keys()),
-        use_container_width=True,
-        key="idle_icon"
+        use_container_width=True
     )
     
     st.sidebar.markdown("### Icon FULL")
@@ -362,12 +361,11 @@ if uploaded_file:
         "",
         images=list(ICONS.values()),
         captions=list(ICONS.keys()),
-        use_container_width=True,
-        key="full_icon"
+        use_container_width=True
     )
-    
-    IDLE_ICON = idle_selected
-    FULL_ICON = full_selected
+        
+    IDLE_ICON = list(ICONS.values())[idle_selected]
+    FULL_ICON = list(ICONS.values())[full_selected]
 
 
 
@@ -496,12 +494,12 @@ if uploaded_file:
                 else:
                     pnt.style.iconstyle.icon.href = IDLE_ICON
                 
-                pnt.style.iconstyle.scale = icon_scale
+                pnt.style.iconstyle.scale = 1.2
                 
                 alpha = int(icon_opacity * 255 / 100)
                 pnt.style.iconstyle.color = f"{alpha:02x}FFFFFF"
 
-                pnt.style.iconstyle.scale = icon_scale
+                pnt.style.iconstyle.scale = 1.2
                 pnt.style.iconstyle.color = f"{int(icon_opacity*255/100):02x}FFFFFF"
                 stats["total"] += 1
 
