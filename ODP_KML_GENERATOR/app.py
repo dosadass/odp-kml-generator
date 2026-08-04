@@ -195,8 +195,19 @@ required_cols = [
     "Active"
 ]
 
-IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
-FULL_ICON = "https://maps.google.com/mapfiles/kml/paddle/red-blank.png"
+ICONS = {
+    "Blue Paddle": "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png",
+    "Green Paddle": "https://maps.google.com/mapfiles/kml/paddle/grn-blank.png",
+    "Red Paddle": "https://maps.google.com/mapfiles/kml/paddle/red-blank.png",
+    "Yellow Paddle": "https://maps.google.com/mapfiles/kml/paddle/ylw-blank.png",
+
+    "Circle": "https://maps.google.com/mapfiles/kml/shapes/placemark_circle.png",
+    "Star": "https://maps.google.com/mapfiles/kml/shapes/star.png",
+    "Home": "https://maps.google.com/mapfiles/kml/shapes/homegardenbusiness.png",
+    "Target": "https://maps.google.com/mapfiles/kml/shapes/target.png",
+    "Flag": "https://maps.google.com/mapfiles/kml/shapes/flag.png",
+    "Warning": "https://maps.google.com/mapfiles/kml/shapes/caution.png",
+}
 
 def read_excel_auto_header(file):
     raw = pd.read_excel(file, header=None)
@@ -297,6 +308,39 @@ if uploaded_file:
     )
 
     st.sidebar.markdown("---")
+    st.sidebar.subheader("⚙ Marker Style")
+    
+    idle_icon_name = st.sidebar.selectbox(
+        "Icon IDLE",
+        list(ICONS.keys()),
+        index=list(ICONS.keys()).index("Blue Paddle")
+    )
+    
+    full_icon_name = st.sidebar.selectbox(
+        "Icon FULL",
+        list(ICONS.keys()),
+        index=list(ICONS.keys()).index("Red Paddle")
+    )
+    
+    icon_scale = st.sidebar.slider(
+        "Scale",
+        0.5,
+        3.0,
+        1.2,
+        0.1
+    )
+    
+    icon_opacity = st.sidebar.slider(
+        "Opacity",
+        0,
+        100,
+        100
+    )
+    
+    IDLE_ICON = ICONS[idle_icon_name]
+    FULL_ICON = ICONS[full_icon_name]
+
+    st.sidebar.markdown("---")
     st.sidebar.markdown("### 👁 Preview Struktur")
 
     preview = folder1
@@ -306,6 +350,9 @@ if uploaded_file:
 
     if folder3 != "Tidak dipisah":
         preview += f"\n    └── {folder3}"
+
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("⚙ Marker Style")
 
     preview += "\n        └── ODP"
 
@@ -451,8 +498,14 @@ if uploaded_file:
                     pnt.style.iconstyle.icon.href = FULL_ICON
                 else:
                     pnt.style.iconstyle.icon.href = IDLE_ICON
+                
+                pnt.style.iconstyle.scale = icon_scale
+                
+                alpha = int(icon_opacity * 255 / 100)
+                pnt.style.iconstyle.color = f"{alpha:02x}FFFFFF"
 
-                pnt.style.iconstyle.scale = 1.2
+                pnt.style.iconstyle.scale = icon_scale
+                pnt.style.iconstyle.color = f"{int(icon_opacity*255/100):02x}FFFFFF"
                 stats["total"] += 1
 
             for value1, df1 in df.groupby(folder1):
