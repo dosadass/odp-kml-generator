@@ -306,6 +306,9 @@ if uploaded_file:
         ["Tidak dipisah"] + folder_columns,
         index=0
     )
+
+        st.sidebar.markdown("---")
+        st.sidebar.subheader("⚙ Marker Style")
     
     idle_icon_name = st.sidebar.selectbox(
         "Icon IDLE",
