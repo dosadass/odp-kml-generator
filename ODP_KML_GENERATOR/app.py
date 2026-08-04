@@ -6,7 +6,7 @@ import zipfile
 from datetime import datetime
 import requests
 import base64
-from streamlit_image_select import image_select
+
 
 
 today = datetime.now().strftime("%d %b %Y")
@@ -346,32 +346,35 @@ if uploaded_file:
     st.sidebar.markdown("---")
     st.sidebar.subheader("⚙ Marker Style")
     
-    st.sidebar.markdown("### Icon IDLE")
-    
-    idle_selected = image_select(
-        "",
-        images=list(ICONS.values()),
-        captions=list(ICONS.keys()),
-        use_container_width=True,
-        key="idle_picker"
+    idle_icon_name = st.sidebar.selectbox(
+        "Icon IDLE",
+        list(ICONS.keys()),
+        index=list(ICONS.keys()).index("Blue Paddle")
     )
     
-    st.sidebar.markdown("### Icon FULL")
-    
-    full_selected = image_select(
-        "",
-        images=list(ICONS.values()),
-        captions=list(ICONS.keys()),
-        use_container_width=True,
-        key="full_picker"
+    full_icon_name = st.sidebar.selectbox(
+        "Icon FULL",
+        list(ICONS.keys()),
+        index=list(ICONS.keys()).index("Red Paddle")
     )
-        
-    IDLE_ICON = list(ICONS.values())[idle_selected]
-    FULL_ICON = list(ICONS.values())[full_selected]
-
-
-
-    missing = [col for col in required_cols if col not in df.columns]
+    
+    icon_scale = st.sidebar.slider(
+        "Scale",
+        0.5,
+        3.0,
+        1.2,
+        0.1
+    )
+    
+    icon_opacity = st.sidebar.slider(
+        "Opacity",
+        0,
+        100,
+        100
+    )
+    
+    IDLE_ICON = ICONS[idle_icon_name]
+    FULL_ICON = ICONS[full_icon_name]
 
     if coord_col is None:
         missing.append("Kolom koordinat format Lat,Long")
