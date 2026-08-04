@@ -311,6 +311,40 @@ if uploaded_file:
     )
 
     
+
+
+    st.sidebar.markdown("---")
+    st.sidebar.markdown("### 👁 Preview Struktur")
+
+    preview = folder1
+
+    if folder2 != "Tidak dipisah":
+        preview += f"\n└── {folder2}"
+
+    if folder3 != "Tidak dipisah":
+        preview += f"\n    └── {folder3}"
+
+    preview += "\n        └── ODP"
+
+
+    st.sidebar.markdown(f"""
+    <div style="
+    background:white;
+    padding:17.4px;
+    border-radius:12px;
+    border:1px solid #E5E7EB;
+    font-family:Consolas;
+    line-height:1.7;
+    ">
+    
+    {preview.replace(chr(10),"<br>")}
+    
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("⚙ Marker Style")
+    
     idle_icon_name = st.sidebar.selectbox(
         "Icon IDLE",
         list(ICONS.keys()),
@@ -340,38 +374,6 @@ if uploaded_file:
     
     IDLE_ICON = ICONS[idle_icon_name]
     FULL_ICON = ICONS[full_icon_name]
-
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("### 👁 Preview Struktur")
-
-    preview = folder1
-
-    if folder2 != "Tidak dipisah":
-        preview += f"\n└── {folder2}"
-
-    if folder3 != "Tidak dipisah":
-        preview += f"\n    └── {folder3}"
-
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("⚙ Marker Style")
-
-    preview += "\n        └── ODP"
-
-
-    st.sidebar.markdown(f"""
-    <div style="
-    background:white;
-    padding:17.4px;
-    border-radius:12px;
-    border:1px solid #E5E7EB;
-    font-family:Consolas;
-    line-height:1.7;
-    ">
-    
-    {preview.replace(chr(10),"<br>")}
-    
-    </div>
-    """, unsafe_allow_html=True)
 
 
 
