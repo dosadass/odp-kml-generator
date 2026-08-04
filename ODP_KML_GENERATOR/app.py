@@ -349,10 +349,11 @@ if uploaded_file:
     st.sidebar.markdown("### Icon IDLE")
     
     idle_selected = image_select(
-    "",
+        "",
         images=list(ICONS.values()),
         captions=list(ICONS.keys()),
-        use_container_width=True
+        use_container_width=True,
+        key="idle_picker"
     )
     
     st.sidebar.markdown("### Icon FULL")
@@ -361,7 +362,8 @@ if uploaded_file:
         "",
         images=list(ICONS.values()),
         captions=list(ICONS.keys()),
-        use_container_width=True
+        use_container_width=True,
+        key="full_picker"
     )
         
     IDLE_ICON = list(ICONS.values())[idle_selected]
