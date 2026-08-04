@@ -281,6 +281,9 @@ if not uploaded_file:
         disabled=True
     )
 
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("⚙ Marker Style")
+
 
 if uploaded_file:
 
