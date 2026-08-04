@@ -3,3 +3,4 @@ pandas
 simplekml
 openpyxl
 requests
+streamlit-image-select
