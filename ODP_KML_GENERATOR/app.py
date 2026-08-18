@@ -196,7 +196,7 @@ required_cols = [
     "Active"
 ]
 
-IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
+IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blue-blank.png"
 FULL_ICON = "https://maps.google.com/mapfiles/kml/paddle/red-blank.png"
 
 def read_excel_auto_header(file):
