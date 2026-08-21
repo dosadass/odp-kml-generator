@@ -199,6 +199,78 @@ required_cols = [
 IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
 FULL_ICON = "https://maps.google.com/mapfiles/kml/paddle/red-blank.png"
 
+# =========================
+# ICON CST
+# =========================
+
+CST_ICONS = {
+    "👤 Customer": "https://maps.google.com/mapfiles/kml/paddle/grn-blank.png",
+    "📍 Customer 2": "https://maps.google.com/mapfiles/kml/paddle/ylw-blank.png",
+    "🏠 Customer 3": "https://maps.google.com/mapfiles/kml/paddle/purple-blank.png",
+    "🔵 Customer 4": "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png",
+    "🟠 Customer 5": "https://maps.google.com/mapfiles/kml/paddle/orange-blank.png",
+}
+
+# =========================
+# SESSION STATE ICON CST
+# =========================
+
+if "cst_icon_name" not in st.session_state:
+    st.session_state.cst_icon_name = "👤 Customer"
+
+if "cst_icon_url" not in st.session_state:
+    st.session_state.cst_icon_url = CST_ICONS["👤 Customer"]
+
+
+# =========================
+# POPUP PILIH ICON CST
+# =========================
+
+@st.dialog("🎨 Pilih Icon Customer")
+def pilih_icon_cst():
+
+    st.write("Pilih icon yang akan digunakan untuk titik Customer / CST.")
+
+    pilihan = st.selectbox(
+        "Icon Customer",
+        list(CST_ICONS.keys()),
+        index=list(CST_ICONS.keys()).index(
+            st.session_state.cst_icon_name
+        )
+    )
+
+    st.markdown(
+        f"""
+        <div style="
+            text-align:center;
+            padding:20px;
+            border:1px solid #e5e7eb;
+            border-radius:12px;
+            margin-top:10px;
+        ">
+            <p style="margin-bottom:8px;color:#64748b;">
+                Preview Icon
+            </p>
+            <img src="{CST_ICONS[pilihan]}"
+                 width="50">
+            <br>
+            <b>{pilihan}</b>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.write("")
+
+    if st.button(
+        "✅ Gunakan Icon Ini",
+        use_container_width=True
+    ):
+        st.session_state.cst_icon_name = pilihan
+        st.session_state.cst_icon_url = CST_ICONS[pilihan]
+
+        st.rerun()
+
 def read_excel_auto_header(file):
     raw = pd.read_excel(file, header=None)
 
@@ -278,6 +350,49 @@ if uploaded_file:
     coord_col = find_coordinate_column(df)
 
     folder_columns = [c for c in df.columns if c != coord_col]
+
+if uploaded_file:
+
+    df = read_excel_auto_header(uploaded_file)
+    coord_col = find_coordinate_column(df)
+
+    # =========================
+    # JENIS TITIK
+    # =========================
+
+    st.markdown("### 📍 Jenis Titik")
+
+    jenis_titik = st.radio(
+        "Pilih jenis data yang akan dibuat menjadi KMZ",
+        ["ODP", "Customer / CST"],
+        horizontal=True
+    )
+
+    if jenis_titik == "ODP":
+
+        st.info(
+            "🔵 IDLE = Biru  |  🔴 FULL = Merah"
+        )
+
+    else:
+
+        col_icon1, col_icon2 = st.columns([3, 1])
+
+        with col_icon1:
+            st.info(
+                f"👤 Icon CST saat ini: "
+                f"**{st.session_state.cst_icon_name}**"
+            )
+
+        with col_icon2:
+            if st.button(
+                "🎨 Pilih Icon",
+                use_container_width=True
+            ):
+                pilih_icon_cst()
+
+    folder_columns = [c for c in df.columns if c != coord_col]
+    
 
     folder1 = st.sidebar.selectbox(
         "Folder Level 1",
@@ -448,11 +563,23 @@ if uploaded_file:
                 pnt.snippet = Snippet("", maxlines=0)
                 pnt.style.balloonstyle.text = desc
 
-                if status == "FULL":
-                    pnt.style.iconstyle.icon.href = FULL_ICON
+                # =========================
+                # PILIH ICON BERDASARKAN JENIS TITIK
+                # =========================
+                
+                if jenis_titik == "ODP":
+                
+                    if status == "FULL":
+                        icon_url = FULL_ICON
+                    else:
+                        icon_url = IDLE_ICON
+                
                 else:
-                    pnt.style.iconstyle.icon.href = IDLE_ICON
-
+                
+                    icon_url = st.session_state.cst_icon_url
+                
+                
+                pnt.style.iconstyle.icon.href = icon_url
                 pnt.style.iconstyle.scale = 1.2
                 stats["total"] += 1
 
