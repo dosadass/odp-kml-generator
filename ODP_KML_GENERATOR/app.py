@@ -184,18 +184,6 @@ uploaded_file = st.file_uploader(
 )
 
 
-
-required_cols = [
-    "Code",
-    "Kelurahan",
-    "Kecamatan",
-    "Region",
-    "District Name",
-    "Ms. Partner Name",
-    "Capacity",
-    "Active"
-]
-
 IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
 FULL_ICON = "https://maps.google.com/mapfiles/kml/paddle/red-blank.png"
 
@@ -443,15 +431,28 @@ if uploaded_file:
 
 
 
-    missing = [col for col in required_cols if col not in df.columns]
-
+    # =========================
+    # VALIDASI FILE
+    # =========================
+    
     if coord_col is None:
-        missing.append("Kolom koordinat format Lat,Long")
-
-    if missing:
-        st.error(f"Kolom ini belum ada / beda nama: {missing}")
+    
+        st.error(
+            "❌ Kolom koordinat tidak ditemukan. "
+            "Pastikan ada satu kolom dengan format Lat,Long."
+        )
+    
     else:
-        st.info(f"📍 Koordinat terdeteksi di kolom : {coord_col}")
+    
+        st.success(
+            f"📍 Koordinat terdeteksi di kolom: {coord_col}"
+        )
+    
+        st.info(
+            f"📊 Total data yang terbaca: {len(df)} baris"
+        )
+    
+        # lanjut ke tombol Generate / Publish
 
         col1, col2 = st.columns(2)
 
@@ -486,23 +487,67 @@ if uploaded_file:
                    stats["skipped"] += 1
                    return
 
-                capacity = int(row["Capacity"]) if pd.notna(row["Capacity"]) else 0
-                active = int(row["Active"]) if pd.notna(row["Active"]) else 0
-
-                status = "FULL" if capacity > 0 and active >= capacity else "IDLE"
-                header_color = "#E53935" if status == "FULL" else "#4285F4"
-
-                promo = ""
-
-                if "Promo" in df.columns:
-                    promo = str(row["Promo"]).strip() if pd.notna(row["Promo"]) else ""
+            # =========================
+            # STATUS ODP
+            # =========================
+            
+            if jenis_titik == "ODP":
+            
+                if "Capacity" in df.columns and "Active" in df.columns:
+            
+                    capacity = pd.to_numeric(
+                        row["Capacity"],
+                        errors="coerce"
+                    )
+            
+                    active = pd.to_numeric(
+                        row["Active"],
+                        errors="coerce"
+                    )
+            
+                    capacity = 0 if pd.isna(capacity) else int(capacity)
+                    active = 0 if pd.isna(active) else int(active)
+            
+                    status = (
+                        "FULL"
+                        if capacity > 0 and active >= capacity
+                        else "IDLE"
+                    )
+            
                 else:
-                    promo = ""
+            
+                    # Kalau ODP tidak punya Capacity / Active
+                    status = "IDLE"
+            
+            else:
+            
+                # CST tidak menggunakan status FULL / IDLE
+                status = "CUSTOMER"
+                header_color = "#E53935" if status == "FULL" else "#4285F4"    
 
-                if promo:
-                    point_name = f"{row['Code']} - {promo}"
-                else:
+                # =========================
+                # NAMA TITIK
+                # =========================
+                
+                if "Code" in df.columns:
+                
                     point_name = str(row["Code"])
+                
+                elif "Customer ID" in df.columns:
+                
+                    point_name = str(row["Customer ID"])
+                
+                elif "ID" in df.columns:
+                
+                    point_name = str(row["ID"])
+                
+                elif "Nama" in df.columns:
+                
+                    point_name = str(row["Nama"])
+                
+                else:
+                
+                    point_name = f"Point {stats['total'] + 1}"
                 table_rows = ""
 
                 for col in df.columns:
