@@ -685,39 +685,49 @@ if uploaded_file:
             
                 stats["total"] += 1
 
-                folder_a = kml.newfolder(name=str(value1))
+        # =========================
+        # BUAT STRUKTUR FOLDER
+        # =========================
 
-                if folder2 == "Tidak dipisah":
+        for value1, df1 in df.groupby(folder1):
 
-                    for _, row in df1.iterrows():
+            folder_a = kml.newfolder(name=str(value1))
 
-                        target_folder = folder_a
+            if folder2 == "Tidak dipisah":
 
-                        create_point(target_folder, row)
+                for _, row in df1.iterrows():
 
-                else:
+                    target_folder = folder_a
 
-                    for value2, df2 in df1.groupby(folder2):
+                    create_point(target_folder, row)
 
-                        folder_b = folder_a.newfolder(name=str(value2))
+            else:
 
-                        if folder3 == "Tidak dipisah":
+                for value2, df2 in df1.groupby(folder2):
 
-                            for _, row in df2.iterrows():
+                    folder_b = folder_a.newfolder(
+                        name=str(value2)
+                    )
 
-                                target_folder = folder_b
+                    if folder3 == "Tidak dipisah":
 
-                                create_point(target_folder, row)
+                        for _, row in df2.iterrows():
 
-                        else:
+                            target_folder = folder_b
 
-                            for value3, df3 in df2.groupby(folder3):
+                            create_point(target_folder, row)
 
-                                folder_c = folder_b.newfolder(name=str(value3))
+                    else:
 
-                                for _, row in df3.iterrows():
+                        for value3, df3 in df2.groupby(folder3):
 
-                                    create_point(folder_c, row)
+                            folder_c = folder_b.newfolder(
+                                name=str(value3)
+                            )
+
+                            for _, row in df3.iterrows():
+
+                                create_point(folder_c, row)
 
 
             kml.save(kml_path)
