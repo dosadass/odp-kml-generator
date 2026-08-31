@@ -184,7 +184,7 @@ uploaded_file = st.file_uploader(
 )
 
 
-IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png"
+IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blue-blank.png"
 FULL_ICON = "https://maps.google.com/mapfiles/kml/paddle/red-blank.png"
 
 # =========================
@@ -411,7 +411,7 @@ if uploaded_file:
     if folder3 != "Tidak dipisah":
         preview += f"\n    └── {folder3}"
 
-    preview += "\n        └── ODP"
+    preview += f"\n        └── {jenis_titik}"
 
 
     st.sidebar.markdown(f"""
@@ -478,157 +478,212 @@ if uploaded_file:
             }
 
             def create_point(target_folder, row):
+            
+                # =========================
+                # BACA KOORDINAT
+                # =========================
+            
                 try:
-                   coord = str(row[coord_col]).strip()
-                   lat, lon = coord.split(",")
-                   lat = float(lat.strip())
-                   lon = float(lon.strip())
+                    coord = str(row[coord_col]).strip()
+            
+                    lat, lon = coord.split(",")
+            
+                    lat = float(lat.strip())
+                    lon = float(lon.strip())
+            
                 except:
-                   stats["skipped"] += 1
-                   return
-
-            # =========================
-            # STATUS ODP
-            # =========================
+                    stats["skipped"] += 1
+                    return
             
-            if jenis_titik == "ODP":
             
-                if "Capacity" in df.columns and "Active" in df.columns:
+                # =========================
+                # STATUS & ICON
+                # =========================
             
-                    capacity = pd.to_numeric(
-                        row["Capacity"],
-                        errors="coerce"
-                    )
+                if jenis_titik == "ODP":
             
-                    active = pd.to_numeric(
-                        row["Active"],
-                        errors="coerce"
-                    )
+                    # Kalau kolom Capacity dan Active tersedia
+                    if "Capacity" in df.columns and "Active" in df.columns:
             
-                    capacity = 0 if pd.isna(capacity) else int(capacity)
-                    active = 0 if pd.isna(active) else int(active)
+                        capacity = pd.to_numeric(
+                            row["Capacity"],
+                            errors="coerce"
+                        )
             
-                    status = (
-                        "FULL"
-                        if capacity > 0 and active >= capacity
-                        else "IDLE"
-                    )
+                        active = pd.to_numeric(
+                            row["Active"],
+                            errors="coerce"
+                        )
+            
+                        capacity = 0 if pd.isna(capacity) else int(capacity)
+                        active = 0 if pd.isna(active) else int(active)
+            
+                        status = (
+                            "FULL"
+                            if capacity > 0 and active >= capacity
+                            else "IDLE"
+                        )
+            
+                    else:
+            
+                        # ODP tanpa Capacity / Active
+                        status = "IDLE"
+            
+            
+                    # Icon ODP
+                    if status == "FULL":
+                        icon_url = FULL_ICON
+                        header_color = "#E53935"
+                    else:
+                        icon_url = IDLE_ICON
+                        header_color = "#4285F4"
+            
             
                 else:
             
-                    # Kalau ODP tidak punya Capacity / Active
-                    status = "IDLE"
+                    # =========================
+                    # CUSTOMER / CST
+                    # =========================
             
-            else:
+                    status = "CUSTOMER"
             
-                # CST tidak menggunakan status FULL / IDLE
-                status = "CUSTOMER"
-                header_color = "#E53935" if status == "FULL" else "#4285F4"    
-
+                    icon_url = st.session_state.cst_icon_url
+            
+                    header_color = "#16A34A"
+            
+            
                 # =========================
                 # NAMA TITIK
                 # =========================
-                
+            
                 if "Code" in df.columns:
-                
+            
                     point_name = str(row["Code"])
-                
+            
                 elif "Customer ID" in df.columns:
-                
+            
                     point_name = str(row["Customer ID"])
-                
+            
                 elif "ID" in df.columns:
-                
+            
                     point_name = str(row["ID"])
-                
+            
                 elif "Nama" in df.columns:
-                
+            
                     point_name = str(row["Nama"])
-                
+            
+                elif "Name" in df.columns:
+            
+                    point_name = str(row["Name"])
+            
                 else:
-                
+            
                     point_name = f"Point {stats['total'] + 1}"
+            
+            
+                # =========================
+                # DATA POPUP
+                # =========================
+            
                 table_rows = ""
-
+            
                 for col in df.columns:
-
+            
                     if col == coord_col:
                         continue
-
+            
                     value = row[col]
-
+            
                     if pd.isna(value):
                         value = "-"
-
+            
                     table_rows += f"""
                     <tr>
                         <td><b>{col}</b></td>
                         <td>{value}</td>
                     </tr>
                     """
+            
+            
                 desc = f"""
                 <div style="font-family:Arial; font-size:12px;">
-                <table border="1" cellpadding="5" cellspacing="0" width="300">
-                
-                <tr>
-                    <th colspan="2" bgcolor="{header_color}">
-                        <font color="white">{point_name}</font>
-                    </th>
-                </tr>
-                
-                {table_rows}
-                
-                <tr>
-                    <td><b>Status</b></td>
-                    <td>{status}</td>
-                </tr>
-                
-                <tr>
-                    <td><b>Lat</b></td>
-                    <td>{lat}</td>
-                </tr>
-                
-                <tr>
-                    <td><b>Long</b></td>
-                    <td>{lon}</td>
-                </tr>
-                
-                </table>
+            
+                    <table
+                        border="1"
+                        cellpadding="5"
+                        cellspacing="0"
+                        width="300"
+                    >
+            
+                        <tr>
+                            <th colspan="2" bgcolor="{header_color}">
+                                <font color="white">
+                                    {point_name}
+                                </font>
+                            </th>
+                        </tr>
+            
+                        {table_rows}
+            
+                        <tr>
+                            <td><b>Status</b></td>
+                            <td>{status}</td>
+                        </tr>
+            
+                        <tr>
+                            <td><b>Lat</b></td>
+                            <td>{lat}</td>
+                        </tr>
+            
+                        <tr>
+                            <td><b>Long</b></td>
+                            <td>{lon}</td>
+                        </tr>
+            
+                    </table>
+            
                 </div>
                 """
-
-
-
+            
+            
+                # =========================
+                # BUAT POINT KML
+                # =========================
+            
                 pnt = target_folder.newpoint(
                     name=point_name,
                     coords=[(lon, lat)]
                 )
-
+            
+            
+                # =========================
+                # POPUP
+                # =========================
+            
                 pnt.description = ""
-                pnt.snippet = Snippet("", maxlines=0)
+            
+                pnt.snippet = Snippet(
+                    "",
+                    maxlines=0
+                )
+            
                 pnt.style.balloonstyle.text = desc
-
+            
+            
                 # =========================
-                # PILIH ICON BERDASARKAN JENIS TITIK
+                # ICON
                 # =========================
-                
-                if jenis_titik == "ODP":
-                
-                    if status == "FULL":
-                        icon_url = FULL_ICON
-                    else:
-                        icon_url = IDLE_ICON
-                
-                else:
-                
-                    icon_url = st.session_state.cst_icon_url
-                
-                
+            
                 pnt.style.iconstyle.icon.href = icon_url
+            
                 pnt.style.iconstyle.scale = 1.2
+            
+            
+                # =========================
+                # COUNTER
+                # =========================
+            
                 stats["total"] += 1
-
-            for value1, df1 in df.groupby(folder1):
 
                 folder_a = kml.newfolder(name=str(value1))
 
@@ -684,7 +739,7 @@ if uploaded_file:
                 with c1:
                     st.markdown(f"""
                     <div class="metric-card">
-                        <p>Total ODP</p>
+                        <p>Total {jenis_titik}</p>
                         <h1>{stats["total"]}</h1>
                     </div>
                     """, unsafe_allow_html=True)
