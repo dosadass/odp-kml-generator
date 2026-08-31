@@ -471,150 +471,171 @@ if uploaded_file:
 
         if generate or publish:
 
+            # =========================
+            # BUAT KML
+            # =========================
+
             kml = simplekml.Kml(name=f"Update {today}")
+
             stats = {
                 "total": 0,
                 "skipped": 0
             }
 
+
+            # =========================
+            # FUNGSI BUAT POINT
+            # =========================
+
             def create_point(target_folder, row):
-            
+
                 # =========================
                 # BACA KOORDINAT
                 # =========================
-            
+
                 try:
+
                     coord = str(row[coord_col]).strip()
-            
+
                     lat, lon = coord.split(",")
-            
+
                     lat = float(lat.strip())
                     lon = float(lon.strip())
-            
-                except:
+
+                except Exception:
+
                     stats["skipped"] += 1
                     return
-            
-            
+
+
                 # =========================
                 # STATUS & ICON
                 # =========================
-            
+
                 if jenis_titik == "ODP":
-            
-                    # Kalau kolom Capacity dan Active tersedia
+
                     if "Capacity" in df.columns and "Active" in df.columns:
-            
+
                         capacity = pd.to_numeric(
                             row["Capacity"],
                             errors="coerce"
                         )
-            
+
                         active = pd.to_numeric(
                             row["Active"],
                             errors="coerce"
                         )
-            
-                        capacity = 0 if pd.isna(capacity) else int(capacity)
-                        active = 0 if pd.isna(active) else int(active)
-            
+
+                        capacity = (
+                            0 if pd.isna(capacity)
+                            else int(capacity)
+                        )
+
+                        active = (
+                            0 if pd.isna(active)
+                            else int(active)
+                        )
+
                         status = (
                             "FULL"
                             if capacity > 0 and active >= capacity
                             else "IDLE"
                         )
-            
+
                     else:
-            
-                        # ODP tanpa Capacity / Active
+
                         status = "IDLE"
-            
-            
-                    # Icon ODP
+
+
+                    # ICON ODP
+
                     if status == "FULL":
+
                         icon_url = FULL_ICON
                         header_color = "#E53935"
+
                     else:
+
                         icon_url = IDLE_ICON
                         header_color = "#4285F4"
-            
-            
+
+
                 else:
-            
+
                     # =========================
                     # CUSTOMER / CST
                     # =========================
-            
+
                     status = "CUSTOMER"
-            
+
                     icon_url = st.session_state.cst_icon_url
-            
+
                     header_color = "#16A34A"
-            
-            
+
+
                 # =========================
                 # NAMA TITIK
                 # =========================
-            
+
                 if "Code" in df.columns:
-            
+
                     point_name = str(row["Code"])
-            
+
                 elif "Customer ID" in df.columns:
-            
+
                     point_name = str(row["Customer ID"])
-            
+
                 elif "ID" in df.columns:
-            
+
                     point_name = str(row["ID"])
-            
+
                 elif "Nama" in df.columns:
-            
+
                     point_name = str(row["Nama"])
-            
+
                 elif "Name" in df.columns:
-            
+
                     point_name = str(row["Name"])
-            
+
                 else:
-            
+
                     point_name = f"Point {stats['total'] + 1}"
-            
-            
+
+
                 # =========================
                 # DATA POPUP
                 # =========================
-            
+
                 table_rows = ""
-            
+
                 for col in df.columns:
-            
+
                     if col == coord_col:
                         continue
-            
+
                     value = row[col]
-            
+
                     if pd.isna(value):
                         value = "-"
-            
+
                     table_rows += f"""
                     <tr>
                         <td><b>{col}</b></td>
                         <td>{value}</td>
                     </tr>
                     """
-            
-            
+
+
                 desc = f"""
                 <div style="font-family:Arial; font-size:12px;">
-            
+
                     <table
                         border="1"
                         cellpadding="5"
                         cellspacing="0"
                         width="300"
                     >
-            
+
                         <tr>
                             <th colspan="2" bgcolor="{header_color}">
                                 <font color="white">
@@ -622,185 +643,276 @@ if uploaded_file:
                                 </font>
                             </th>
                         </tr>
-            
+
                         {table_rows}
-            
+
                         <tr>
                             <td><b>Status</b></td>
                             <td>{status}</td>
                         </tr>
-            
+
                         <tr>
                             <td><b>Lat</b></td>
                             <td>{lat}</td>
                         </tr>
-            
+
                         <tr>
                             <td><b>Long</b></td>
                             <td>{lon}</td>
                         </tr>
-            
+
                     </table>
-            
+
                 </div>
                 """
-            
-            
+
+
                 # =========================
-                # BUAT POINT KML
+                # BUAT POINT
                 # =========================
-            
+
                 pnt = target_folder.newpoint(
                     name=point_name,
                     coords=[(lon, lat)]
                 )
-            
-            
-                # =========================
-                # POPUP
-                # =========================
-            
+
                 pnt.description = ""
-            
+
                 pnt.snippet = Snippet(
                     "",
                     maxlines=0
                 )
-            
+
                 pnt.style.balloonstyle.text = desc
-            
-            
+
+
                 # =========================
-                # ICON
+                # PASANG ICON
                 # =========================
-            
+
                 pnt.style.iconstyle.icon.href = icon_url
-            
+
                 pnt.style.iconstyle.scale = 1.2
-            
-            
+
+
                 # =========================
                 # COUNTER
                 # =========================
-            
+
                 stats["total"] += 1
 
-        # =========================
-        # BUAT STRUKTUR FOLDER
-        # =========================
 
-        for value1, df1 in df.groupby(folder1):
+            # =========================
+            # BUAT STRUKTUR FOLDER
+            # =========================
 
-            folder_a = kml.newfolder(name=str(value1))
+            for value1, df1 in df.groupby(
+                folder1,
+                dropna=False
+            ):
 
-            if folder2 == "Tidak dipisah":
+                folder_a = kml.newfolder(
+                    name=str(value1)
+                )
 
-                for _, row in df1.iterrows():
 
-                    target_folder = folder_a
+                if folder2 == "Tidak dipisah":
 
-                    create_point(target_folder, row)
+                    for _, row in df1.iterrows():
 
-            else:
+                        create_point(
+                            folder_a,
+                            row
+                        )
 
-                for value2, df2 in df1.groupby(folder2):
 
-                    folder_b = folder_a.newfolder(
-                        name=str(value2)
-                    )
+                else:
 
-                    if folder3 == "Tidak dipisah":
+                    for value2, df2 in df1.groupby(
+                        folder2,
+                        dropna=False
+                    ):
 
-                        for _, row in df2.iterrows():
+                        folder_b = folder_a.newfolder(
+                            name=str(value2)
+                        )
 
-                            target_folder = folder_b
 
-                            create_point(target_folder, row)
+                        if folder3 == "Tidak dipisah":
 
-                    else:
+                            for _, row in df2.iterrows():
 
-                        for value3, df3 in df2.groupby(folder3):
+                                create_point(
+                                    folder_b,
+                                    row
+                                )
 
-                            folder_c = folder_b.newfolder(
-                                name=str(value3)
-                            )
 
-                            for _, row in df3.iterrows():
+                        else:
 
-                                create_point(folder_c, row)
+                            for value3, df3 in df2.groupby(
+                                folder3,
+                                dropna=False
+                            ):
 
+                                folder_c = folder_b.newfolder(
+                                    name=str(value3)
+                                )
+
+                                for _, row in df3.iterrows():
+
+                                    create_point(
+                                        folder_c,
+                                        row
+                                    )
+
+
+            # =========================
+            # SIMPAN KML
+            # =========================
 
             kml.save(kml_path)
 
-            with zipfile.ZipFile(kmz_path, "w", zipfile.ZIP_DEFLATED) as kmz:
-                kmz.write(kml_path, "doc.kml")
+
+            # =========================
+            # BUAT KMZ
+            # =========================
+
+            with zipfile.ZipFile(
+                kmz_path,
+                "w",
+                zipfile.ZIP_DEFLATED
+            ) as kmz:
+
+                kmz.write(
+                    kml_path,
+                    "doc.kml"
+                )
 
 
-            left,right = st.columns([1.05,1])
+            # =========================
+            # HASIL GENERATE
+            # =========================
+
+            left, right = st.columns([1.05, 1])
+
 
             with left:
 
                 st.subheader("2. Hasil Generate")
 
-                st.success("Generate selesai!")
-
-                c1,c2,c3 = st.columns(3)
-
-                with c1:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <p>Total {jenis_titik}</p>
-                        <h1>{stats["total"]}</h1>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                with c2:
-                    st.markdown(f"""
-                    <div class="metric-card">
-                        <p>Skipped</p>
-                        <h1>{stats["skipped"]}</h1>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-                with c3:
-                    st.markdown("""
-                    <div class="metric-card">
-                        <p>Status</p>
-                        <h1 style="font-size:34px;">Success</h1>
-                    </div>
-                    """, unsafe_allow_html=True)
-
                 st.success(
-                    f"File berhasil dibuat! Total titik: {stats['total']}, dilewati: {stats['skipped']}"
+                    "Generate selesai!"
                 )
 
-                col1,col2 = st.columns(2)
+
+                c1, c2, c3 = st.columns(3)
+
+
+                with c1:
+
+                    st.markdown(
+                        f"""
+                        <div class="metric-card">
+
+                            <p>Total {jenis_titik}</p>
+
+                            <h1>
+                                {stats["total"]}
+                            </h1>
+
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+
+
+                with c2:
+
+                    st.markdown(
+                        f"""
+                        <div class="metric-card">
+
+                            <p>Skipped</p>
+
+                            <h1>
+                                {stats["skipped"]}
+                            </h1>
+
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+
+
+                with c3:
+
+                    st.markdown(
+                        """
+                        <div class="metric-card">
+
+                            <p>Status</p>
+
+                            <h1 style="font-size:34px;">
+                                Success
+                            </h1>
+
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+
+
+                st.success(
+                    f"File berhasil dibuat! "
+                    f"Total titik: {stats['total']}, "
+                    f"dilewati: {stats['skipped']}"
+                )
+
+
+                # =========================
+                # DOWNLOAD
+                # =========================
+
+                col1, col2 = st.columns(2)
+
 
                 with col1:
-                    with col1:
 
-                        st.markdown("### 📄 Download KML")
+                    st.markdown(
+                        "### 📄 Download KML"
+                    )
 
-                        with open(kml_path,"rb") as f:
-                            st.download_button(
-                                "File kml",
-                                f,
-                                file_name="ODP_Master.kml",
-                                use_container_width=True
-                            )
+                    with open(
+                        kml_path,
+                        "rb"
+                    ) as f:
+
+                        st.download_button(
+                            "File KML",
+                            f,
+                            file_name="ODP_Master.kml",
+                            use_container_width=True
+                        )
+
 
                 with col2:
-                    with col2:
 
-                        st.markdown("### 📦 Download KMZ")
+                    st.markdown(
+                        "### 📦 Download KMZ"
+                    )
 
-                        with open(kmz_path,"rb") as f:
-                            st.download_button(
-                                "File kmz",
-                                f,
-                                file_name="ODP_Master.kmz",
-                                use_container_width=True
-                            )
+                    with open(
+                        kmz_path,
+                        "rb"
+                    ) as f:
+
+                        st.download_button(
+                            "File KMZ",
+                            f,
+                            file_name="ODP_Master.kmz",
+                            use_container_width=True
+                        )
 
             with right:
 
