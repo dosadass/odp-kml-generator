@@ -184,8 +184,8 @@ uploaded_file = st.file_uploader(
 )
 
 
-IDLE_ICON = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
-FULL_ICON = "http://maps.google.com/mapfiles/kml/pal2/icon21.png"
+IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blue-blank.png"
+FULL_ICON = "https://maps.google.com/mapfiles/kml/paddle/red-blank.png"
 
 # =========================
 # ICON CST
