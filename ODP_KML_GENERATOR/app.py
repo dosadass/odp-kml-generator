@@ -184,19 +184,19 @@ uploaded_file = st.file_uploader(
 )
 
 
-IDLE_ICON = "https://maps.google.com/mapfiles/kml/paddle/blue-blank.png"
-FULL_ICON = "https://maps.google.com/mapfiles/kml/paddle/red-blank.png"
+IDLE_ICON = "http://maps.google.com/mapfiles/kml/pal2/icon18.png"
+FULL_ICON = "http://maps.google.com/mapfiles/kml/pal2/icon21.png"
 
 # =========================
 # ICON CST
 # =========================
 
 CST_ICONS = {
-    "👤 Customer": "https://maps.google.com/mapfiles/kml/paddle/grn-blank.png",
-    "📍 Customer 2": "https://maps.google.com/mapfiles/kml/paddle/ylw-blank.png",
-    "🏠 Customer 3": "https://maps.google.com/mapfiles/kml/paddle/purple-blank.png",
-    "🔵 Customer 4": "https://maps.google.com/mapfiles/kml/paddle/blu-blank.png",
-    "🟠 Customer 5": "https://maps.google.com/mapfiles/kml/paddle/orange-blank.png",
+    "👤 Customer": "http://maps.google.com/mapfiles/kml/pal2/icon18.png",
+    "📍 Customer 2": "http://maps.google.com/mapfiles/kml/pal2/icon19.png",
+    "🏠 Customer 3": "http://maps.google.com/mapfiles/kml/pal2/icon20.png",
+    "🔵 Customer 4": "http://maps.google.com/mapfiles/kml/pal2/icon21.png",
+    "🟠 Customer 5": "http://maps.google.com/mapfiles/kml/pal2/icon22.png",
 }
 
 # =========================
